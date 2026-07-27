@@ -1,0 +1,5 @@
+#VariationID	AlleleID	Type_of_HGVS	NucleotideExpression
+207776	12345	HGVS, coding, RefSeq	NM_000603.4:c.894T>G
+207776	12345	HGVS, genomic, RefSeq	NC_000007.14:g.150999023T>G
+207776	12345	HGVS, protein, RefSeq	NP_000594.2:p.Asp298Glu
+207777	12346	HGVS, coding, RefSeq	NM_000603.4:c.894T>G

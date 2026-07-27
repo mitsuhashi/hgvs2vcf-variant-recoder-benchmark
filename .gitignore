@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Downloaded source data and generated caches
+sources/
+build/
+
+# Evaluation output
+evaluation/
+
+# Generated diagnostics; truth/gold.jsonl may be committed
+truth/quarantine.jsonl
+truth/build-report.json

@@ -1,0 +1,3 @@
+#AlleleID	Type	Name	GeneID	GeneSymbol	Assembly	ChromosomeAccession	Chromosome	Start	Stop	ReferenceAllele	AlternateAllele	VariationID	PositionVCF	ReferenceAlleleVCF	AlternateAlleleVCF
+12345	single nucleotide variant	NM_000603.4(NOS3):c.894T>G	4846	NOS3	GRCh38	NC_000007.14	7	150999023	150999023	A	C	207776	150999023	T	G
+12346	single nucleotide variant	old build row	4846	NOS3	GRCh37	NC_000007.13	7	150696111	150696111	A	C	207777	150696111	T	G
