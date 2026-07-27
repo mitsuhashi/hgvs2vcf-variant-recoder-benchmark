@@ -35,16 +35,10 @@ versionなし `NM_:c.` の期待transcriptは、Variant Recoder応答のversion�
 ## 入力データの固定
 
 同じClinVarリリースの2ファイルと、固定したMANE summaryを保存する。
+通常はダウンロードスクリプトで3ファイルをまとめて取得する。
 
 ```bash
-mkdir -p sources/clinvar/2026-07-02
-curl -fL -o sources/clinvar/2026-07-02/variant_summary.txt.gz \
-  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz
-curl -fL -o sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
-  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/hgvs4variation.txt.gz
-mkdir -p sources/mane/1.5
-curl -fL -o sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
-  https://ftp.ncbi.nlm.nih.gov/refseq/MANE/MANE_human/release_1.5/MANE.GRCh38.v1.5.summary.txt.gz
+scripts/download_sources.sh
 ```
 
 生成レポートには3ファイルのSHA-256、ClinVar・MANE・Ensemblリリース、

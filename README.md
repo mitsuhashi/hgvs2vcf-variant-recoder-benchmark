@@ -59,22 +59,28 @@ RESTサーバーを使う場合は、正解セット生成時に `--server` で�
 
 ## 1. ClinVar・MANEデータを取得
 
+通常はダウンロードスクリプトを実行します。
+
 ```bash
-mkdir -p sources/clinvar/2026-07-02
-
-curl -fL -o sources/clinvar/2026-07-02/variant_summary.txt.gz \
-  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz
-
-curl -fL -o sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
-  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/hgvs4variation.txt.gz
-
-mkdir -p sources/mane/1.5
-
-curl -fL -o sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
-  https://ftp.ncbi.nlm.nih.gov/refseq/MANE/MANE_human/release_1.5/MANE.GRCh38.v1.5.summary.txt.gz
+scripts/download_sources.sh
 ```
 
-ディレクトリ名とリリース引数には、実際に使用したClinVar・MANEリリースを指定します。
+リリースを変更する場合は、buildスクリプトと同じ環境変数を指定します。
+
+```bash
+CLINVAR_RELEASE=2026-07-02 \
+MANE_RELEASE=1.5 \
+scripts/download_sources.sh
+```
+
+既存ファイルは再利用します。再取得する場合は `FORCE_DOWNLOAD=1` を指定します。
+
+```bash
+FORCE_DOWNLOAD=1 scripts/download_sources.sh
+```
+
+ClinVarは公式のtab-delimited配布先、MANEは指定リリースの公式summaryから取得します。
+保存先は `CLINVAR_DIR`、`MANE_DIR`、または `SOURCES_DIR` で変更できます。
 
 ## 2. 約100件の正解セットを生成
 
@@ -201,6 +207,7 @@ python3 -m unittest discover -s tests -v
 - `TESTS.md` — テスト内容と検証範囲
 
 実装は `tools/`、ユニットテストとfixtureは `tests/` にあります。
-通常の正解セット生成は `scripts/build_truth_set.sh` から実行します。
+入力取得は `scripts/download_sources.sh`、正解セット生成は
+`scripts/build_truth_set.sh` から実行します。
 
 この正解セットは回帰試験用です。臨床判断には使用しないでください。
