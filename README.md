@@ -78,19 +78,41 @@ curl -fL -o sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
 
 ## 2. 約100件の正解セットを生成
 
+通常は実行スクリプトを使います。
+
 ```bash
-python3 tools/build_truth_set.py \
-  --variant-summary sources/clinvar/2026-07-02/variant_summary.txt.gz \
-  --hgvs4variation sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
-  --mane-summary sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
-  --clinvar-release 2026-07-02 \
-  --ensembl-release 116 \
-  --mane-release 1.5 \
-  --target-count 100 \
-  --cache build/variant-recoder-cache.jsonl \
-  --output truth/gold.jsonl \
-  --quarantine truth/quarantine.jsonl \
-  --report truth/build-report.json
+scripts/build_truth_set.sh
+```
+
+デフォルトはClinVar `2026-07-02`、Ensembl `116`、MANE `1.5`、目標100件です。
+異なるリリースや件数は環境変数で指定できます。
+
+```bash
+CLINVAR_RELEASE=2026-07-02 \
+ENSEMBL_RELEASE=116 \
+MANE_RELEASE=1.5 \
+TARGET_COUNT=100 \
+scripts/build_truth_set.sh
+```
+
+主な環境変数:
+
+| 変数 | デフォルト |
+|---|---|
+| `CLINVAR_RELEASE` | `2026-07-02` |
+| `ENSEMBL_RELEASE` | `116` |
+| `MANE_RELEASE` | `1.5` |
+| `TARGET_COUNT` | `100` |
+| `CANDIDATE_MULTIPLIER` | `3` |
+| `ENSEMBL_SERVER` | `https://rest.ensembl.org` |
+| `CLINVAR_DIR` | `sources/clinvar/$CLINVAR_RELEASE` |
+| `MANE_SUMMARY` | `sources/mane/$MANE_RELEASE/MANE.GRCh38.v$MANE_RELEASE.summary.txt.gz` |
+
+入力・出力パスは `VARIANT_SUMMARY`、`HGVS4VARIATION`、`TRUTH_DIR`、`BUILD_DIR`
+でも上書きできます。追加引数はPythonプログラムへ渡されます。
+
+```bash
+scripts/build_truth_set.sh --batch-size 50
 ```
 
 次の3形式をほぼ同数にし、各形式の中でも変異操作が偏らないよう抽出します。
@@ -119,8 +141,12 @@ goldへ採用します。
 | `truth/build-report.json` | 件数、カテゴリ分布、SHA-256、実行設定 |
 | `build/variant-recoder-cache.jsonl` | Variant Recoderの応答キャッシュ |
 
-保存済みキャッシュだけで再生成する場合は、同じコマンドに `--mode cache` を
+保存済みキャッシュだけで再生成する場合は、スクリプトに `--mode cache` を
 追加します。キャッシュミスは正解として採用されません。
+
+```bash
+scripts/build_truth_set.sh --mode cache
+```
 
 ## 3. HGVS→VCF APIを評価
 
@@ -175,5 +201,6 @@ python3 -m unittest discover -s tests -v
 - `TESTS.md` — テスト内容と検証範囲
 
 実装は `tools/`、ユニットテストとfixtureは `tests/` にあります。
+通常の正解セット生成は `scripts/build_truth_set.sh` から実行します。
 
 この正解セットは回帰試験用です。臨床判断には使用しないでください。
