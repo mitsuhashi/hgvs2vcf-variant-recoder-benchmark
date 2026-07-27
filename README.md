@@ -27,6 +27,22 @@ Variant Recoderが返す `vcf_string` を正解VCFへ変換します。
 Variant Recoderが解釈できないHGVSや、GRCh38主染色体のVCFを返さないケースは
 正解セットから除外し、quarantineへ記録します。
 
+## 利用する2つのAPI
+
+このツールでは、目的の異なる2つのAPIを使います。
+
+| API | URL | 用途 |
+|---|---|---|
+| Ensembl Variant Recoder | `https://rest.ensembl.org/variant_recoder/homo_sapiens` | 正解VCFの生成 |
+| 評価対象のHGVS→VCF API | `--base-url` で指定したURLの `/decode` | 正解セットとの比較 |
+
+Variant Recoderのデフォルトサーバーは `https://rest.ensembl.org` です。別のEnsembl
+RESTサーバーを使う場合は、正解セット生成時に `--server` で指定します。
+
+`http://localhost:4567` は、評価対象の `hgvs2vcf-cdot-lmdb` をローカルで起動した
+場合の例です。このレポジトリ自身はHGVS→VCF APIサーバーを起動しません。公開または
+別環境のサーバーを評価する場合は、`--base-url` を実際のURLへ変更してください。
+
 ## 必要なもの
 
 - Python 3.11以上（外部Pythonパッケージ不要）
@@ -87,7 +103,8 @@ python3 tools/build_truth_set.py \
 
 ## 3. HGVS→VCF APIを評価
 
-評価対象サーバーを起動してから実行します。
+評価対象の `hgvs2vcf-cdot-lmdb` サーバーを起動してから実行します。次は
+`http://localhost:4567` でローカル起動している場合の例です。
 
 ```bash
 python3 tools/evaluate_hgvs2vcf.py \
@@ -96,6 +113,9 @@ python3 tools/evaluate_hgvs2vcf.py \
   --json-report evaluation/result.json \
   --markdown-report evaluation/result.md
 ```
+
+`--base-url` には評価対象サーバーのURLを指定します。これはVariant RecoderのURL
+ではありません。
 
 `POST /decode` の結果について、次を比較します。
 
