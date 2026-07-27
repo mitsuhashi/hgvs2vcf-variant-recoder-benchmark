@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build a balanced HGVS -> GRCh38 VCF truth set using Ensembl Variant Recoder.
 
-ClinVar is used only as a large, reproducible source of transcript HGVS inputs.
-The expected VCF alleles come exclusively from Ensembl Variant Recoder.
+ClinVar is used only as a reproducible source for three input forms:
+GENE:p., GENE:c., and unversioned NM_:c.  Expected VCF alleles come
+exclusively from Ensembl Variant Recoder.
 """
 
 from __future__ import annotations
@@ -24,8 +25,9 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator
 
 
-SCHEMA_VERSION = "1.1"
+SCHEMA_VERSION = "1.2"
 DEFAULT_SERVER = "https://rest.ensembl.org"
+INPUT_KINDS = ("gene_hgvsp", "gene_hgvsc", "refseq_hgvsc")
 ACCESSION_TO_CHROM = {
     accession: str(index + 1)
     for index, accession in enumerate(
@@ -114,16 +116,49 @@ def expected_vcf_from_summary(row: dict[str, str]) -> dict[str, Any] | None:
     return {"chrom": contig, "pos": int(pos), "ref": ref.upper(), "alt": alt.upper()}
 
 
-def supported_hgvs_type(value: str) -> bool:
+def supported_transcript_hgvs_type(value: str) -> bool:
     lowered = value.lower()
     if any(token in lowered for token in ("non-validated", "uncertain", "previous", "other", "protein")):
         return False
     return "coding" in lowered or "non-coding" in lowered or "noncoding" in lowered
 
 
+def supported_protein_hgvs_type(value: str) -> bool:
+    lowered = value.lower()
+    if any(token in lowered for token in ("non-validated", "uncertain", "previous", "other")):
+        return False
+    return "protein" in lowered
+
+
+def valid_gene_symbol(value: str) -> bool:
+    return bool(value and value != "-" and re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", value))
+
+
+def load_mane_select(path: Path) -> dict[str, dict[str, str]]:
+    """Load one pinned MANE summary and index MANE Select rows by gene symbol."""
+    result: dict[str, dict[str, str]] = {}
+    for row in read_tsv(path):
+        if first(row, "MANE_status", "MANE status") != "MANE Select":
+            continue
+        symbol = first(row, "symbol", "GeneSymbol")
+        refseq_nuc = first(row, "RefSeq_nuc")
+        refseq_prot = first(row, "RefSeq_prot")
+        ensembl_nuc = first(row, "Ensembl_nuc")
+        if not valid_gene_symbol(symbol) or not refseq_nuc:
+            continue
+        result[symbol] = {
+            "refseq_nuc": refseq_nuc,
+            "refseq_prot": refseq_prot,
+            "ensembl_nuc": ensembl_nuc,
+        }
+    return result
+
+
 def category(hgvs: str) -> str:
     body = hgvs.split(":", 1)[-1]
-    if body.startswith("n."):
+    if body.startswith("p."):
+        context = "protein"
+    elif body.startswith("n."):
         context = "noncoding"
     elif re.search(r"(?:c|n)\.(?:\*|-)", body):
         context = "utr"
@@ -139,17 +174,24 @@ def category(hgvs: str) -> str:
         operation = "ins"
     elif "del" in body:
         operation = "del"
-    elif ">" in body:
+    elif ">" in body or (
+        body.startswith("p.") and re.search(r"p\.[A-Za-z*]{3}\d+[A-Za-z*]{3}", body)
+    ):
         operation = "substitution"
     else:
         operation = "other"
     return f"{context}_{operation}"
 
 
-def load_candidates(variant_summary: Path, hgvs_file: Path) -> tuple[list[dict[str, Any]], Counter]:
-    """Join pinned ClinVar tables to obtain diverse, versioned HGVS inputs."""
+def load_candidates(
+    variant_summary: Path,
+    hgvs_file: Path,
+    mane_summary: Path,
+) -> tuple[list[dict[str, Any]], Counter]:
+    """Join ClinVar tables and derive the three supported Variant Recoder inputs."""
+    mane_select = load_mane_select(mane_summary)
     locations: dict[str, dict[str, Any]] = {}
-    stats: Counter = Counter()
+    stats: Counter = Counter({"mane_select_genes": len(mane_select)})
     for row in read_tsv(variant_summary):
         stats["variant_summary_rows"] += 1
         variation_id = first(row, "VariationID")
@@ -166,7 +208,8 @@ def load_candidates(variant_summary: Path, hgvs_file: Path) -> tuple[list[dict[s
             "variant_type": first(row, "Type"),
         }
 
-    expressions: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    transcript_expressions: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    protein_expressions: dict[str, list[tuple[str, str]]] = defaultdict(list)
     genomic: dict[str, set[str]] = defaultdict(set)
     for row in read_tsv(hgvs_file):
         stats["hgvs_rows"] += 1
@@ -177,14 +220,19 @@ def load_candidates(variant_summary: Path, hgvs_file: Path) -> tuple[list[dict[s
             continue
         if re.match(r"^NC_\d+\.\d+:g\.", nucleotide):
             genomic[variation_id].add(nucleotide)
-        if supported_hgvs_type(hgvs_type) and re.match(
+        if supported_transcript_hgvs_type(hgvs_type) and re.match(
             r"^(?:NM_|NR_|ENST)\d+\.\d+:[cn]\.", nucleotide
         ):
-            expressions[variation_id].append((nucleotide, hgvs_type))
+            transcript_expressions[variation_id].append((nucleotide, hgvs_type))
+        if supported_protein_hgvs_type(hgvs_type) and re.match(
+            r"^(?:NP_|ENSP)\d+\.\d+:p\.", nucleotide
+        ):
+            protein_expressions[variation_id].append((nucleotide, hgvs_type))
 
     candidates: list[dict[str, Any]] = []
     seen_inputs: set[str] = set()
-    for variation_id, values in expressions.items():
+    variation_ids = dict.fromkeys([*transcript_expressions, *protein_expressions])
+    for variation_id in variation_ids:
         location = locations.get(variation_id)
         if not location or location.get("conflicting_location"):
             continue
@@ -193,9 +241,35 @@ def load_candidates(variant_summary: Path, hgvs_file: Path) -> tuple[list[dict[s
             if value.startswith(location["vcf"]["chrom"] + ":g.")
         }
         if not matching_genomic:
-            stats["rejected_missing_genomic_hgvs"] += len(values)
+            stats["rejected_missing_genomic_hgvs"] += (
+                len(transcript_expressions[variation_id]) + len(protein_expressions[variation_id])
+            )
             continue
-        for hgvs, hgvs_type in values:
+
+        derived: list[tuple[str, str, str, str]] = []
+        gene = location["gene"]
+        mane = mane_select.get(gene)
+        for source_hgvs, hgvs_type in transcript_expressions[variation_id]:
+            accession, body = source_hgvs.split(":", 1)
+            if body.startswith("c.") and mane and accession == mane["refseq_nuc"]:
+                derived.append((f"{gene}:{body}", "gene_hgvsc", source_hgvs, hgvs_type))
+            unversioned = re.fullmatch(r"(NM_\d+)\.\d+:(c\..+)", source_hgvs)
+            if unversioned:
+                derived.append(
+                    (
+                        f"{unversioned.group(1)}:{unversioned.group(2)}",
+                        "refseq_hgvsc",
+                        source_hgvs,
+                        hgvs_type,
+                    )
+                )
+        if mane and mane["refseq_prot"]:
+            for source_hgvs, hgvs_type in protein_expressions[variation_id]:
+                accession, body = source_hgvs.split(":", 1)
+                if accession == mane["refseq_prot"]:
+                    derived.append((f"{gene}:{body}", "gene_hgvsp", source_hgvs, hgvs_type))
+
+        for hgvs, input_kind, source_hgvs, hgvs_type in derived:
             if hgvs in seen_inputs:
                 stats["rejected_duplicate_input"] += 1
                 continue
@@ -204,6 +278,10 @@ def load_candidates(variant_summary: Path, hgvs_file: Path) -> tuple[list[dict[s
                 {
                     "variation_id": variation_id,
                     "input": hgvs,
+                    "input_kind": input_kind,
+                    "source_clinvar_hgvs": source_hgvs,
+                    "oracle_hgvs": source_hgvs if input_kind.startswith("gene_") else hgvs,
+                    "mane_select": mane if input_kind.startswith("gene_") else None,
                     "hgvs_type": hgvs_type,
                     "genomic_hgvs": matching_genomic,
                     **location,
@@ -211,27 +289,48 @@ def load_candidates(variant_summary: Path, hgvs_file: Path) -> tuple[list[dict[s
                 }
             )
     stats["candidates"] = len(candidates)
+    input_kind_counts = Counter(candidate["input_kind"] for candidate in candidates)
+    for name in INPUT_KINDS:
+        stats[f"candidates_{name}"] = input_kind_counts[name]
     return candidates, stats
 
 
 def balanced_order(candidates: list[dict[str, Any]], seed: int) -> list[dict[str, Any]]:
-    """Return a deterministic round-robin order across all non-empty categories."""
-    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    """Balance input forms first, then variant categories within each form."""
+    input_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for candidate in candidates:
-        groups[candidate["category"]].append(candidate)
+        input_groups[candidate.get("input_kind", "")].append(candidate)
     rng = random.Random(seed)
-    for values in groups.values():
-        values.sort(key=lambda value: (int(value["variation_id"]), value["input"]))
-        rng.shuffle(values)
 
+    def order_categories(values: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        category_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for value in values:
+            category_groups[value["category"]].append(value)
+        for category_values in category_groups.values():
+            category_values.sort(key=lambda value: (int(value["variation_id"]), value["input"]))
+            rng.shuffle(category_values)
+        ordered: list[dict[str, Any]] = []
+        offsets = {name: 0 for name in category_groups}
+        while True:
+            added = False
+            for name in sorted(category_groups):
+                offset = offsets[name]
+                if offset < len(category_groups[name]):
+                    ordered.append(category_groups[name][offset])
+                    offsets[name] += 1
+                    added = True
+            if not added:
+                return ordered
+
+    queues = {name: order_categories(values) for name, values in input_groups.items()}
     result: list[dict[str, Any]] = []
-    offsets = {name: 0 for name in groups}
+    offsets = {name: 0 for name in queues}
     while True:
         added = False
-        for name in sorted(groups):
+        for name in sorted(queues):
             offset = offsets[name]
-            if offset < len(groups[name]):
-                result.append(groups[name][offset])
+            if offset < len(queues[name]):
+                result.append(queues[name][offset])
                 offsets[name] += 1
                 added = True
         if not added:
@@ -325,7 +424,7 @@ def fetch_recoder(
     cache: ResponseCache,
     mode: str,
 ) -> dict[str, Any]:
-    query = urllib.parse.urlencode({"vcf_string": 1, "fields": "hgvsg,hgvsc,spdi"})
+    query = urllib.parse.urlencode({"vcf_string": 1, "fields": "hgvsg,hgvsc,hgvsp,spdi"})
     url = f"{server.rstrip('/')}/variant_recoder/{urllib.parse.quote(species)}?{query}"
     result: dict[str, Any] = {}
     missing: list[str] = []
@@ -391,6 +490,21 @@ def iter_vcf_strings(value: Any) -> Iterator[str]:
             yield from iter_vcf_strings(child)
 
 
+def iter_named_strings(value: Any, field: str) -> Iterator[str]:
+    if isinstance(value, dict):
+        raw = value.get(field)
+        if isinstance(raw, str):
+            yield raw
+        elif isinstance(raw, list):
+            yield from (item for item in raw if isinstance(item, str))
+        for key, child in value.items():
+            if key != field:
+                yield from iter_named_strings(child, field)
+    elif isinstance(value, list):
+        for child in value:
+            yield from iter_named_strings(child, field)
+
+
 def parse_vcf_string(value: str) -> dict[str, Any] | None:
     """Parse both VEP's CHROM-POS-REF-ALT form and ordinary VCF columns."""
     fields = value.strip().split()
@@ -429,18 +543,47 @@ def write_jsonl(path: Path, records: Iterable[dict[str, Any]]) -> None:
             handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
 
 
-def make_record(candidate: dict[str, Any], response: Any, source: dict[str, Any]) -> dict[str, Any]:
-    alleles, invalid_vcf = extract_recoder_vcf(response)
-    error = None if alleles else "no_parseable_primary_assembly_vcf"
+def resolved_refseq_transcript(candidate: dict[str, Any], response: Any) -> str | None:
+    if candidate["input_kind"].startswith("gene_"):
+        mane = candidate["mane_select"]
+        return mane["refseq_nuc"] if mane else None
+    accession, _ = candidate["input"].split(":", 1)
+    pattern = re.compile(rf"^{re.escape(accession)}\.\d+:")
+    matches = sorted(value for value in iter_named_strings(response, "hgvsc") if pattern.match(value))
+    return matches[0].split(":", 1)[0] if matches else None
+
+
+def make_record(
+    candidate: dict[str, Any],
+    input_response: Any,
+    oracle_response: Any,
+    source: dict[str, Any],
+) -> dict[str, Any]:
+    input_alleles, input_invalid_vcf = extract_recoder_vcf(input_response)
+    alleles, invalid_vcf = extract_recoder_vcf(oracle_response)
+    error = None
+    if not input_alleles:
+        error = "input_has_no_parseable_primary_assembly_vcf"
+    elif not alleles:
+        error = "mane_or_refseq_has_no_parseable_primary_assembly_vcf"
+    elif candidate["input_kind"].startswith("gene_"):
+        input_keys = {vcf_key(value) for value in input_alleles}
+        oracle_keys = {vcf_key(value) for value in alleles}
+        if not oracle_keys.issubset(input_keys):
+            error = "mane_vcf_not_returned_for_gene_input"
+    transcript = resolved_refseq_transcript(candidate, oracle_response)
+    if not error and not transcript:
+        error = "resolved_transcript_not_found"
     return {
         "schema_version": SCHEMA_VERSION,
         "id": f"ensembl-vr-{candidate['variation_id']}-{hashlib.sha1(candidate['input'].encode()).hexdigest()[:10]}",
         "input": candidate["input"],
+        "input_kind": candidate["input_kind"],
         "assembly": "GRCh38",
         "category": candidate["category"],
         "expected": {
-            "transcript": candidate["input"].split(":", 1)[0],
-            "gene": None,
+            "transcript": transcript,
+            "gene": candidate["gene"] if candidate["input_kind"].startswith("gene_") else None,
             "vcf": alleles,
             "ambiguous": len(alleles) > 1,
         },
@@ -451,7 +594,13 @@ def make_record(candidate: dict[str, Any], response: Any, source: dict[str, Any]
             "allele_id": candidate["allele_id"],
             "candidate_gene": candidate["gene"] or None,
             "clinvar_hgvs_type": candidate["hgvs_type"],
-            "variant_recoder_response_sha256": json_hash(response),
+            "input_kind": candidate["input_kind"],
+            "clinvar_source_hgvs": candidate["source_clinvar_hgvs"],
+            "oracle_hgvs": candidate["oracle_hgvs"],
+            "mane_select": candidate["mane_select"],
+            "variant_recoder_response_sha256": json_hash(input_response),
+            "variant_recoder_oracle_response_sha256": json_hash(oracle_response),
+            "input_invalid_vcf_strings": input_invalid_vcf,
             "invalid_vcf_strings": invalid_vcf,
             "error": error,
         },
@@ -460,8 +609,9 @@ def make_record(candidate: dict[str, Any], response: Any, source: dict[str, Any]
 
 def choose_final(records: list[dict[str, Any]], target_count: int, seed: int) -> list[dict[str, Any]]:
     candidates = [
-        {"category": record["category"], "variation_id": record["provenance"]["variation_id"],
-         "input": record["input"], "record": record}
+        {"category": record["category"], "input_kind": record["input_kind"],
+         "variation_id": record["provenance"]["variation_id"], "input": record["input"],
+         "record": record}
         for record in records if record["confidence"] == "ensembl_variant_recoder"
     ]
     return [value["record"] for value in balanced_order(candidates, seed)[:target_count]]
@@ -471,11 +621,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant-summary", type=Path, required=True)
     parser.add_argument("--hgvs4variation", type=Path, required=True)
+    parser.add_argument("--mane-summary", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--quarantine", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--clinvar-release", "--release", dest="clinvar_release", required=True)
     parser.add_argument("--ensembl-release", required=True, help="Release label recorded for reproducibility")
+    parser.add_argument("--mane-release", required=True, help="Pinned MANE release used for gene-symbol inputs")
     parser.add_argument("--server", default=DEFAULT_SERVER, help="Use an Ensembl archive REST URL to pin results")
     parser.add_argument("--species", default="homo_sapiens")
     parser.add_argument("--target-count", type=int, default=100)
@@ -497,12 +649,16 @@ def main() -> int:
         print("--batch-size must be between 1 and the Ensembl POST limit of 200", file=sys.stderr)
         return 2
 
-    candidates, stats = load_candidates(args.variant_summary, args.hgvs4variation)
+    candidates, stats = load_candidates(args.variant_summary, args.hgvs4variation, args.mane_summary)
     attempted = balanced_order(candidates, args.seed)[: args.target_count * args.candidate_multiplier]
+    query_inputs = list(dict.fromkeys(
+        [candidate["input"] for candidate in attempted]
+        + [candidate["oracle_hgvs"] for candidate in attempted]
+    ))
     cache = ResponseCache(args.cache)
     try:
         responses = fetch_recoder(
-            [candidate["input"] for candidate in attempted],
+            query_inputs,
             args.server,
             args.species,
             args.batch_size,
@@ -518,12 +674,26 @@ def main() -> int:
         "oracle": "Ensembl Variant Recoder",
         "ensembl_release": args.ensembl_release,
         "variant_recoder_server": args.server,
-        "variant_recoder_options": {"species": args.species, "vcf_string": 1, "fields": "hgvsg,hgvsc,spdi"},
+        "variant_recoder_options": {
+            "species": args.species,
+            "vcf_string": 1,
+            "fields": "hgvsg,hgvsc,hgvsp,spdi",
+        },
         "clinvar_release": args.clinvar_release,
+        "mane_release": args.mane_release,
         "variant_summary_sha256": sha256(args.variant_summary),
         "hgvs4variation_sha256": sha256(args.hgvs4variation),
+        "mane_summary_sha256": sha256(args.mane_summary),
     }
-    processed = [make_record(candidate, responses[candidate["input"]], source) for candidate in attempted]
+    processed = [
+        make_record(
+            candidate,
+            responses[candidate["input"]],
+            responses[candidate["oracle_hgvs"]],
+            source,
+        )
+        for candidate in attempted
+    ]
     gold = choose_final(processed, args.target_count, args.seed)
     gold_ids = {record["id"] for record in gold}
     quarantined = [
@@ -539,6 +709,7 @@ def main() -> int:
         "configuration": {
             "target_count": args.target_count,
             "candidate_multiplier": args.candidate_multiplier,
+            "input_kinds": list(INPUT_KINDS),
             "seed": args.seed,
             "mode": args.mode,
             "batch_size": args.batch_size,
@@ -546,9 +717,11 @@ def main() -> int:
         "counts": {
             **stats,
             "attempted": len(attempted),
+            "variant_recoder_queries": len(query_inputs),
             "recoder_accepted": sum(record["confidence"] == "ensembl_variant_recoder" for record in processed),
             "written": len(gold),
             "quarantined": len(quarantined),
+            "written_by_input_kind": dict(Counter(record["input_kind"] for record in gold)),
             "written_by_category": dict(Counter(record["category"] for record in gold)),
         },
     }

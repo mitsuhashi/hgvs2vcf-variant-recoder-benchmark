@@ -25,28 +25,44 @@ evaluator = load("truth_evaluator", "tools/evaluate_hgvs2vcf.py")
 
 
 class BuildTruthSetTests(unittest.TestCase):
-    def test_fixture_join_and_filter(self):
-        candidates, stats = builder.load_candidates(
+    def load_fixture_candidates(self):
+        return builder.load_candidates(
             ROOT / "tests/fixtures/variant_summary.txt",
             ROOT / "tests/fixtures/hgvs4variation.txt",
+            ROOT / "tests/fixtures/mane_summary.txt",
         )
-        self.assertEqual(1, len(candidates))
-        case = candidates[0]
-        self.assertEqual("NM_000603.4:c.894T>G", case["input"])
-        self.assertEqual(
-            ("NC_000007.14", 150999023, "T", "G"),
-            builder.vcf_key(case["vcf"]),
-        )
-        self.assertEqual({"NC_000007.14:g.150999023T>G"}, case["genomic_hgvs"])
-        self.assertEqual("coding_substitution", case["category"])
-        self.assertEqual(1, stats["candidates"])
 
-    def test_protein_and_old_build_are_not_candidates(self):
-        candidates, _ = builder.load_candidates(
-            ROOT / "tests/fixtures/variant_summary.txt",
-            ROOT / "tests/fixtures/hgvs4variation.txt",
+    def test_fixture_join_and_filter(self):
+        candidates, stats = self.load_fixture_candidates()
+        self.assertEqual(
+            {
+                "NOS3:p.Asp298Glu": "gene_hgvsp",
+                "NOS3:c.894T>G": "gene_hgvsc",
+                "NM_000603:c.894T>G": "refseq_hgvsc",
+            },
+            {case["input"]: case["input_kind"] for case in candidates},
         )
-        self.assertTrue(all(":p." not in case["input"] for case in candidates))
+        for case in candidates:
+            self.assertEqual(
+                ("NC_000007.14", 150999023, "T", "G"),
+                builder.vcf_key(case["vcf"]),
+            )
+            self.assertEqual({"NC_000007.14:g.150999023T>G"}, case["genomic_hgvs"])
+        self.assertEqual("protein_substitution", next(
+            case["category"] for case in candidates if case["input_kind"] == "gene_hgvsp"
+        ))
+        self.assertEqual(3, stats["candidates"])
+        self.assertEqual(1, stats["candidates_gene_hgvsp"])
+        self.assertEqual(1, stats["candidates_gene_hgvsc"])
+        self.assertEqual(1, stats["candidates_refseq_hgvsc"])
+
+    def test_inputs_use_mane_and_old_build_is_excluded(self):
+        candidates, _ = self.load_fixture_candidates()
+        self.assertTrue(all(not case["input"].startswith(("NP_", "NM_000603.4")) for case in candidates))
+        self.assertTrue(all(
+            case["mane_select"]["refseq_nuc"] == "NM_000603.4"
+            for case in candidates if case["input_kind"].startswith("gene_")
+        ))
         self.assertTrue(all(case["vcf"]["chrom"] != "NC_000007.13" for case in candidates))
 
     def test_parse_variant_recoder_vcf_formats(self):
@@ -86,14 +102,71 @@ class BuildTruthSetTests(unittest.TestCase):
 
     def test_balanced_order_round_robins_categories(self):
         candidates = [
-            {"category": "a", "variation_id": str(index), "input": f"a{index}"}
+            {"input_kind": "one", "category": "a", "variation_id": str(index), "input": f"a{index}"}
             for index in range(4)
         ] + [
-            {"category": "b", "variation_id": str(index + 10), "input": f"b{index}"}
+            {"input_kind": "two", "category": "b", "variation_id": str(index + 10), "input": f"b{index}"}
             for index in range(4)
         ]
         ordered = builder.balanced_order(candidates, seed=1)
-        self.assertEqual(["a", "b", "a", "b"], [value["category"] for value in ordered[:4]])
+        self.assertEqual(["one", "two", "one", "two"], [value["input_kind"] for value in ordered[:4]])
+
+    def test_gene_record_uses_only_mane_vcf(self):
+        candidates, _ = self.load_fixture_candidates()
+        candidate = next(case for case in candidates if case["input_kind"] == "gene_hgvsc")
+        input_response = [{
+            "G": {
+                "input": candidate["input"],
+                "vcf_string": ["7-150999023-T-G", "7-150999024-A-C"],
+            }
+        }]
+        mane_response = [{
+            "G": {
+                "input": candidate["oracle_hgvs"],
+                "vcf_string": ["7-150999023-T-G"],
+                "hgvsc": ["NM_000603.4:c.894T>G"],
+            }
+        }]
+        record = builder.make_record(candidate, input_response, mane_response, {"oracle": "test"})
+        self.assertEqual("NM_000603.4", record["expected"]["transcript"])
+        self.assertEqual("NOS3", record["expected"]["gene"])
+        self.assertEqual(
+            [("NC_000007.14", 150999023, "T", "G")],
+            [builder.vcf_key(value) for value in record["expected"]["vcf"]],
+        )
+        self.assertFalse(record["expected"]["ambiguous"])
+        self.assertEqual("ensembl_variant_recoder", record["confidence"])
+
+    def test_gene_record_rejects_mane_vcf_missing_from_gene_response(self):
+        candidates, _ = self.load_fixture_candidates()
+        candidate = next(case for case in candidates if case["input_kind"] == "gene_hgvsc")
+        input_response = [{
+            "G": {"input": candidate["input"], "vcf_string": ["7-150999024-A-C"]}
+        }]
+        mane_response = [{
+            "G": {
+                "input": candidate["oracle_hgvs"],
+                "vcf_string": ["7-150999023-T-G"],
+                "hgvsc": ["NM_000603.4:c.894T>G"],
+            }
+        }]
+        record = builder.make_record(candidate, input_response, mane_response, {"oracle": "test"})
+        self.assertEqual("quarantined", record["confidence"])
+        self.assertEqual("mane_vcf_not_returned_for_gene_input", record["provenance"]["error"])
+
+    def test_unversioned_refseq_resolves_version_from_recoder(self):
+        candidates, _ = self.load_fixture_candidates()
+        candidate = next(case for case in candidates if case["input_kind"] == "refseq_hgvsc")
+        response = [{
+            "G": {
+                "input": candidate["input"],
+                "vcf_string": ["7-150999023-T-G"],
+                "hgvsc": ["NM_000603.4:c.895T>G"],
+            }
+        }]
+        record = builder.make_record(candidate, response, response, {"oracle": "test"})
+        self.assertEqual("NM_000603.4", record["expected"]["transcript"])
+        self.assertEqual("ensembl_variant_recoder", record["confidence"])
 
     def test_fetch_recoder_uses_post_and_associates_echoed_input(self):
         class FakeResponse(io.BytesIO):

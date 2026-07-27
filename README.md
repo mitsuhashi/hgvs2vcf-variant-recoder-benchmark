@@ -5,10 +5,12 @@ Ensembl Variant Recoderを正解として、HGVS→GRCh38 VCF変換を評価す�
 ## 全体の流れ
 
 ```text
-ClinVar
-  │ バージョン付きtranscript HGVSを収集
+ClinVar（HGVS・gene symbol） ─┐
+                              ├─ 入力候補を生成
+MANE Select（代表transcript）─┘
+  │
   ▼
-位置と変異操作で分類し、偏りなく抽出
+3つの入力形式と変異操作で分類し、偏りなく抽出
   ▼
 Ensembl Variant Recoder
   │ HGVSを変換
@@ -22,7 +24,9 @@ Ensembl Variant Recoder
 ```
 
 ClinVarはHGVS入力候補の収集にだけ使います。ClinVarの座標やREF/ALTは正解にせず、
-Variant Recoderが返す `vcf_string` を正解VCFへ変換します。
+Variant Recoderが返す `vcf_string` を正解VCFへ変換します。gene symbolを
+リファレンスにする場合は、固定したMANE SelectのRefSeq transcript/proteinに限定
+して正解を決めます。
 
 Variant Recoderが解釈できないHGVSや、GRCh38主染色体のVCFを返さないケースは
 正解セットから除外し、quarantineへ記録します。
@@ -50,8 +54,10 @@ RESTサーバーを使う場合は、正解セット生成時に `--server` で�
 - 同一ClinVarリリースの次のファイル
   - `variant_summary.txt.gz`
   - `hgvs4variation.txt.gz`
+- MANE summary
+  - `MANE.GRCh38.v1.5.summary.txt.gz`
 
-## 1. ClinVarデータを取得
+## 1. ClinVar・MANEデータを取得
 
 ```bash
 mkdir -p sources/clinvar/2026-07-02
@@ -61,9 +67,14 @@ curl -fL -o sources/clinvar/2026-07-02/variant_summary.txt.gz \
 
 curl -fL -o sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
   https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/hgvs4variation.txt.gz
+
+mkdir -p sources/mane/1.5
+
+curl -fL -o sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
+  https://ftp.ncbi.nlm.nih.gov/refseq/MANE/MANE_human/release_1.5/MANE.GRCh38.v1.5.summary.txt.gz
 ```
 
-ディレクトリ名と `--clinvar-release` には、実際に使用したリリース日を指定します。
+ディレクトリ名とリリース引数には、実際に使用したClinVar・MANEリリースを指定します。
 
 ## 2. 約100件の正解セットを生成
 
@@ -71,8 +82,10 @@ curl -fL -o sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
 python3 tools/build_truth_set.py \
   --variant-summary sources/clinvar/2026-07-02/variant_summary.txt.gz \
   --hgvs4variation sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
+  --mane-summary sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
   --clinvar-release 2026-07-02 \
   --ensembl-release 116 \
+  --mane-release 1.5 \
   --target-count 100 \
   --cache build/variant-recoder-cache.jsonl \
   --output truth/gold.jsonl \
@@ -80,12 +93,20 @@ python3 tools/build_truth_set.py \
   --report truth/build-report.json
 ```
 
-候補は次の2軸で分類し、存在するカテゴリからラウンドロビンで抽出します。
+次の3形式をほぼ同数にし、各形式の中でも変異操作が偏らないよう抽出します。
 
-- 位置: coding、intronic、UTR、non-coding transcript
-- 操作: substitution、deletion、insertion、duplication、delins
+| 入力形式 | 例 | transcriptの決定 |
+|---|---|---|
+| gene symbol HGVSp | `ALDH2:p.Glu504Lys` | MANE Select |
+| gene symbol HGVSc | `ALDH2:c.1510G>A` | MANE Select |
+| versionなしRefSeq HGVSc | `NM_000690:c.1510G>A` | Variant Recoderの解決結果 |
 
-固定seedを使うため、同じClinVarファイルとVariant Recoder応答から同じセットを
+gene symbol形式は、ClinVar HGVSのaccessionがMANE summaryの `RefSeq_nuc` または
+`RefSeq_prot` と一致する場合だけ生成します。Variant Recoderへgene symbol表記と
+MANE表記の両方を問い合わせ、MANE由来VCFがgene symbolの結果に含まれる場合だけ
+goldへ採用します。
+
+固定seedを使うため、同じClinVar・MANEファイルとVariant Recoder応答から同じセットを
 再生成できます。100件に届かない場合は `--candidate-multiplier 5` のように、
 問い合わせる候補数を増やします（デフォルトは目標数の3倍）。
 
@@ -131,7 +152,7 @@ python3 tools/evaluate_hgvs2vcf.py \
 Ensembl REST APIの内容はリリースとともに更新されます。同じ正解セットを再構築
 できるよう、以下を保存してください。
 
-- 2つのClinVar入力ファイル
+- 2つのClinVar入力ファイルとMANE summary
 - Variant Recoder応答キャッシュ
 - `truth/gold.jsonl`
 - `truth/build-report.json`

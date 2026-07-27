@@ -1,30 +1,40 @@
 # Ensembl Variant RecoderによるHGVS→VCF正解セット
 
 このプロジェクトでは、Ensembl Variant Recoderの返却値をHGVS→GRCh38 VCF変換の
-正解とする。ClinVarは入力候補を多数集めるためだけに使い、ClinVarの座標は正解値へ
-コピーしない。
+正解とする。ClinVarは入力候補を集めるためだけに使い、ClinVarの座標は正解値へ
+コピーしない。gene symbol表記では、固定したMANE Selectを代表transcriptとする。
 
 ## 生成内容
 
 `tools/build_truth_set.py` は次を行う。
 
 1. 同一リリースのClinVar `variant_summary.txt.gz` と
-   `hgvs4variation.txt.gz` を結合し、バージョン付きの `NM_`、`NR_`、`ENST`
-   transcript HGVSを候補にする。
-2. coding/non-coding/UTR/intronic と substitution/del/ins/dup/delins の
-   組み合わせで候補を分類し、固定seedでラウンドロビンに並べる。
-3. Ensembl REST APIの `POST /variant_recoder/homo_sapiens` を最大200件ずつ呼び、
+   `hgvs4variation.txt.gz` を結合し、version付きRefSeq HGVSとgene symbolを得る。
+2. 固定したMANE summaryの `MANE Select` 行をgene symbolへ対応付ける。
+3. 次の3形式を生成する。
+   - `GENE:p.` — MANE Selectの `RefSeq_prot` と一致するprotein HGVSから生成
+   - `GENE:c.` — MANE Selectの `RefSeq_nuc` と一致するtranscript HGVSから生成
+   - versionなし `NM_:c.` — version付き `NM_:c.` から生成
+4. 入力形式をほぼ同数にし、各形式内でも変異操作が偏らないよう固定seedで並べる。
+5. Ensembl REST APIの `POST /variant_recoder/homo_sapiens` を最大200件ずつ呼び、
    `vcf_string=1` の結果を取得する。
-4. GRCh38の主染色体（1–22、X、Y、MT）のVCFだけをRefSeq accessionへ変換する。
-5. Variant Recoderが有効なVCFを返したケースから再度均等に100件を選ぶ。
+6. GRCh38の主染色体（1–22、X、Y、MT）のVCFだけをRefSeq accessionへ変換する。
+7. Variant Recoderが有効なVCFを返したケースから再度均等に100件を選ぶ。
 
-複数アレルまたは複数座標が返った場合はすべてを `expected.vcf` に含め、
-`expected.ambiguous` を `true` にする。VCFを解釈できない候補はgoldに入れず、
+gene symbol入力は複数transcriptへ解決され得るため、次の二段階で正解を限定する。
+
+1. gene symbol表記をVariant Recoderへ入力し、解釈できることを確認する。
+2. 対応するMANE Selectのversion付きRefSeq HGVSもVariant Recoderへ入力する。
+3. MANE由来VCFがgene symbol表記の返却VCFに含まれる場合、MANE由来VCFだけを正解にする。
+
+versionなし `NM_:c.` の期待transcriptは、Variant Recoder応答のversion付き `hgvsc`
+から決定する。MANE表記が複数アレルを返した場合はすべてを `expected.vcf` に含め、
+`expected.ambiguous` を `true` にする。不一致や解釈不能はgoldに入れず、
 `quarantine.jsonl` に理由と応答SHA-256を記録する。
 
 ## 入力データの固定
 
-同じClinVarリリースの2ファイルを保存し、リリース名をコマンドへ渡す。
+同じClinVarリリースの2ファイルと、固定したMANE summaryを保存する。
 
 ```bash
 mkdir -p sources/clinvar/2026-07-02
@@ -32,9 +42,12 @@ curl -fL -o sources/clinvar/2026-07-02/variant_summary.txt.gz \
   https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz
 curl -fL -o sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
   https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/hgvs4variation.txt.gz
+mkdir -p sources/mane/1.5
+curl -fL -o sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
+  https://ftp.ncbi.nlm.nih.gov/refseq/MANE/MANE_human/release_1.5/MANE.GRCh38.v1.5.summary.txt.gz
 ```
 
-生成レポートには両ファイルのSHA-256、ClinVarリリース、Ensemblリリース、
+生成レポートには3ファイルのSHA-256、ClinVar・MANE・Ensemblリリース、
 Variant RecoderのURLとオプションが入る。`rest.ensembl.org` は更新されるため、
 完全な再現性が必要な場合は、対象リリースのEnsembl archive REST URLを
 `--server` に指定する。
@@ -45,8 +58,10 @@ Variant RecoderのURLとオプションが入る。`rest.ensembl.org` は更新�
 python3 tools/build_truth_set.py \
   --variant-summary sources/clinvar/2026-07-02/variant_summary.txt.gz \
   --hgvs4variation sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
+  --mane-summary sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
   --clinvar-release 2026-07-02 \
   --ensembl-release 116 \
+  --mane-release 1.5 \
   --target-count 100 \
   --cache build/variant-recoder-cache.jsonl \
   --output truth/gold.jsonl \
@@ -69,8 +84,10 @@ EnsemblのPOST上限は200件であり、`--batch-size` は1–200に制限さ�
 python3 tools/build_truth_set.py \
   --variant-summary sources/clinvar/2026-07-02/variant_summary.txt.gz \
   --hgvs4variation sources/clinvar/2026-07-02/hgvs4variation.txt.gz \
+  --mane-summary sources/mane/1.5/MANE.GRCh38.v1.5.summary.txt.gz \
   --clinvar-release 2026-07-02 \
   --ensembl-release 116 \
+  --mane-release 1.5 \
   --mode cache \
   --cache build/variant-recoder-cache.jsonl \
   --output truth/gold.jsonl \
