@@ -66,7 +66,7 @@ def normalized_vcf(rows: Iterable[dict[str, Any]]) -> list[tuple[str, int, str, 
     return sorted(values)
 
 
-def compare_case(case: dict[str, Any], observed: dict[str, Any], check_gene: bool) -> dict[str, Any]:
+def compare_case(case: dict[str, Any], observed: dict[str, Any]) -> dict[str, Any]:
     expected = case["expected"]
     differences: dict[str, Any] = {}
     if "error" in expected:
@@ -79,18 +79,6 @@ def compare_case(case: dict[str, Any], observed: dict[str, Any], check_gene: boo
         observed_vcf = normalized_vcf(observed.get("vcf", []))
         if expected_vcf != observed_vcf:
             differences["vcf"] = {"expected": expected_vcf, "observed": observed_vcf}
-        if expected.get("transcript") is not None and expected["transcript"] != observed.get("transcript"):
-            differences["transcript"] = {
-                "expected": expected["transcript"],
-                "observed": observed.get("transcript"),
-            }
-        if "ambiguous" in expected and bool(expected["ambiguous"]) != bool(observed.get("ambiguous")):
-            differences["ambiguous"] = {
-                "expected": bool(expected["ambiguous"]),
-                "observed": bool(observed.get("ambiguous")),
-            }
-        if check_gene and expected.get("gene") is not None and expected["gene"] != observed.get("gene"):
-            differences["gene"] = {"expected": expected["gene"], "observed": observed.get("gene")}
     return {
         "id": case["id"],
         "input": case["input"],
@@ -98,6 +86,25 @@ def compare_case(case: dict[str, Any], observed: dict[str, Any], check_gene: boo
         "passed": not differences,
         "differences": differences,
         "observed": observed,
+    }
+
+
+def summarize_results(results: list[dict[str, Any]], elapsed_seconds: float) -> dict[str, Any]:
+    passed = sum(result["passed"] for result in results)
+    category_counts: dict[str, Counter] = {}
+    for result in results:
+        counts = category_counts.setdefault(result["category"], Counter())
+        counts["passed" if result["passed"] else "failed"] += 1
+    return {
+        "total": len(results),
+        "passed": passed,
+        "failed": len(results) - passed,
+        "pass_rate": passed / len(results) if results else 0.0,
+        "elapsed_seconds": elapsed_seconds,
+        "by_category": {
+            name: {"passed": counts["passed"], "failed": counts["failed"]}
+            for name, counts in category_counts.items()
+        },
     }
 
 
@@ -229,7 +236,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--markdown-report", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=100)
     parser.add_argument("--timeout", type=float, default=60.0)
-    parser.add_argument("--check-gene", action="store_true")
     parser.add_argument("--allow-non-gold", action="store_true")
     return parser.parse_args()
 
@@ -250,26 +256,12 @@ def main() -> int:
             responses = post_batch(args.base_url, [x["input"] for x in batch], args.timeout)
             if len(responses) != len(batch):
                 raise ValueError(f"batch at offset {offset}: got {len(responses)} responses for {len(batch)} inputs")
-            results.extend(compare_case(case, observed, args.check_gene) for case, observed in zip(batch, responses))
+            results.extend(compare_case(case, observed) for case, observed in zip(batch, responses))
     except (urllib.error.URLError, TimeoutError, ValueError) as exc:
         print(f"evaluation infrastructure error: {exc}", file=sys.stderr)
         return 2
     elapsed = time.monotonic() - started
-    passed = sum(result["passed"] for result in results)
-    category_counts: dict[str, Counter] = {}
-    for result in results:
-        counts = category_counts.setdefault(result["category"], Counter())
-        counts["passed" if result["passed"] else "failed"] += 1
-    summary = {
-        "total": len(results),
-        "passed": passed,
-        "failed": len(results) - passed,
-        "pass_rate": passed / len(results) if results else 0.0,
-        "elapsed_seconds": elapsed,
-        "by_category": {
-            name: {"passed": counts["passed"], "failed": counts["failed"]} for name, counts in category_counts.items()
-        },
-    }
+    summary = summarize_results(results, elapsed)
     output = {"summary": summary, "results": results}
     args.json_report.parent.mkdir(parents=True, exist_ok=True)
     args.markdown_report.parent.mkdir(parents=True, exist_ok=True)

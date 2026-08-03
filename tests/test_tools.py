@@ -376,7 +376,16 @@ class EvaluateTests(unittest.TestCase):
             "vcf": [{"alt": "G", "ref": "T", "pos": 150999023, "chrom": "NC_000007.14"}],
             "ambiguous": False,
         }
-        self.assertTrue(evaluator.compare_case(self.case, observed, True)["passed"])
+        self.assertTrue(evaluator.compare_case(self.case, observed)["passed"])
+
+    def test_transcript_difference_does_not_fail_when_vcf_matches(self):
+        observed = {
+            "transcript": "ENST00000296387.6",
+            "gene": "CLDN19",
+            "vcf": [{"chrom": "NC_000007.14", "pos": 150999023, "ref": "T", "alt": "G"}],
+            "ambiguous": True,
+        }
+        self.assertTrue(evaluator.compare_case(self.case, observed)["passed"])
 
     def test_coordinate_difference_is_reported(self):
         observed = {
@@ -384,7 +393,7 @@ class EvaluateTests(unittest.TestCase):
             "vcf": [{"chrom": "NC_000007.14", "pos": 150999024, "ref": "T", "alt": "G"}],
             "ambiguous": False,
         }
-        result = evaluator.compare_case(self.case, observed, False)
+        result = evaluator.compare_case(self.case, observed)
         self.assertFalse(result["passed"])
         self.assertIn("vcf", result["differences"])
 
@@ -399,8 +408,8 @@ class EvaluateTests(unittest.TestCase):
             "vcf": [{"chrom": "NC_000007.14", "pos": 150999024, "ref": "T", "alt": "G"}],
         }
         results = [
-            evaluator.compare_case(self.case, passed_observed, False),
-            evaluator.compare_case(self.case, failed_observed, False),
+            evaluator.compare_case(self.case, passed_observed),
+            evaluator.compare_case(self.case, failed_observed),
         ]
         summary = {
             "total": 2,

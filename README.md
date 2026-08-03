@@ -16,7 +16,7 @@ MANE Select（代表transcript）─┘
   │
   ▼
 正解セット（JSONL）
-  │ VCF・transcript・ambiguousを比較
+  │ ゲノムVCF集合を比較
   ▼
 評価対象の POST /decode
   ▼
@@ -195,9 +195,9 @@ python3 tools/evaluate_hgvs2vcf.py \
 `POST /decode` の結果について、次を比較します。
 
 - VCF集合の `chrom`、`pos`、`ref`、`alt`（順序は無視）
-- transcript
-- `ambiguous`
-- `--check-gene` 指定時はgene
+
+合否はゲノムVCF集合だけで決定します。transcript、gene、`ambiguous` の表記差は
+合否に影響しません。
 
 終了コードは、全件一致が0、変換結果に差分ありが1、通信・応答形式エラーが2です。
 

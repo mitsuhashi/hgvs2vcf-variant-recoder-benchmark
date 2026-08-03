@@ -4,7 +4,7 @@
 python3 -m unittest discover -s tests -v
 ```
 
-現在は、正解セット生成側16件、評価側4件の合計20件である。外部HTTP通信は
+現在は、正解セット生成側16件、評価側5件の合計21件である。外部HTTP通信は
 モックし、ネットワークなしで実行する。
 
 ## 正解セット生成
@@ -103,16 +103,21 @@ versionなしRefSeq入力にはversion解決用の `hgvsc` を要求し、それ
 VCF集合の順序が異なっても、`chrom`、`pos`、`ref`、`alt` が同じなら合格になる
 ことを確認する。
 
-### 18. `test_coordinate_difference_is_reported`
+### 18. `test_transcript_difference_does_not_fail_when_vcf_matches`
+
+transcript、gene、`ambiguous` が異なっても、ゲノムVCF集合が一致すれば合格になることを
+確認する。
+
+### 19. `test_coordinate_difference_is_reported`
 
 座標が1塩基でも異なれば不合格となり、VCF差分がレポートへ記録されることを確認する。
 
-### 19. `test_markdown_report_lists_passed_and_failed_vcfs`
+### 20. `test_markdown_report_lists_passed_and_failed_vcfs`
 
 Markdownレポートの成功・失敗それぞれの表にcategory、HGVS、期待VCF・観測VCFが
 表示されることを確認する。
 
-### 20. `test_post_batch_contract`
+### 21. `test_post_batch_contract`
 
 評価対象の `POST /decode` へ `{"hgvs": [...]}` を送り、JSON配列の応答を読み取る
 ことを確認する。

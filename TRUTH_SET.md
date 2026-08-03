@@ -123,6 +123,7 @@ python3 tools/evaluate_hgvs2vcf.py \
 ```
 
 評価コードは `confidence: ensembl_variant_recoder` だけをgoldとして受け付ける。
-VCF集合、transcript、`ambiguous` を比較し、順序には依存しない。
+ゲノムVCF集合の `chrom`、`pos`、`ref`、`alt` を比較し、順序には依存しない。
+transcript、gene、`ambiguous` の表記差は合否に使わない。
 
 これは座標変換実装の回帰試験用データであり、臨床判断には使用しない。
