@@ -1,7 +1,7 @@
 # hgvs2vcf-variant-recoder-benchmark
 
-HGVS→GRCh38 VCF変換を、Ensembl Variant Recoder由来またはClinVar由来の正解セットで
-評価するツールです。
+HGVS→GRCh38 VCF変換を、Ensembl Variant Recoder由来の正解セットで評価する
+ツールです。
 
 ## 全体の流れ
 
@@ -12,11 +12,10 @@ MANE Select（代表transcript）─┘
   │
   ▼
 3つの入力形式と変異操作で分類し、偏りなく抽出
-  ├─ Ensembl Variant Recoderの返却VCF
-  └─ ClinVarのVCF列 → bcftools norm（GRCh38.p14）
+  │ Ensembl Variant Recoderの返却VCFを取得
   │
   ▼
-出典別の正解セット（JSONL）
+正解セット（JSONL）
   │ VCF・transcript・ambiguousを比較
   ▼
 評価対象の POST /decode
@@ -24,18 +23,24 @@ MANE Select（代表transcript）─┘
 評価レポート（JSON / Markdown）
 ```
 
-Variant Recoder版では、ClinVarはHGVS入力候補の収集にだけ使い、Variant Recoderの
-`vcf_string` を正解にします。ClinVar版では `PositionVCF`、
-`ReferenceAlleleVCF`、`AlternateAlleleVCF` をGRCh38.p14 FASTAで再正規化して
-正解にします。gene symbol入力は、どちらも固定したMANE Selectに限定します。
+ClinVarはHGVS入力候補の収集にだけ使い、正解VCFにはEnsembl Variant Recoderの
+`vcf_string` だけを使います。gene symbol入力は固定したMANE Selectに限定します。
+
+| データソース | このプロジェクトでの用途 |
+|---|---|
+| ClinVar | HGVS、gene symbol、GRCh38主染色体accessionによる入力候補の抽出 |
+| MANE Select | gene symbol入力に対応する代表RefSeq transcriptの固定 |
+| Ensembl Variant Recoder | 正解VCFと、versionなしRefSeq入力のtranscript versionの決定 |
+
+ClinVarの `PositionVCF`、`ReferenceAlleleVCF`、`AlternateAlleleVCF` は読み取らず、
+正解値にも候補の座標判定にも使いません。
 
 Variant Recoderが解釈できないHGVSや、GRCh38主染色体のVCFを返さないケースは
 正解セットから除外し、quarantineへ記録します。
 
 ## 利用するAPI
 
-Variant Recoder版の生成と評価では、目的の異なる2つのAPIを使います。ClinVar版の
-生成はローカルファイルと `bcftools` だけで完結します。
+正解セットの生成と評価では、目的の異なる2つのAPIを使います。
 
 | API | URL | 用途 |
 |---|---|---|
@@ -57,8 +62,7 @@ RESTサーバーを使う場合は、正解セット生成時に `--server` で�
   - `hgvs4variation.txt.gz`
 - MANE summary
   - `MANE.GRCh38.v1.5.summary.txt.gz`
-- Variant Recoder版: Ensembl REST APIへのHTTPS接続
-- ClinVar版: `bcftools` と、展開済みのNCBI GRCh38.p14 genomic FASTA
+- Ensembl REST APIへのHTTPS接続
 
 ## 1. ClinVar・MANEデータを取得
 
@@ -85,18 +89,7 @@ FORCE_DOWNLOAD=1 scripts/download_sources.sh
 ClinVarは公式のtab-delimited配布先、MANEは指定リリースの公式summaryから取得します。
 保存先は `CLINVAR_DIR`、`MANE_DIR`、または `SOURCES_DIR` で変更できます。
 
-ClinVar版も生成する場合は、約973 MBの圧縮済みNCBI GRCh38.p14 FASTAも取得して
-展開します。圧縮ファイルも保存するため、少なくとも約4 GBの空き容量が必要です。
-
-```bash
-DOWNLOAD_REFERENCE=1 scripts/download_sources.sh
-```
-
-デフォルトの展開先は
-`sources/reference/grch38-p14/GCF_000001405.40_GRCh38.p14_genomic.fna` です。
-取得済みの同じFASTAを使う場合はダウンロード不要です。
-
-## 2A. Variant Recoder版を生成
+## 2. Variant Recoderから正解セットを生成
 
 通常は実行スクリプトを使います。
 
@@ -123,10 +116,12 @@ scripts/build_truth_set.sh
 | `ENSEMBL_RELEASE` | `116` |
 | `MANE_RELEASE` | `1.5` |
 | `TARGET_COUNT` | `100` |
-| `CANDIDATE_MULTIPLIER` | `3` |
+| `CANDIDATE_MULTIPLIER` | `5` |
 | `ENSEMBL_SERVER` | `https://rest.ensembl.org` |
 | `BATCH_SIZE` | `20` |
 | `VARIANT_RECODER_TIMEOUT` | `60`秒 |
+| `VARIANT_RECODER_WORKERS` | `1` |
+| `CANDIDATE_CACHE` | `build/candidate-selection-cache.json` |
 | `CLINVAR_DIR` | `sources/clinvar/$CLINVAR_RELEASE` |
 | `MANE_SUMMARY` | `sources/mane/$MANE_RELEASE/MANE.GRCh38.v$MANE_RELEASE.summary.txt.gz` |
 
@@ -134,11 +129,13 @@ scripts/build_truth_set.sh
 でも上書きできます。追加引数はPythonプログラムへ渡されます。
 
 ```bash
-BATCH_SIZE=10 VARIANT_RECODER_TIMEOUT=120 scripts/build_truth_set.sh
+BATCH_SIZE=10 VARIANT_RECODER_TIMEOUT=120 VARIANT_RECODER_WORKERS=4 scripts/build_truth_set.sh
 ```
 
 Variant Recoderへの大きなバッチがタイムアウトした場合は、自動的に半分へ分割して
-再実行します。単一入力もタイムアウトする場合だけ、処理をエラー終了します。
+再実行します。単一入力がタイムアウトする場合は、その入力だけを一時的な
+quarantine対象として残りの処理を続け、応答キャッシュには保存しません。
+`VARIANT_RECODER_WORKERS` で独立したバッチを並列取得できます（1–8）。
 通常はVCFに加えて軽量な `spdi` だけを要求し、versionなしRefSeq入力のみtranscript
 versionの決定に必要な `hgvsc` を要求します。
 
@@ -156,10 +153,12 @@ MANE表記の両方を問い合わせ、MANE由来VCFがgene symbolの結果に�
 goldへ採用します。
 
 固定seedを使うため、同じClinVar・MANEファイルとVariant Recoder応答から同じセットを
-再生成できます。100件に届かない場合は `--candidate-multiplier 5` のように、
-問い合わせる候補数を増やします（デフォルトは目標数の3倍）。
+再生成できます。100件に届かない場合は `--candidate-multiplier 7` のように、
+問い合わせる候補数を増やします（デフォルトは目標数の5倍）。
 大規模なClinVar全候補をメモリへ保持せず、入力形式・変異カテゴリごとに安定ハッシュで
 必要数だけ保持します。候補総数はbuild reportへ記録されます。
+選定済み候補はローカルキャッシュへ保存され、入力ファイルのパス・サイズ・更新時刻、
+seed、候補数が同じ再実行では約4,480万行の再走査を省略します。
 
 生成物:
 
@@ -177,43 +176,6 @@ goldへ採用します。
 scripts/build_truth_set.sh --mode cache
 ```
 
-## 2B. ClinVar版を生成
-
-ClinVarのVCF用3列をそのまま正解にせず、NCBI GRCh38.p14 FASTAを指定して
-`bcftools norm` でleft-align・最小表現化します。REF不一致や正規化できない候補は
-quarantineへ送ります。
-
-VCFのCHROMにはClinVarの数値 `Chromosome` 列ではなく、`ChromosomeAccession`
-（例: `NC_000001.11`）を使います。これはFASTAヘッダーの空白より前の配列IDと一致し、
-一時VCFの `##contig` にも同じIDを定義します。
-
-```bash
-REFERENCE_FASTA=sources/reference/grch38-p14/GCF_000001405.40_GRCh38.p14_genomic.fna \
-scripts/build_clinvar_truth_set.sh
-```
-
-主な環境変数:
-
-| 変数 | デフォルト |
-|---|---|
-| `REFERENCE_FASTA` | 必須 |
-| `BCFTOOLS_BIN` | `bcftools` |
-| `CLINVAR_TRUTH_DIR` | `truth/clinvar` |
-| `TARGET_COUNT` | `100` |
-| `CANDIDATE_MULTIPLIER` | `3` |
-
-生成物:
-
-| パス | 内容 |
-|---|---|
-| `truth/clinvar/gold.jsonl` | ClinVar VCF列を再正規化した正解セット |
-| `truth/clinvar/quarantine.jsonl` | REF不一致、正規化結果なしのケース |
-| `truth/clinvar/build-report.json` | 入力・FASTAのSHA-256、bcftools version、件数 |
-
-ClinVar版はHGVSから座標を計算しているのではなく、ClinVarが提供するVCF表現を
-独立した正解候補として再正規化するものです。Variant Recoder版とは出典が異なるため、
-goldファイルも分離します。
-
 ## 3. HGVS→VCF APIを評価
 
 評価対象の `hgvs2vcf-cdot-lmdb` サーバーを起動してから実行します。次は
@@ -226,8 +188,6 @@ python3 tools/evaluate_hgvs2vcf.py \
   --json-report evaluation/result.json \
   --markdown-report evaluation/result.md
 ```
-
-ClinVar版で評価する場合は `--truth-set truth/clinvar/gold.jsonl` に変更します。
 
 `--base-url` には評価対象サーバーのURLを指定します。これはVariant RecoderのURL
 ではありません。
@@ -247,8 +207,7 @@ Ensembl REST APIの内容はリリースとともに更新されます。同じ�
 できるよう、以下を保存してください。
 
 - 2つのClinVar入力ファイルとMANE summary
-- Variant Recoder版: 応答キャッシュ、`truth/gold.jsonl`、build report
-- ClinVar版: GRCh38.p14 FASTA、`truth/clinvar/gold.jsonl`、build report
+- Variant Recoder応答キャッシュ、`truth/gold.jsonl`、build report
 
 Ensembl archive RESTサーバーを利用する場合は `--server` で指定できます。
 固定方法と採否基準の詳細は [TRUTH_SET.md](TRUTH_SET.md) を参照してください。
@@ -269,7 +228,6 @@ python3 -m unittest discover -s tests -v
 
 実装は `tools/`、ユニットテストとfixtureは `tests/` にあります。
 入力取得は `scripts/download_sources.sh`、正解セット生成は
-`scripts/build_truth_set.sh` または `scripts/build_clinvar_truth_set.sh` から
-実行します。
+`scripts/build_truth_set.sh` から実行します。
 
 この正解セットは回帰試験用です。臨床判断には使用しないでください。

@@ -6,7 +6,6 @@ import json
 import sys
 import tempfile
 import unittest
-from types import SimpleNamespace
 from unittest import mock
 from pathlib import Path
 
@@ -23,7 +22,6 @@ def load(name, relative):
 
 
 builder = load("truth_builder", "tools/build_truth_set.py")
-clinvar_builder = load("clinvar_truth_builder", "tools/build_clinvar_truth_set.py")
 evaluator = load("truth_evaluator", "tools/evaluate_hgvs2vcf.py")
 
 
@@ -46,10 +44,7 @@ class BuildTruthSetTests(unittest.TestCase):
             {case["input"]: case["input_kind"] for case in candidates},
         )
         for case in candidates:
-            self.assertEqual(
-                ("NC_000007.14", 150999023, "T", "G"),
-                builder.vcf_key(case["vcf"]),
-            )
+            self.assertEqual("NC_000007.14", case["contig"])
             self.assertEqual({"NC_000007.14:g.150999023T>G"}, case["genomic_hgvs"])
         self.assertEqual("protein_substitution", next(
             case["category"] for case in candidates if case["input_kind"] == "gene_hgvsp"
@@ -67,7 +62,7 @@ class BuildTruthSetTests(unittest.TestCase):
             case["mane_select"]["refseq_nuc"] == "NM_000603.4"
             for case in candidates if case["input_kind"].startswith("gene_")
         ))
-        self.assertTrue(all(case["vcf"]["chrom"] != "NC_000007.13" for case in candidates))
+        self.assertTrue(all(case["contig"] != "NC_000007.13" for case in candidates))
 
     def test_candidate_retention_is_bounded_per_group(self):
         variant_header = (ROOT / "tests/fixtures/variant_summary.txt").read_text(
@@ -83,11 +78,9 @@ class BuildTruthSetTests(unittest.TestCase):
             variant_summary.write_text(
                 variant_header + "\n" +
                 "12345\tsingle nucleotide variant\tone\t4846\tNOS3\tGRCh38\t"
-                "NC_000007.14\t7\t150999023\t150999023\tT\tG\t207776\t"
-                "150999023\tT\tG\n" +
+                "NC_000007.14\t207776\n" +
                 "12346\tsingle nucleotide variant\ttwo\t4846\tNOS3\tGRCh38\t"
-                "NC_000007.14\t7\t150999024\t150999024\tA\tC\t207778\t"
-                "150999024\tA\tC\n",
+                "NC_000007.14\t207778\n",
                 encoding="utf-8",
             )
             hgvs.write_text(
@@ -115,6 +108,26 @@ class BuildTruthSetTests(unittest.TestCase):
         self.assertEqual(3, stats["retained_candidates"])
         self.assertEqual(3, len(candidates))
         self.assertEqual(set(builder.INPUT_KINDS), {case["input_kind"] for case in candidates})
+
+    def test_candidate_cache_round_trip_preserves_sets_and_stats(self):
+        candidate = {
+            "input": "NM_000603:c.894T>G",
+            "genomic_hgvs": {"NC_000007.14:g.150999023T>G"},
+        }
+        signature = {"version": 1, "seed": 7}
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            path = Path(temporary_dir) / "candidates.json"
+            builder.write_candidate_cache(
+                path,
+                signature,
+                [candidate],
+                builder.Counter({"candidates": 3}),
+            )
+            loaded = builder.load_candidate_cache(path, signature)
+        self.assertIsNotNone(loaded)
+        attempted, stats = loaded
+        self.assertEqual(candidate, attempted[0])
+        self.assertEqual(3, stats["candidates"])
 
     def test_parse_variant_recoder_vcf_formats(self):
         self.assertEqual(
@@ -306,6 +319,41 @@ class BuildTruthSetTests(unittest.TestCase):
         self.assertEqual("two", builder.response_input(result["two"]))
         self.assertEqual([["one", "two"], ["one"], ["two"]], calls)
 
+    def test_fetch_recoder_bisects_http_400_and_quarantines_singleton(self):
+        calls = []
+
+        def fake_api_post(_url, ids, _timeout):
+            calls.append(ids)
+            if "bad" in ids:
+                raise builder.ApiPostError("HTTP Error 400", bad_request=True)
+            return [{"G": {"input": ids[0], "vcf_string": "7-1-A-G"}}]
+
+        with mock.patch.object(builder, "api_post", side_effect=fake_api_post):
+            result = builder.fetch_recoder(
+                ["good", "bad"], "https://example.test", "homo_sapiens",
+                100, 2, builder.ResponseCache(None), "live",
+            )
+        self.assertEqual("good", builder.response_input(result["good"]))
+        self.assertIn("HTTP Error 400", result["bad"]["error"])
+        self.assertEqual([["good", "bad"], ["good"], ["bad"]], calls)
+
+    def test_fetch_recoder_quarantines_timed_out_singleton(self):
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            cache_path = Path(temporary_dir) / "responses.jsonl"
+            with mock.patch.object(
+                builder,
+                "api_post",
+                side_effect=builder.ApiPostError("read timed out", timed_out=True),
+            ):
+                result = builder.fetch_recoder(
+                    ["slow"], "https://example.test", "homo_sapiens",
+                    100, 2, builder.ResponseCache(cache_path), "live",
+                )
+            self.assertFalse(cache_path.exists())
+        self.assertEqual("slow", result["slow"]["input"])
+        self.assertIn("read timed out", result["slow"]["error"])
+        self.assertTrue(result["slow"]["transient_error"])
+
 
 class EvaluateTests(unittest.TestCase):
     def setUp(self):
@@ -330,9 +378,6 @@ class EvaluateTests(unittest.TestCase):
         }
         self.assertTrue(evaluator.compare_case(self.case, observed, True)["passed"])
 
-    def test_clinvar_normalized_confidence_is_gold(self):
-        self.assertIn("clinvar_bcftools_normalized", evaluator.GOLD_CONFIDENCES)
-
     def test_coordinate_difference_is_reported(self):
         observed = {
             "transcript": "NM_000603.4",
@@ -342,6 +387,34 @@ class EvaluateTests(unittest.TestCase):
         result = evaluator.compare_case(self.case, observed, False)
         self.assertFalse(result["passed"])
         self.assertIn("vcf", result["differences"])
+
+    def test_markdown_report_lists_passed_and_failed_vcfs(self):
+        passed_observed = {
+            "transcript": "NM_000603.4",
+            "vcf": [{"chrom": "NC_000007.14", "pos": 150999023, "ref": "T", "alt": "G"}],
+            "ambiguous": False,
+        }
+        failed_observed = {
+            **passed_observed,
+            "vcf": [{"chrom": "NC_000007.14", "pos": 150999024, "ref": "T", "alt": "G"}],
+        }
+        results = [
+            evaluator.compare_case(self.case, passed_observed, False),
+            evaluator.compare_case(self.case, failed_observed, False),
+        ]
+        summary = {
+            "total": 2,
+            "passed": 1,
+            "failed": 1,
+            "pass_rate": 0.5,
+            "elapsed_seconds": 0.1,
+            "by_category": {"coding_substitution": {"passed": 1, "failed": 1}},
+        }
+        report = evaluator.markdown_report(summary, [self.case, self.case], results)
+        self.assertIn("| PASS |", report)
+        self.assertIn("| FAIL |", report)
+        self.assertIn("`NC_000007.14:150999023 T>G`", report)
+        self.assertIn("`NC_000007.14:150999024 T>G`", report)
 
     def test_post_batch_contract(self):
         class FakeResponse(io.BytesIO):
@@ -354,6 +427,7 @@ class EvaluateTests(unittest.TestCase):
         def fake_urlopen(request, timeout):
             self.assertEqual("POST", request.method)
             self.assertEqual(2, timeout)
+            self.assertEqual(evaluator.USER_AGENT, request.get_header("User-agent"))
             payload = json.loads(request.data)
             body = json.dumps(
                 [
@@ -377,69 +451,6 @@ class EvaluateTests(unittest.TestCase):
             )
             self.assertEqual(1, len(response))
             self.assertEqual("NM_000603.4:c.894T>G", response[0]["input"])
-
-
-class ClinVarTruthSetTests(unittest.TestCase):
-    def fixture_candidate(self):
-        candidates, _ = builder.load_candidates(
-            ROOT / "tests/fixtures/variant_summary.txt",
-            ROOT / "tests/fixtures/hgvs4variation.txt",
-            ROOT / "tests/fixtures/mane_summary.txt",
-        )
-        return next(case for case in candidates if case["input_kind"] == "gene_hgvsc")
-
-    def test_bcftools_normalization_is_associated_with_input(self):
-        candidate = self.fixture_candidate()
-
-        def fake_run(command, **_kwargs):
-            self.assertIn("--fasta-ref", command)
-            self.assertIn("--check-ref", command)
-            self.assertIn("-any", command)
-            input_text = Path(command[-1]).read_text(encoding="utf-8")
-            self.assertIn("##contig=<ID=NC_000007.14>", input_text)
-            self.assertIn(
-                "NC_000007.14\t150999023\tcandidate-0\tT\tG",
-                input_text,
-            )
-            return SimpleNamespace(
-                returncode=0,
-                stdout=(
-                    "##fileformat=VCFv4.3\n"
-                    "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"
-                    "NC_000007.14\t150999023\tcandidate-0\tT\tG\t.\tPASS\t.\n"
-                ),
-                stderr="Lines   total/split/realigned/skipped:\t1/0/0/0",
-            )
-
-        with mock.patch.object(clinvar_builder.subprocess, "run", side_effect=fake_run):
-            normalized, diagnostics = clinvar_builder.normalize_vcfs(
-                [candidate],
-                Path("/reference/GRCh38.p14.fna"),
-                "bcftools",
-            )
-        self.assertEqual(
-            [("NC_000007.14", 150999023, "T", "G")],
-            [builder.vcf_key(value) for value in normalized[candidate["input"]]],
-        )
-        self.assertEqual(1, diagnostics["input_records"])
-        self.assertEqual(1, diagnostics["output_records"])
-
-    def test_clinvar_record_keeps_raw_and_normalized_vcf(self):
-        candidate = self.fixture_candidate()
-        normalized = [{"chrom": "NC_000007.14", "pos": 150999023, "ref": "T", "alt": "G"}]
-        record = clinvar_builder.make_clinvar_record(
-            candidate,
-            normalized,
-            {"oracle": "test"},
-        )
-        self.assertEqual("clinvar_bcftools_normalized", record["confidence"])
-        self.assertEqual("NM_000603.4", record["expected"]["transcript"])
-        self.assertEqual(normalized, record["expected"]["vcf"])
-        self.assertEqual(
-            candidate["vcf"],
-            record["provenance"]["clinvar_vcf_before_normalization"],
-        )
-
 
 if __name__ == "__main__":
     unittest.main()

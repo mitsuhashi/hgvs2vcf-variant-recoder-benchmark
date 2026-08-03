@@ -16,10 +16,12 @@ truth_dir=${TRUTH_DIR:-"${repo_root}/truth"}
 build_dir=${BUILD_DIR:-"${repo_root}/build"}
 python_bin=${PYTHON_BIN:-python3}
 target_count=${TARGET_COUNT:-100}
-candidate_multiplier=${CANDIDATE_MULTIPLIER:-3}
+candidate_multiplier=${CANDIDATE_MULTIPLIER:-5}
 ensembl_server=${ENSEMBL_SERVER:-https://rest.ensembl.org}
 batch_size=${BATCH_SIZE:-20}
 variant_recoder_timeout=${VARIANT_RECODER_TIMEOUT:-60}
+variant_recoder_workers=${VARIANT_RECODER_WORKERS:-1}
+candidate_cache=${CANDIDATE_CACHE:-"${build_dir}/candidate-selection-cache.json"}
 
 for required_file in "${variant_summary}" "${hgvs4variation}" "${mane_summary}"; do
     if [[ ! -f "${required_file}" ]]; then
@@ -41,7 +43,9 @@ exec "${python_bin}" "${repo_root}/tools/build_truth_set.py" \
     --candidate-multiplier "${candidate_multiplier}" \
     --batch-size "${batch_size}" \
     --timeout "${variant_recoder_timeout}" \
+    --workers "${variant_recoder_workers}" \
     --cache "${build_dir}/variant-recoder-cache.jsonl" \
+    --candidate-cache "${candidate_cache}" \
     --output "${truth_dir}/gold.jsonl" \
     --quarantine "${truth_dir}/quarantine.jsonl" \
     --report "${truth_dir}/build-report.json" \

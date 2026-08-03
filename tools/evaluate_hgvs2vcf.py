@@ -16,8 +16,8 @@ from typing import Any, Iterable
 
 GOLD_CONFIDENCES = {
     "ensembl_variant_recoder",
-    "clinvar_bcftools_normalized",
 }
+USER_AGENT = "hgvs2vcf-variant-recoder-benchmark/1.0"
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -37,7 +37,11 @@ def post_batch(base_url: str, inputs: list[str], timeout: float) -> list[dict[st
     request = urllib.request.Request(
         base_url.rstrip("/") + "/decode",
         data=json.dumps({"hgvs": inputs}, ensure_ascii=False).encode(),
-        headers={"Content-Type": "application/json", "Accept": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+        },
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -96,7 +100,25 @@ def compare_case(case: dict[str, Any], observed: dict[str, Any], check_gene: boo
     }
 
 
-def markdown_report(summary: dict[str, Any], failures: list[dict[str, Any]]) -> str:
+def markdown_escape(value: Any) -> str:
+    return str(value).replace("|", "\\|").replace("`", "&#96;")
+
+
+def markdown_vcf(rows: Iterable[dict[str, Any]]) -> str:
+    values = [
+        f"{row['chrom']}:{row['pos']} {row['ref']}>{row['alt']}"
+        for row in rows
+    ]
+    if not values:
+        return "—"
+    return "<br>".join(f"`{markdown_escape(value)}`" for value in values)
+
+
+def markdown_report(
+    summary: dict[str, Any],
+    cases: list[dict[str, Any]],
+    results: list[dict[str, Any]],
+) -> str:
     lines = [
         "# hgvs2vcf-cdot-lmdb evaluation",
         "",
@@ -114,14 +136,32 @@ def markdown_report(summary: dict[str, Any], failures: list[dict[str, Any]]) -> 
     for category, counts in sorted(summary["by_category"].items()):
         total = counts["passed"] + counts["failed"]
         lines.append(f"| {category} | {counts['passed']} | {counts['failed']} | {counts['passed'] / total:.2%} |")
-    lines.extend(["", "## Failures", ""])
-    if not failures:
-        lines.append("None.")
-    else:
-        lines.extend(["| ID | Input | Differences |", "|---|---|---|"])
-        for failure in failures:
-            diff = json.dumps(failure["differences"], ensure_ascii=False, sort_keys=True).replace("|", "\\|")
-            lines.append(f"| {failure['id']} | `{failure['input']}` | `{diff}` |")
+    lines.extend(
+        [
+            "",
+            "## All results",
+            "",
+            "| Result | HGVS | Variant Recoder expected VCF | hgvs2vcf observed VCF | Differences |",
+            "|---|---|---|---|---|",
+        ]
+    )
+    for case, result in zip(cases, results):
+        expected = case["expected"]
+        observed = result["observed"]
+        expected_vcf = markdown_vcf(expected.get("vcf", []))
+        observed_vcf = markdown_vcf(observed.get("vcf", []))
+        if "error" in observed:
+            observed_vcf = f"Error: `{markdown_escape(observed['error'])}`"
+        differences = "—"
+        if result["differences"]:
+            differences = "`" + markdown_escape(
+                json.dumps(result["differences"], ensure_ascii=False, sort_keys=True)
+            ) + "`"
+        status = "PASS" if result["passed"] else "FAIL"
+        lines.append(
+            f"| {status} | `{markdown_escape(case['input'])}` | {expected_vcf} | "
+            f"{observed_vcf} | {differences} |"
+        )
     return "\n".join(lines) + "\n"
 
 
@@ -179,7 +219,7 @@ def main() -> int:
     args.markdown_report.parent.mkdir(parents=True, exist_ok=True)
     args.json_report.write_text(json.dumps(output, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     failures = [result for result in results if not result["passed"]]
-    args.markdown_report.write_text(markdown_report(summary, failures), encoding="utf-8")
+    args.markdown_report.write_text(markdown_report(summary, cases, results), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0 if not failures else 1
 

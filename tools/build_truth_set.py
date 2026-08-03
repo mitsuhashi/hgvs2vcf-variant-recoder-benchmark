@@ -9,10 +9,12 @@ exclusively from Ensembl Variant Recoder.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import csv
 import gzip
 import hashlib
 import heapq
+import http.client
 import json
 import random
 import re
@@ -103,23 +105,12 @@ def vcf_key(value: dict[str, Any]) -> tuple[str, int, str, str]:
     )
 
 
-def expected_vcf_from_summary(row: dict[str, str]) -> dict[str, Any] | None:
-    """Read a location for candidate filtering only; it is never used as truth."""
+def candidate_contig_from_summary(row: dict[str, str]) -> str | None:
+    """Read only the primary-assembly contig used to join candidate HGVS rows."""
     if first(row, "Assembly") not in {"GRCh38", "GRCh38.p14"}:
         return None
     contig = first(row, "ChromosomeAccession")
-    pos = first(row, "PositionVCF")
-    ref = first(row, "ReferenceAlleleVCF")
-    alt = first(row, "AlternateAlleleVCF")
-    if (
-        not (contig and pos.isdigit() and ref and alt)
-        or ref == "-"
-        or alt == "-"
-        or not re.fullmatch(r"[ACGTN]+", ref, re.IGNORECASE)
-        or not re.fullmatch(r"[ACGTN]+", alt, re.IGNORECASE)
-    ):
-        return None
-    return {"chrom": contig, "pos": int(pos), "ref": ref.upper(), "alt": alt.upper()}
+    return contig if contig in ACCESSION_TO_CHROM else None
 
 
 def supported_transcript_hgvs_type(value: str) -> bool:
@@ -204,14 +195,14 @@ def load_candidates(
     for row in read_tsv(variant_summary):
         stats["variant_summary_rows"] += 1
         variation_id = first(row, "VariationID")
-        location = expected_vcf_from_summary(row)
-        if not variation_id or not location:
+        contig = candidate_contig_from_summary(row)
+        if not variation_id or not contig:
             continue
-        if variation_id in locations and vcf_key(locations[variation_id]["vcf"]) != vcf_key(location):
+        if variation_id in locations and locations[variation_id]["contig"] != contig:
             locations[variation_id]["conflicting_location"] = True
             continue
         locations[variation_id] = {
-            "vcf": location,
+            "contig": contig,
             "gene": first(row, "GeneSymbol"),
             "allele_id": first(row, "AlleleID"),
             "variant_type": first(row, "Type"),
@@ -278,7 +269,7 @@ def load_candidates(
             return
         matching_genomic = {
             value for value in genomic_hgvs
-            if value.startswith(location["vcf"]["chrom"] + ":g.")
+            if value.startswith(location["contig"] + ":g.")
         }
         if not matching_genomic:
             stats["rejected_missing_genomic_hgvs"] += (
@@ -439,9 +430,18 @@ class ResponseCache:
 
 
 class ApiPostError(RuntimeError):
-    def __init__(self, message: str, *, timed_out: bool = False):
+    def __init__(
+        self,
+        message: str,
+        *,
+        timed_out: bool = False,
+        bad_request: bool = False,
+        transient: bool = False,
+    ):
         super().__init__(message)
         self.timed_out = timed_out
+        self.bad_request = bad_request
+        self.transient = transient
 
 
 def api_post(url: str, ids: list[str], timeout: float, attempts: int = 4) -> Any:
@@ -459,20 +459,27 @@ def api_post(url: str, ids: list[str], timeout: float, attempts: int = 4) -> Any
     last_error: Exception | None = None
     attempts_made = 0
     timed_out = False
+    bad_request = False
     for attempt in range(attempts):
         attempts_made = attempt + 1
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 return json.load(response)
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            json.JSONDecodeError,
+            http.client.RemoteDisconnected,
+        ) as exc:
             last_error = exc
+            bad_request = isinstance(exc, urllib.error.HTTPError) and exc.code == 400
             timed_out = isinstance(exc, TimeoutError) or isinstance(
                 getattr(exc, "reason", None), TimeoutError
             )
             retryable = not isinstance(exc, urllib.error.HTTPError) or exc.code == 429 or exc.code >= 500
             # A large valid batch can exceed the REST response timeout. Let the
             # caller bisect it immediately; singleton requests still get retries.
-            if timed_out and len(ids) > 1:
+            if timed_out:
                 break
             if not retryable or attempts_made == attempts:
                 break
@@ -481,6 +488,8 @@ def api_post(url: str, ids: list[str], timeout: float, attempts: int = 4) -> Any
     raise ApiPostError(
         f"POST failed after {attempts_made} attempt(s): {url}: {last_error}",
         timed_out=timed_out,
+        bad_request=bad_request,
+        transient=retryable,
     )
 
 
@@ -500,6 +509,12 @@ def response_input(value: Any) -> str | None:
     return None
 
 
+def recoder_request_url(server: str, species: str, hgvs: str) -> str:
+    fields = "hgvsc" if re.match(r"^NM_\d+:[cn]\.", hgvs) else "spdi"
+    query = urllib.parse.urlencode({"vcf_string": 1, "fields": fields})
+    return f"{server.rstrip('/')}/variant_recoder/{urllib.parse.quote(species)}?{query}"
+
+
 def fetch_recoder(
     inputs: list[str],
     server: str,
@@ -508,6 +523,7 @@ def fetch_recoder(
     timeout: float,
     cache: ResponseCache,
     mode: str,
+    workers: int = 1,
 ) -> dict[str, Any]:
     result: dict[str, Any] = {}
     missing_by_url: dict[str, list[str]] = defaultdict(list)
@@ -515,9 +531,7 @@ def fetch_recoder(
         # Only unversioned RefSeq inputs need hgvsc to discover the transcript
         # version chosen by Variant Recoder. spdi keeps every other response
         # small while vcf_string remains available through its own option.
-        fields = "hgvsc" if re.match(r"^NM_\d+:[cn]\.", hgvs) else "spdi"
-        query = urllib.parse.urlencode({"vcf_string": 1, "fields": fields})
-        url = f"{server.rstrip('/')}/variant_recoder/{urllib.parse.quote(species)}?{query}"
+        url = recoder_request_url(server, species, hgvs)
         key = f"{url}:{hgvs}"
         cached = cache.get(key)
         if cached is None:
@@ -534,8 +548,25 @@ def fetch_recoder(
         try:
             response = api_post(url, batch, timeout)
         except ApiPostError as exc:
-            if not exc.timed_out or len(batch) == 1:
+            if exc.transient and not exc.timed_out:
+                return {
+                    hgvs: {
+                        "error": str(exc),
+                        "input": hgvs,
+                        "transient_error": True,
+                    }
+                    for hgvs in batch
+                }
+            if not (exc.timed_out or exc.bad_request):
                 raise
+            if len(batch) == 1:
+                return {
+                    batch[0]: {
+                        "error": str(exc),
+                        "input": batch[0],
+                        "transient_error": exc.timed_out,
+                    }
+                }
             middle = len(batch) // 2
             return {
                 **fetch_batch(url, batch[:middle]),
@@ -566,15 +597,28 @@ def fetch_recoder(
             for hgvs in batch
         }
 
-    for url, missing in missing_by_url.items():
-        for offset in range(0, len(missing), batch_size):
-            batch = missing[offset:offset + batch_size]
-            fetched = fetch_batch(url, batch)
-            for hgvs, item in fetched.items():
-                result[hgvs] = item
+    def store_fetched(url: str, fetched: dict[str, Any]) -> None:
+        for hgvs, item in fetched.items():
+            result[hgvs] = item
+            if not (isinstance(item, dict) and item.get("transient_error")):
                 cache.put(f"{url}:{hgvs}", item)
-            if offset + batch_size < len(missing):
-                time.sleep(0.1)
+
+    for url, missing in missing_by_url.items():
+        batches = [
+            missing[offset:offset + batch_size]
+            for offset in range(0, len(missing), batch_size)
+        ]
+        if workers == 1:
+            for index, batch in enumerate(batches):
+                store_fetched(url, fetch_batch(url, batch))
+                if index + 1 < len(batches):
+                    time.sleep(0.1)
+            continue
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+            futures = [executor.submit(fetch_batch, url, batch) for batch in batches]
+            for future in concurrent.futures.as_completed(futures):
+                fetched = future.result()
+                store_fetched(url, fetched)
     return result
 
 
@@ -720,6 +764,81 @@ def choose_final(records: list[dict[str, Any]], target_count: int, seed: int) ->
     return [value["record"] for value in balanced_order(candidates, seed)[:target_count]]
 
 
+def candidate_cache_signature(
+    variant_summary: Path,
+    hgvs_file: Path,
+    mane_summary: Path,
+    attempt_limit: int,
+    seed: int,
+) -> dict[str, Any]:
+    def identity(path: Path) -> dict[str, Any]:
+        stat = path.stat()
+        return {
+            "path": str(path.resolve()),
+            "size": stat.st_size,
+            "mtime_ns": stat.st_mtime_ns,
+        }
+
+    return {
+        "version": 2,
+        "attempt_limit": attempt_limit,
+        "seed": seed,
+        "variant_summary": identity(variant_summary),
+        "hgvs4variation": identity(hgvs_file),
+        "mane_summary": identity(mane_summary),
+    }
+
+
+def load_candidate_cache(
+    path: Path | None,
+    signature: dict[str, Any],
+) -> tuple[list[dict[str, Any]], Counter] | None:
+    if not path or not path.is_file():
+        return None
+    try:
+        cached = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if cached.get("signature") != signature:
+        return None
+    attempted = cached.get("attempted")
+    stats = cached.get("stats")
+    if not isinstance(attempted, list) or not isinstance(stats, dict):
+        return None
+    for candidate in attempted:
+        if not isinstance(candidate, dict):
+            return None
+        candidate["genomic_hgvs"] = set(candidate.get("genomic_hgvs", []))
+    return attempted, Counter(stats)
+
+
+def write_candidate_cache(
+    path: Path | None,
+    signature: dict[str, Any],
+    attempted: list[dict[str, Any]],
+    stats: Counter,
+) -> None:
+    if not path:
+        return
+    serializable = []
+    for candidate in attempted:
+        value = dict(candidate)
+        value["genomic_hgvs"] = sorted(candidate.get("genomic_hgvs", []))
+        serializable.append(value)
+    payload = {
+        "signature": signature,
+        "stats": dict(stats),
+        "attempted": serializable,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    temporary.replace(path)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant-summary", type=Path, required=True)
@@ -734,12 +853,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--server", default=DEFAULT_SERVER, help="Use an Ensembl archive REST URL to pin results")
     parser.add_argument("--species", default="homo_sapiens")
     parser.add_argument("--target-count", type=int, default=100)
-    parser.add_argument("--candidate-multiplier", type=int, default=3)
+    parser.add_argument("--candidate-multiplier", type=int, default=5)
     parser.add_argument("--seed", type=int, default=20260727)
     parser.add_argument("--mode", choices=("live", "cache"), default="live")
     parser.add_argument("--cache", type=Path)
+    parser.add_argument("--candidate-cache", type=Path)
     parser.add_argument("--batch-size", type=int, default=20)
     parser.add_argument("--timeout", type=float, default=60.0)
+    parser.add_argument("--workers", type=int, default=1)
     return parser.parse_args()
 
 
@@ -751,21 +872,57 @@ def main() -> int:
     if not 1 <= args.batch_size <= 200:
         print("--batch-size must be between 1 and the Ensembl POST limit of 200", file=sys.stderr)
         return 2
+    if not 1 <= args.workers <= 8:
+        print("--workers must be between 1 and 8", file=sys.stderr)
+        return 2
 
     attempt_limit = args.target_count * args.candidate_multiplier
-    candidates, stats = load_candidates(
+    candidate_signature = candidate_cache_signature(
         args.variant_summary,
         args.hgvs4variation,
         args.mane_summary,
-        limit_per_group=attempt_limit,
-        seed=args.seed,
+        attempt_limit,
+        args.seed,
     )
-    attempted = balanced_order(candidates, args.seed)[:attempt_limit]
-    query_inputs = list(dict.fromkeys(
-        [candidate["input"] for candidate in attempted]
-        + [candidate["oracle_hgvs"] for candidate in attempted]
-    ))
+    cached_candidates = load_candidate_cache(args.candidate_cache, candidate_signature)
+    if cached_candidates:
+        attempted, stats = cached_candidates
+    else:
+        candidates, stats = load_candidates(
+            args.variant_summary,
+            args.hgvs4variation,
+            args.mane_summary,
+            limit_per_group=attempt_limit,
+            seed=args.seed,
+        )
+        attempted = balanced_order(candidates, args.seed)[:attempt_limit]
+        write_candidate_cache(
+            args.candidate_cache,
+            candidate_signature,
+            attempted,
+            stats,
+        )
     cache = ResponseCache(args.cache)
+    def is_cached(hgvs: str) -> bool:
+        url = recoder_request_url(args.server, args.species, hgvs)
+        return cache.get(f"{url}:{hgvs}") is not None
+
+    missing_counterparts = []
+    for candidate in attempted:
+        input_hgvs = candidate["input"]
+        oracle_hgvs = candidate["oracle_hgvs"]
+        input_cached = is_cached(input_hgvs)
+        oracle_cached = is_cached(oracle_hgvs)
+        if input_cached and not oracle_cached:
+            missing_counterparts.append(oracle_hgvs)
+        elif oracle_cached and not input_cached:
+            missing_counterparts.append(input_hgvs)
+    paired_inputs = [
+        hgvs
+        for candidate in attempted
+        for hgvs in (candidate["oracle_hgvs"], candidate["input"])
+    ]
+    query_inputs = list(dict.fromkeys(missing_counterparts + paired_inputs))
     try:
         responses = fetch_recoder(
             query_inputs,
@@ -775,6 +932,7 @@ def main() -> int:
             args.timeout,
             cache,
             args.mode,
+            args.workers,
         )
     except (RuntimeError, ValueError) as exc:
         print(f"Variant Recoder infrastructure error: {exc}", file=sys.stderr)
@@ -826,6 +984,7 @@ def main() -> int:
             "seed": args.seed,
             "mode": args.mode,
             "batch_size": args.batch_size,
+            "workers": args.workers,
         },
         "counts": {
             **stats,
