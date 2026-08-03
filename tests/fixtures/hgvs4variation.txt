@@ -1,5 +1,8 @@
-#VariationID	AlleleID	Type_of_HGVS	NucleotideExpression
-207776	12345	HGVS, coding, RefSeq	NM_000603.4:c.894T>G
-207776	12345	HGVS, genomic, RefSeq	NC_000007.14:g.150999023T>G
-207776	12345	HGVS, protein, RefSeq	NP_000594.2:p.Asp298Glu
-207777	12346	HGVS, coding, RefSeq	NM_000603.4:c.894T>G
+##Report of HGVS expressions for VariationIDs and AlleleIDs
+##Explanation of the columns in this report
+#GeneSymbol:           the official symbol from HGNC for the gene in which this allele is found.
+#VariationID:          the identifier assigned by ClinVar.
+#Symbol	GeneID	VariationID	AlleleID	Type	Assembly	NucleotideExpression	NucleotideChange	ProteinExpression	ProteinChange	UsedForNaming	Submitted	OnRefSeqGene
+NOS3	4846	207776	12345	coding	na	NM_000603.4:c.894T>G	c.894T>G	NP_000594.2:p.Asp298Glu	p.Asp298Glu	Yes	No	No
+NOS3	4846	207776	12345	genomic	GRCh38	NC_000007.14:g.150999023T>G	g.150999023T>G	-	-	No	No	No
+NOS3	4846	207777	12346	coding	na	NM_000603.4:c.894T>G	c.894T>G	NP_000594.2:p.Asp298Glu	p.Asp298Glu	Yes	No	No

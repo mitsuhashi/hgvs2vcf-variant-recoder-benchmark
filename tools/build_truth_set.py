@@ -12,6 +12,7 @@ import argparse
 import csv
 import gzip
 import hashlib
+import heapq
 import json
 import random
 import re
@@ -56,14 +57,19 @@ def canonical_header(value: str) -> str:
 
 def read_tsv(path: Path) -> Iterator[dict[str, str]]:
     with open_text(path) as handle:
-        reader = csv.DictReader(handle, delimiter="\t")
-        if not reader.fieldnames:
+        fieldnames = None
+        for line in handle:
+            if "\t" in line:
+                fieldnames = next(csv.reader([line], delimiter="\t"))
+                break
+        if not fieldnames:
             raise ValueError(f"{path}: header is missing")
-        normalized = [canonical_header(name) for name in reader.fieldnames]
+        reader = csv.DictReader(handle, delimiter="\t", fieldnames=fieldnames)
+        normalized = [canonical_header(name) for name in fieldnames]
         for raw in reader:
             yield {
                 normalized[index]: (raw.get(name) or "").strip()
-                for index, name in enumerate(reader.fieldnames)
+                for index, name in enumerate(fieldnames)
             }
 
 
@@ -187,6 +193,9 @@ def load_candidates(
     variant_summary: Path,
     hgvs_file: Path,
     mane_summary: Path,
+    *,
+    limit_per_group: int | None = None,
+    seed: int = 0,
 ) -> tuple[list[dict[str, Any]], Counter]:
     """Join ClinVar tables and derive the three supported Variant Recoder inputs."""
     mane_select = load_mane_select(mane_summary)
@@ -216,40 +225,71 @@ def load_candidates(
         variation_id = first(row, "VariationID")
         hgvs_type = first(row, "TypeOfHGVS", "Type_of_HGVS", "Type")
         nucleotide = first(row, "NucleotideExpression", "NucleotideHGVS", "HGVS")
-        if not variation_id or not nucleotide:
+        protein = first(row, "ProteinExpression", "ProteinHGVS")
+        if not protein and supported_protein_hgvs_type(hgvs_type):
+            # Compatibility with older four-column exports and local fixtures.
+            protein = nucleotide
+        # Rows without a usable GRCh38 VCF location can never become candidates.
+        # Filtering them here avoids retaining millions of irrelevant HGVS rows.
+        if not variation_id or variation_id not in locations:
             continue
-        if re.match(r"^NC_\d+\.\d+:g\.", nucleotide):
+        if nucleotide and re.match(r"^NC_\d+\.\d+:g\.", nucleotide):
             genomic[variation_id].add(nucleotide)
-        if supported_transcript_hgvs_type(hgvs_type) and re.match(
+        if nucleotide and supported_transcript_hgvs_type(hgvs_type) and re.match(
             r"^(?:NM_|NR_|ENST)\d+\.\d+:[cn]\.", nucleotide
         ):
             transcript_expressions[variation_id].append((nucleotide, hgvs_type))
-        if supported_protein_hgvs_type(hgvs_type) and re.match(
-            r"^(?:NP_|ENSP)\d+\.\d+:p\.", nucleotide
+        if protein and (
+            supported_transcript_hgvs_type(hgvs_type)
+            or supported_protein_hgvs_type(hgvs_type)
+        ) and re.match(
+            r"^(?:NP_|ENSP)\d+\.\d+:p\.", protein
         ):
-            protein_expressions[variation_id].append((nucleotide, hgvs_type))
+            protein_expressions[variation_id].append((protein, hgvs_type))
 
     candidates: list[dict[str, Any]] = []
+    retained: dict[tuple[str, str], list[tuple[int, str, dict[str, Any]]]] = defaultdict(list)
     seen_inputs: set[str] = set()
-    variation_ids = dict.fromkeys([*transcript_expressions, *protein_expressions])
-    for variation_id in variation_ids:
-        location = locations.get(variation_id)
+
+    def retain(candidate: dict[str, Any]) -> None:
+        if limit_per_group is None:
+            candidates.append(candidate)
+            return
+        group = (candidate["input_kind"], candidate["category"])
+        priority = int.from_bytes(
+            hashlib.sha256(f"{seed}\0{candidate['input']}".encode()).digest(),
+            "big",
+        )
+        item = (-priority, candidate["input"], candidate)
+        heap = retained[group]
+        if len(heap) < limit_per_group:
+            heapq.heappush(heap, item)
+        elif priority < -heap[0][0]:
+            heapq.heapreplace(heap, item)
+
+    def process_variation(
+        variation_id: str,
+        transcripts: list[tuple[str, str]],
+        proteins: list[tuple[str, str]],
+        genomic_hgvs: set[str],
+    ) -> None:
+        location = locations.pop(variation_id, None)
         if not location or location.get("conflicting_location"):
-            continue
+            return
         matching_genomic = {
-            value for value in genomic[variation_id]
+            value for value in genomic_hgvs
             if value.startswith(location["vcf"]["chrom"] + ":g.")
         }
         if not matching_genomic:
             stats["rejected_missing_genomic_hgvs"] += (
-                len(transcript_expressions[variation_id]) + len(protein_expressions[variation_id])
+                len(transcripts) + len(proteins)
             )
-            continue
+            return
 
         derived: list[tuple[str, str, str, str]] = []
         gene = location["gene"]
         mane = mane_select.get(gene)
-        for source_hgvs, hgvs_type in transcript_expressions[variation_id]:
+        for source_hgvs, hgvs_type in transcripts:
             accession, body = source_hgvs.split(":", 1)
             if body.startswith("c.") and mane and accession == mane["refseq_nuc"]:
                 derived.append((f"{gene}:{body}", "gene_hgvsc", source_hgvs, hgvs_type))
@@ -264,7 +304,7 @@ def load_candidates(
                     )
                 )
         if mane and mane["refseq_prot"]:
-            for source_hgvs, hgvs_type in protein_expressions[variation_id]:
+            for source_hgvs, hgvs_type in proteins:
                 accession, body = source_hgvs.split(":", 1)
                 if accession == mane["refseq_prot"]:
                     derived.append((f"{gene}:{body}", "gene_hgvsp", source_hgvs, hgvs_type))
@@ -274,24 +314,50 @@ def load_candidates(
                 stats["rejected_duplicate_input"] += 1
                 continue
             seen_inputs.add(hgvs)
-            candidates.append(
-                {
-                    "variation_id": variation_id,
-                    "input": hgvs,
-                    "input_kind": input_kind,
-                    "source_clinvar_hgvs": source_hgvs,
-                    "oracle_hgvs": source_hgvs if input_kind.startswith("gene_") else hgvs,
-                    "mane_select": mane if input_kind.startswith("gene_") else None,
-                    "hgvs_type": hgvs_type,
-                    "genomic_hgvs": matching_genomic,
-                    **location,
-                    "category": category(hgvs),
-                }
-            )
-    stats["candidates"] = len(candidates)
-    input_kind_counts = Counter(candidate["input_kind"] for candidate in candidates)
+            candidate = {
+                "variation_id": variation_id,
+                "input": hgvs,
+                "input_kind": input_kind,
+                "source_clinvar_hgvs": source_hgvs,
+                "oracle_hgvs": source_hgvs if input_kind.startswith("gene_") else hgvs,
+                "mane_select": mane if input_kind.startswith("gene_") else None,
+                "hgvs_type": hgvs_type,
+                "genomic_hgvs": matching_genomic,
+                **location,
+                "category": category(hgvs),
+            }
+            stats["candidates"] += 1
+            stats[f"candidates_{input_kind}"] += 1
+            retain(candidate)
+
+    # Pop processed entries so the large HGVS indexes shrink throughout the
+    # join instead of remaining live while candidate dictionaries are built.
+    while transcript_expressions:
+        variation_id, transcripts = transcript_expressions.popitem()
+        process_variation(
+            variation_id,
+            transcripts,
+            protein_expressions.pop(variation_id, []),
+            genomic.pop(variation_id, set()),
+        )
+    while protein_expressions:
+        variation_id, proteins = protein_expressions.popitem()
+        process_variation(
+            variation_id,
+            [],
+            proteins,
+            genomic.pop(variation_id, set()),
+        )
+
+    genomic.clear()
+    locations.clear()
+    seen_inputs.clear()
+
+    if limit_per_group is not None:
+        candidates = [item[2] for heap in retained.values() for item in heap]
+        stats["retained_candidates"] = len(candidates)
     for name in INPUT_KINDS:
-        stats[f"candidates_{name}"] = input_kind_counts[name]
+        stats.setdefault(f"candidates_{name}", 0)
     return candidates, stats
 
 
@@ -372,6 +438,12 @@ class ResponseCache:
                 handle.write(json.dumps({"key": key, "value": value}, ensure_ascii=False, sort_keys=True) + "\n")
 
 
+class ApiPostError(RuntimeError):
+    def __init__(self, message: str, *, timed_out: bool = False):
+        super().__init__(message)
+        self.timed_out = timed_out
+
+
 def api_post(url: str, ids: list[str], timeout: float, attempts: int = 4) -> Any:
     body = json.dumps({"ids": ids}, ensure_ascii=False).encode()
     request = urllib.request.Request(
@@ -385,18 +457,31 @@ def api_post(url: str, ids: list[str], timeout: float, attempts: int = 4) -> Any
         method="POST",
     )
     last_error: Exception | None = None
+    attempts_made = 0
+    timed_out = False
     for attempt in range(attempts):
+        attempts_made = attempt + 1
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 return json.load(response)
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
             last_error = exc
+            timed_out = isinstance(exc, TimeoutError) or isinstance(
+                getattr(exc, "reason", None), TimeoutError
+            )
             retryable = not isinstance(exc, urllib.error.HTTPError) or exc.code == 429 or exc.code >= 500
-            if not retryable or attempt + 1 == attempts:
+            # A large valid batch can exceed the REST response timeout. Let the
+            # caller bisect it immediately; singleton requests still get retries.
+            if timed_out and len(ids) > 1:
+                break
+            if not retryable or attempts_made == attempts:
                 break
             retry_after = exc.headers.get("Retry-After") if isinstance(exc, urllib.error.HTTPError) else None
             time.sleep(float(retry_after) if retry_after else 2**attempt)
-    raise RuntimeError(f"POST failed after {attempts} attempts: {url}: {last_error}")
+    raise ApiPostError(
+        f"POST failed after {attempts_made} attempt(s): {url}: {last_error}",
+        timed_out=timed_out,
+    )
 
 
 def response_input(value: Any) -> str | None:
@@ -424,24 +509,38 @@ def fetch_recoder(
     cache: ResponseCache,
     mode: str,
 ) -> dict[str, Any]:
-    query = urllib.parse.urlencode({"vcf_string": 1, "fields": "hgvsg,hgvsc,hgvsp,spdi"})
-    url = f"{server.rstrip('/')}/variant_recoder/{urllib.parse.quote(species)}?{query}"
     result: dict[str, Any] = {}
-    missing: list[str] = []
+    missing_by_url: dict[str, list[str]] = defaultdict(list)
     for hgvs in inputs:
+        # Only unversioned RefSeq inputs need hgvsc to discover the transcript
+        # version chosen by Variant Recoder. spdi keeps every other response
+        # small while vcf_string remains available through its own option.
+        fields = "hgvsc" if re.match(r"^NM_\d+:[cn]\.", hgvs) else "spdi"
+        query = urllib.parse.urlencode({"vcf_string": 1, "fields": fields})
+        url = f"{server.rstrip('/')}/variant_recoder/{urllib.parse.quote(species)}?{query}"
         key = f"{url}:{hgvs}"
         cached = cache.get(key)
         if cached is None:
-            missing.append(hgvs)
+            missing_by_url[url].append(hgvs)
         else:
             result[hgvs] = cached
     if mode == "cache":
-        for hgvs in missing:
-            result[hgvs] = {"cache_error": "cache_miss", "input": hgvs}
+        for missing in missing_by_url.values():
+            for hgvs in missing:
+                result[hgvs] = {"cache_error": "cache_miss", "input": hgvs}
         return result
 
-    def fetch_batch(batch: list[str]) -> dict[str, Any]:
-        response = api_post(url, batch, timeout)
+    def fetch_batch(url: str, batch: list[str]) -> dict[str, Any]:
+        try:
+            response = api_post(url, batch, timeout)
+        except ApiPostError as exc:
+            if not exc.timed_out or len(batch) == 1:
+                raise
+            middle = len(batch) // 2
+            return {
+                **fetch_batch(url, batch[:middle]),
+                **fetch_batch(url, batch[middle:]),
+            }
         if not isinstance(response, list):
             # Variant Recoder returns {"error": ...} when every ID in a request
             # is invalid. Bisect to preserve valid records and identify the
@@ -449,7 +548,10 @@ def fetch_recoder(
             if len(batch) == 1:
                 return {batch[0]: response}
             middle = len(batch) // 2
-            return {**fetch_batch(batch[:middle]), **fetch_batch(batch[middle:])}
+            return {
+                **fetch_batch(url, batch[:middle]),
+                **fetch_batch(url, batch[middle:]),
+            }
         # The documented response is one element per input. Prefer the echoed
         # input, but retain positional association for warning/error-only rows.
         associated: dict[str, Any] = {}
@@ -464,14 +566,15 @@ def fetch_recoder(
             for hgvs in batch
         }
 
-    for offset in range(0, len(missing), batch_size):
-        batch = missing[offset:offset + batch_size]
-        fetched = fetch_batch(batch)
-        for hgvs, item in fetched.items():
-            result[hgvs] = item
-            cache.put(f"{url}:{hgvs}", item)
-        if offset + batch_size < len(missing):
-            time.sleep(0.1)
+    for url, missing in missing_by_url.items():
+        for offset in range(0, len(missing), batch_size):
+            batch = missing[offset:offset + batch_size]
+            fetched = fetch_batch(url, batch)
+            for hgvs, item in fetched.items():
+                result[hgvs] = item
+                cache.put(f"{url}:{hgvs}", item)
+            if offset + batch_size < len(missing):
+                time.sleep(0.1)
     return result
 
 
@@ -635,7 +738,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=20260727)
     parser.add_argument("--mode", choices=("live", "cache"), default="live")
     parser.add_argument("--cache", type=Path)
-    parser.add_argument("--batch-size", type=int, default=100)
+    parser.add_argument("--batch-size", type=int, default=20)
     parser.add_argument("--timeout", type=float, default=60.0)
     return parser.parse_args()
 
@@ -649,8 +752,15 @@ def main() -> int:
         print("--batch-size must be between 1 and the Ensembl POST limit of 200", file=sys.stderr)
         return 2
 
-    candidates, stats = load_candidates(args.variant_summary, args.hgvs4variation, args.mane_summary)
-    attempted = balanced_order(candidates, args.seed)[: args.target_count * args.candidate_multiplier]
+    attempt_limit = args.target_count * args.candidate_multiplier
+    candidates, stats = load_candidates(
+        args.variant_summary,
+        args.hgvs4variation,
+        args.mane_summary,
+        limit_per_group=attempt_limit,
+        seed=args.seed,
+    )
+    attempted = balanced_order(candidates, args.seed)[:attempt_limit]
     query_inputs = list(dict.fromkeys(
         [candidate["input"] for candidate in attempted]
         + [candidate["oracle_hgvs"] for candidate in attempted]
@@ -677,7 +787,10 @@ def main() -> int:
         "variant_recoder_options": {
             "species": args.species,
             "vcf_string": 1,
-            "fields": "hgvsg,hgvsc,hgvsp,spdi",
+            "fields": {
+                "unversioned_refseq": "hgvsc",
+                "other_inputs": "spdi",
+            },
         },
         "clinvar_release": args.clinvar_release,
         "mane_release": args.mane_release,

@@ -4,7 +4,9 @@ import importlib.util
 import io
 import json
 import sys
+import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest import mock
 from pathlib import Path
 
@@ -21,6 +23,7 @@ def load(name, relative):
 
 
 builder = load("truth_builder", "tools/build_truth_set.py")
+clinvar_builder = load("clinvar_truth_builder", "tools/build_clinvar_truth_set.py")
 evaluator = load("truth_evaluator", "tools/evaluate_hgvs2vcf.py")
 
 
@@ -52,6 +55,7 @@ class BuildTruthSetTests(unittest.TestCase):
             case["category"] for case in candidates if case["input_kind"] == "gene_hgvsp"
         ))
         self.assertEqual(3, stats["candidates"])
+        self.assertEqual(3, stats["hgvs_rows"])
         self.assertEqual(1, stats["candidates_gene_hgvsp"])
         self.assertEqual(1, stats["candidates_gene_hgvsc"])
         self.assertEqual(1, stats["candidates_refseq_hgvsc"])
@@ -64,6 +68,53 @@ class BuildTruthSetTests(unittest.TestCase):
             for case in candidates if case["input_kind"].startswith("gene_")
         ))
         self.assertTrue(all(case["vcf"]["chrom"] != "NC_000007.13" for case in candidates))
+
+    def test_candidate_retention_is_bounded_per_group(self):
+        variant_header = (ROOT / "tests/fixtures/variant_summary.txt").read_text(
+            encoding="utf-8"
+        ).splitlines()[0]
+        hgvs_header = (ROOT / "tests/fixtures/hgvs4variation.txt").read_text(
+            encoding="utf-8"
+        ).splitlines()[4]
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            temporary = Path(temporary_dir)
+            variant_summary = temporary / "variant_summary.txt"
+            hgvs = temporary / "hgvs4variation.txt"
+            variant_summary.write_text(
+                variant_header + "\n" +
+                "12345\tsingle nucleotide variant\tone\t4846\tNOS3\tGRCh38\t"
+                "NC_000007.14\t7\t150999023\t150999023\tT\tG\t207776\t"
+                "150999023\tT\tG\n" +
+                "12346\tsingle nucleotide variant\ttwo\t4846\tNOS3\tGRCh38\t"
+                "NC_000007.14\t7\t150999024\t150999024\tA\tC\t207778\t"
+                "150999024\tA\tC\n",
+                encoding="utf-8",
+            )
+            hgvs.write_text(
+                hgvs_header + "\n" +
+                "NOS3\t4846\t207776\t12345\tcoding\tna\t"
+                "NM_000603.4:c.894T>G\tc.894T>G\tNP_000594.2:p.Asp298Glu\t"
+                "p.Asp298Glu\tYes\tNo\tNo\n" +
+                "NOS3\t4846\t207776\t12345\tgenomic\tGRCh38\t"
+                "NC_000007.14:g.150999023T>G\tg.150999023T>G\t-\t-\tNo\tNo\tNo\n" +
+                "NOS3\t4846\t207778\t12346\tcoding\tna\t"
+                "NM_000603.4:c.895A>C\tc.895A>C\tNP_000594.2:p.Asp299Ala\t"
+                "p.Asp299Ala\tYes\tNo\tNo\n" +
+                "NOS3\t4846\t207778\t12346\tgenomic\tGRCh38\t"
+                "NC_000007.14:g.150999024A>C\tg.150999024A>C\t-\t-\tNo\tNo\tNo\n",
+                encoding="utf-8",
+            )
+            candidates, stats = builder.load_candidates(
+                variant_summary,
+                hgvs,
+                ROOT / "tests/fixtures/mane_summary.txt",
+                limit_per_group=1,
+                seed=7,
+            )
+        self.assertEqual(6, stats["candidates"])
+        self.assertEqual(3, stats["retained_candidates"])
+        self.assertEqual(3, len(candidates))
+        self.assertEqual(set(builder.INPUT_KINDS), {case["input_kind"] for case in candidates})
 
     def test_parse_variant_recoder_vcf_formats(self):
         self.assertEqual(
@@ -179,6 +230,7 @@ class BuildTruthSetTests(unittest.TestCase):
         def fake_urlopen(request, timeout):
             self.assertEqual("POST", request.method)
             self.assertIn("vcf_string=1", request.full_url)
+            self.assertIn("fields=spdi", request.full_url)
             payload = json.loads(request.data)
             # Deliberately reverse the response to verify echoed-input matching.
             body = json.dumps(
@@ -193,6 +245,23 @@ class BuildTruthSetTests(unittest.TestCase):
             )
         self.assertEqual("one", builder.response_input(result["one"]))
         self.assertEqual("two", builder.response_input(result["two"]))
+
+    def test_fetch_recoder_requests_hgvsc_for_unversioned_refseq(self):
+        seen_urls = []
+
+        def fake_api_post(url, ids, _timeout):
+            seen_urls.append(url)
+            return [{"G": {"input": value, "vcf_string": "7-1-A-G"}} for value in ids]
+
+        with mock.patch.object(builder, "api_post", side_effect=fake_api_post):
+            builder.fetch_recoder(
+                ["NM_000603:c.894T>G", "NM_000603.4:c.894T>G"],
+                "https://example.test", "homo_sapiens", 100, 2,
+                builder.ResponseCache(None), "live",
+            )
+        self.assertEqual(2, len(seen_urls))
+        self.assertTrue(any("fields=hgvsc" in url for url in seen_urls))
+        self.assertTrue(any("fields=spdi" in url for url in seen_urls))
 
     def test_fetch_recoder_bisects_all_invalid_batch(self):
         class FakeResponse(io.BytesIO):
@@ -219,6 +288,24 @@ class BuildTruthSetTests(unittest.TestCase):
         self.assertEqual("unable to parse bad-two", result["bad-two"]["error"])
         self.assertEqual(3, len(calls))
 
+    def test_fetch_recoder_bisects_timed_out_batch(self):
+        calls = []
+
+        def fake_api_post(_url, ids, _timeout):
+            calls.append(ids)
+            if len(ids) > 1:
+                raise builder.ApiPostError("read timed out", timed_out=True)
+            return [{"G": {"input": ids[0], "vcf_string": "7-1-A-G"}}]
+
+        with mock.patch.object(builder, "api_post", side_effect=fake_api_post):
+            result = builder.fetch_recoder(
+                ["one", "two"], "https://example.test", "homo_sapiens",
+                100, 2, builder.ResponseCache(None), "live",
+            )
+        self.assertEqual("one", builder.response_input(result["one"]))
+        self.assertEqual("two", builder.response_input(result["two"]))
+        self.assertEqual([["one", "two"], ["one"], ["two"]], calls)
+
 
 class EvaluateTests(unittest.TestCase):
     def setUp(self):
@@ -242,6 +329,9 @@ class EvaluateTests(unittest.TestCase):
             "ambiguous": False,
         }
         self.assertTrue(evaluator.compare_case(self.case, observed, True)["passed"])
+
+    def test_clinvar_normalized_confidence_is_gold(self):
+        self.assertIn("clinvar_bcftools_normalized", evaluator.GOLD_CONFIDENCES)
 
     def test_coordinate_difference_is_reported(self):
         observed = {
@@ -287,6 +377,68 @@ class EvaluateTests(unittest.TestCase):
             )
             self.assertEqual(1, len(response))
             self.assertEqual("NM_000603.4:c.894T>G", response[0]["input"])
+
+
+class ClinVarTruthSetTests(unittest.TestCase):
+    def fixture_candidate(self):
+        candidates, _ = builder.load_candidates(
+            ROOT / "tests/fixtures/variant_summary.txt",
+            ROOT / "tests/fixtures/hgvs4variation.txt",
+            ROOT / "tests/fixtures/mane_summary.txt",
+        )
+        return next(case for case in candidates if case["input_kind"] == "gene_hgvsc")
+
+    def test_bcftools_normalization_is_associated_with_input(self):
+        candidate = self.fixture_candidate()
+
+        def fake_run(command, **_kwargs):
+            self.assertIn("--fasta-ref", command)
+            self.assertIn("--check-ref", command)
+            self.assertIn("-any", command)
+            input_text = Path(command[-1]).read_text(encoding="utf-8")
+            self.assertIn("##contig=<ID=NC_000007.14>", input_text)
+            self.assertIn(
+                "NC_000007.14\t150999023\tcandidate-0\tT\tG",
+                input_text,
+            )
+            return SimpleNamespace(
+                returncode=0,
+                stdout=(
+                    "##fileformat=VCFv4.3\n"
+                    "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"
+                    "NC_000007.14\t150999023\tcandidate-0\tT\tG\t.\tPASS\t.\n"
+                ),
+                stderr="Lines   total/split/realigned/skipped:\t1/0/0/0",
+            )
+
+        with mock.patch.object(clinvar_builder.subprocess, "run", side_effect=fake_run):
+            normalized, diagnostics = clinvar_builder.normalize_vcfs(
+                [candidate],
+                Path("/reference/GRCh38.p14.fna"),
+                "bcftools",
+            )
+        self.assertEqual(
+            [("NC_000007.14", 150999023, "T", "G")],
+            [builder.vcf_key(value) for value in normalized[candidate["input"]]],
+        )
+        self.assertEqual(1, diagnostics["input_records"])
+        self.assertEqual(1, diagnostics["output_records"])
+
+    def test_clinvar_record_keeps_raw_and_normalized_vcf(self):
+        candidate = self.fixture_candidate()
+        normalized = [{"chrom": "NC_000007.14", "pos": 150999023, "ref": "T", "alt": "G"}]
+        record = clinvar_builder.make_clinvar_record(
+            candidate,
+            normalized,
+            {"oracle": "test"},
+        )
+        self.assertEqual("clinvar_bcftools_normalized", record["confidence"])
+        self.assertEqual("NM_000603.4", record["expected"]["transcript"])
+        self.assertEqual(normalized, record["expected"]["vcf"])
+        self.assertEqual(
+            candidate["vcf"],
+            record["provenance"]["clinvar_vcf_before_normalization"],
+        )
 
 
 if __name__ == "__main__":

@@ -14,6 +14,12 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
+GOLD_CONFIDENCES = {
+    "ensembl_variant_recoder",
+    "clinvar_bcftools_normalized",
+}
+
+
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     records = []
     with path.open(encoding="utf-8") as handle:
@@ -136,7 +142,7 @@ def main() -> int:
     args = parse_args()
     cases = load_jsonl(args.truth_set)
     if not args.allow_non_gold:
-        non_gold = [x["id"] for x in cases if x.get("confidence") != "ensembl_variant_recoder"]
+        non_gold = [x["id"] for x in cases if x.get("confidence") not in GOLD_CONFIDENCES]
         if non_gold:
             print(f"truth set contains {len(non_gold)} non-gold case(s); use --allow-non-gold only for fixtures", file=sys.stderr)
             return 2

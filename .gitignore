@@ -20,3 +20,5 @@ evaluation/
 # Generated diagnostics; truth/gold.jsonl may be committed
 truth/quarantine.jsonl
 truth/build-report.json
+truth/clinvar/quarantine.jsonl
+truth/clinvar/build-report.json
