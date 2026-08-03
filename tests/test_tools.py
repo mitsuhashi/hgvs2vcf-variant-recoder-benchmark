@@ -411,10 +411,14 @@ class EvaluateTests(unittest.TestCase):
             "by_category": {"coding_substitution": {"passed": 1, "failed": 1}},
         }
         report = evaluator.markdown_report(summary, [self.case, self.case], results)
-        self.assertIn("| PASS |", report)
-        self.assertIn("| FAIL |", report)
-        self.assertIn("`NC_000007.14:150999023 T>G`", report)
-        self.assertIn("`NC_000007.14:150999024 T>G`", report)
+        self.assertIn("## Successful results", report)
+        self.assertIn("## Failed results", report)
+        self.assertIn("| Category | HGVS | VCF comparison |", report)
+        self.assertIn("| Category | HGVS | VCF comparison | Difference |", report)
+        self.assertIn("<code>coding_substitution</code>", report)
+        self.assertIn("<code>NC_000007.14:150999023<br>REF: T<br>ALT: G</code>", report)
+        self.assertIn("<code>NC_000007.14:150999024<br>REF: T<br>ALT: G</code>", report)
+        self.assertIn("VCF mismatch", report)
 
     def test_post_batch_contract(self):
         class FakeResponse(io.BytesIO):

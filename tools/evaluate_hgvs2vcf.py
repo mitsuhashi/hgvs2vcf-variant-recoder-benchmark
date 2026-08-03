@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import sys
 import time
@@ -100,18 +101,60 @@ def compare_case(case: dict[str, Any], observed: dict[str, Any], check_gene: boo
     }
 
 
-def markdown_escape(value: Any) -> str:
-    return str(value).replace("|", "\\|").replace("`", "&#96;")
+def html_breakable(value: Any, chunk_size: int = 24) -> str:
+    text = str(value)
+    return "<wbr>".join(
+        html.escape(text[offset : offset + chunk_size])
+        for offset in range(0, len(text), chunk_size)
+    )
+
+
+def html_code(value: Any) -> str:
+    if value is None:
+        return "—"
+    if isinstance(value, (dict, list, tuple)):
+        value = json.dumps(value, ensure_ascii=False, sort_keys=True)
+    return f"<code>{html_breakable(value)}</code>"
 
 
 def markdown_vcf(rows: Iterable[dict[str, Any]]) -> str:
-    values = [
-        f"{row['chrom']}:{row['pos']} {row['ref']}>{row['alt']}"
-        for row in rows
-    ]
+    values = []
+    for row in rows:
+        locus = html.escape(f"{row['chrom']}:{row['pos']}")
+        ref = html_breakable(row["ref"])
+        alt = html_breakable(row["alt"])
+        values.append(f"<code>{locus}<br>REF: {ref}<br>ALT: {alt}</code>")
     if not values:
         return "—"
-    return "<br>".join(f"`{markdown_escape(value)}`" for value in values)
+    return "<br><br>".join(values)
+
+
+def markdown_vcf_comparison(expected: dict[str, Any], observed: dict[str, Any]) -> str:
+    expected_vcf = markdown_vcf(expected.get("vcf", []))
+    if "error" in observed:
+        observed_vcf = f"Error:<br>{html_code(observed['error'])}"
+    else:
+        observed_vcf = markdown_vcf(observed.get("vcf", []))
+    return (
+        f"<strong>Variant Recoder</strong><br>{expected_vcf}<br><br>"
+        f"<strong>hgvs2vcf</strong><br>{observed_vcf}"
+    )
+
+
+def markdown_differences(differences: dict[str, Any]) -> str:
+    values = []
+    for name, difference in sorted(differences.items()):
+        if name == "error":
+            values.append("API error")
+        elif name == "vcf":
+            values.append("VCF mismatch")
+        else:
+            values.append(
+                f"<strong>{html.escape(name)}</strong><br>"
+                f"expected: {html_code(difference.get('expected'))}<br>"
+                f"observed: {html_code(difference.get('observed'))}"
+            )
+    return "<br><br>".join(values) or "—"
 
 
 def markdown_report(
@@ -136,31 +179,44 @@ def markdown_report(
     for category, counts in sorted(summary["by_category"].items()):
         total = counts["passed"] + counts["failed"]
         lines.append(f"| {category} | {counts['passed']} | {counts['failed']} | {counts['passed'] / total:.2%} |")
+    case_results = list(zip(cases, results))
+
     lines.extend(
         [
             "",
-            "## All results",
+            "## Successful results",
             "",
-            "| Result | HGVS | Variant Recoder expected VCF | hgvs2vcf observed VCF | Differences |",
-            "|---|---|---|---|---|",
+            "| Category | HGVS | VCF comparison |",
+            "|---|---|---|",
         ]
     )
-    for case, result in zip(cases, results):
-        expected = case["expected"]
-        observed = result["observed"]
-        expected_vcf = markdown_vcf(expected.get("vcf", []))
-        observed_vcf = markdown_vcf(observed.get("vcf", []))
-        if "error" in observed:
-            observed_vcf = f"Error: `{markdown_escape(observed['error'])}`"
-        differences = "—"
-        if result["differences"]:
-            differences = "`" + markdown_escape(
-                json.dumps(result["differences"], ensure_ascii=False, sort_keys=True)
-            ) + "`"
-        status = "PASS" if result["passed"] else "FAIL"
+    successful = [(case, result) for case, result in case_results if result["passed"]]
+    if not successful:
+        lines.append("| — | None. | — |")
+    for case, result in successful:
+        comparison = markdown_vcf_comparison(case["expected"], result["observed"])
         lines.append(
-            f"| {status} | `{markdown_escape(case['input'])}` | {expected_vcf} | "
-            f"{observed_vcf} | {differences} |"
+            f"| {html_code(result['category'])} | {html_code(case['input'])} | {comparison} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Failed results",
+            "",
+            "| Category | HGVS | VCF comparison | Difference |",
+            "|---|---|---|---|",
+        ]
+    )
+    failed = [(case, result) for case, result in case_results if not result["passed"]]
+    if not failed:
+        lines.append("| — | None. | — | — |")
+    for case, result in failed:
+        comparison = markdown_vcf_comparison(case["expected"], result["observed"])
+        differences = markdown_differences(result["differences"])
+        lines.append(
+            f"| {html_code(result['category'])} | {html_code(case['input'])} | "
+            f"{comparison} | {differences} |"
         )
     return "\n".join(lines) + "\n"
 

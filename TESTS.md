@@ -109,7 +109,8 @@ VCF集合の順序が異なっても、`chrom`、`pos`、`ref`、`alt` が同じ
 
 ### 19. `test_markdown_report_lists_passed_and_failed_vcfs`
 
-Markdownレポートに成功・失敗の両方と、期待VCF・観測VCFが表示されることを確認する。
+Markdownレポートの成功・失敗それぞれの表にcategory、HGVS、期待VCF・観測VCFが
+表示されることを確認する。
 
 ### 20. `test_post_batch_contract`
 
