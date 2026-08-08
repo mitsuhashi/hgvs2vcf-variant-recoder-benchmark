@@ -3,114 +3,202 @@
     {
       "category": "coding_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000003.12",
+              10146574,
+              "AATTATTTGTGCCATCTCTCAATGTTGA",
+              "A"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000003.12",
+              10146571,
+              "CTGAATTATTTGTGCCATCTCTCAATGT",
+              "C"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-1737106-de82027c1e",
       "input": "VHL:c.402_428del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "VHL:c.402_428del"
+        "ambiguous": false,
+        "gene": "VHL",
+        "input": "VHL:c.402_428del",
+        "transcript": "ENST00000256474.3",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000003.12",
+            "pos": 10146571,
+            "ref": "CTGAATTATTTGTGCCATCTCTCAATGT"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Glu440del\" (only substitutions here)"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000006.12",
+              3153880,
+              "CCTC",
+              "C"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000006.12",
+              3153879,
+              "CCCT",
+              "C"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-2723300-2e2a5c457f",
       "input": "TUBB2A:p.Glu440del",
       "observed": {
-        "error": "unsupported protein change \"p.Glu440del\" (only substitutions here)",
-        "input": "TUBB2A:p.Glu440del"
+        "ambiguous": false,
+        "gene": "TUBB2A",
+        "input": "TUBB2A:p.Glu440del",
+        "transcript": "ENST00000333628.4",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000006.12",
+            "pos": 3153879,
+            "ref": "CCCT"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "coding_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1386932-5f56cfdbd3",
       "input": "NM_000720:c.2151_2152del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "NM_000720:c.2151_2152del"
+        "ambiguous": false,
+        "gene": "CACNA1D",
+        "input": "NM_000720:c.2151_2152del",
+        "transcript": "NM_000720.4",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000003.12",
+            "pos": 53723989,
+            "ref": "CAG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-4690013-1ee27608ce",
       "input": "MYH14:c.2337_2338delinsAA",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "MYH14:c.2337_2338delinsAA"
+        "ambiguous": false,
+        "gene": "MYH14",
+        "input": "MYH14:c.2337_2338delinsAA",
+        "transcript": "ENST00000642316.2",
+        "vcf": [
+          {
+            "alt": "AA",
+            "chrom": "NC_000019.10",
+            "pos": 50259248,
+            "ref": "CC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Ile441=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2079340-c30fa64030",
       "input": "MTR:p.Ile441=",
       "observed": {
-        "error": "unsupported protein change \"p.Ile441=\" (only substitutions here)",
-        "input": "MTR:p.Ile441="
+        "ambiguous": true,
+        "gene": "MTR",
+        "input": "MTR:p.Ile441=",
+        "transcript": "ENST00000366577.10",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000001.11",
+            "pos": 236835681,
+            "ref": "C"
+          },
+          {
+            "alt": "A",
+            "chrom": "NC_000001.11",
+            "pos": 236835681,
+            "ref": "C"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (2 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2446064-3086333c4c",
       "input": "NM_001368038:c.835_837delinsTGC",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_001368038:c.835_837delinsTGC"
+        "ambiguous": false,
+        "gene": "CEP83",
+        "input": "NM_001368038:c.835_837delinsTGC",
+        "transcript": "NM_001368038.1",
+        "vcf": [
+          {
+            "alt": "GCA",
+            "chrom": "NC_000012.12",
+            "pos": 94375982,
+            "ref": "ACG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-962651-e916378382",
       "input": "VIM:c.1374_1375dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "VIM:c.1374_1375dup"
+        "ambiguous": false,
+        "gene": "VIM",
+        "input": "VIM:c.1374_1375dup",
+        "transcript": "ENST00000544301.7",
+        "vcf": [
+          {
+            "alt": "CTT",
+            "chrom": "NC_000010.11",
+            "pos": 17237243,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -137,66 +225,128 @@
     {
       "category": "coding_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000017.11",
+              7673745,
+              "T",
+              "TTT"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000017.11",
+              7673743,
+              "C",
+              "CTT"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-4189260-179112aaab",
       "input": "NM_000546:c.875_876dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NM_000546:c.875_876dup"
+        "ambiguous": false,
+        "gene": "TP53",
+        "input": "NM_000546:c.875_876dup",
+        "transcript": "NM_000546.6",
+        "vcf": [
+          {
+            "alt": "CTT",
+            "chrom": "NC_000017.11",
+            "pos": 7673743,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "coding_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type ins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2767828-bb74e264f5",
       "input": "MMUT:c.96_97insGG",
       "observed": {
-        "error": "edit type ins not yet implemented in this prototype",
-        "input": "MMUT:c.96_97insGG"
+        "ambiguous": false,
+        "gene": "MMUT",
+        "input": "MMUT:c.96_97insGG",
+        "transcript": "ENST00000274813.4",
+        "vcf": [
+          {
+            "alt": "GCC",
+            "chrom": "NC_000006.12",
+            "pos": 49459370,
+            "ref": "G"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Asn351del\" (only substitutions here)"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000002.12",
+              190921035,
+              "TAAT",
+              "T"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000002.12",
+              190921032,
+              "AAAT",
+              "A"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-1098677-939e50988a",
       "input": "GLS:p.Asn351del",
       "observed": {
-        "error": "unsupported protein change \"p.Asn351del\" (only substitutions here)",
-        "input": "GLS:p.Asn351del"
+        "ambiguous": false,
+        "gene": "GLS",
+        "input": "GLS:p.Asn351del",
+        "transcript": "ENST00000320717.8",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000002.12",
+            "pos": 190921032,
+            "ref": "AAAT"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "coding_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type ins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-419191-ce3e3b9d67",
       "input": "NM_018136:c.5101_5102insG",
       "observed": {
-        "error": "edit type ins not yet implemented in this prototype",
-        "input": "NM_018136:c.5101_5102insG"
+        "ambiguous": false,
+        "gene": "ASPM",
+        "input": "NM_018136:c.5101_5102insG",
+        "transcript": "NM_018136.5",
+        "vcf": [
+          {
+            "alt": "AC",
+            "chrom": "NC_000001.11",
+            "pos": 197104149,
+            "ref": "A"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_substitution",
@@ -222,51 +372,83 @@
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Leu61=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3013127-43602b9745",
       "input": "MS4A1:p.Leu61=",
       "observed": {
-        "error": "unsupported protein change \"p.Leu61=\" (only substitutions here)",
-        "input": "MS4A1:p.Leu61="
+        "ambiguous": true,
+        "gene": "MS4A1",
+        "input": "MS4A1:p.Leu61=",
+        "transcript": "ENST00000345732.9",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000011.10",
+            "pos": 60463025,
+            "ref": "C"
+          },
+          {
+            "alt": "A",
+            "chrom": "NC_000011.10",
+            "pos": 60463025,
+            "ref": "C"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000011.10",
+            "pos": 60463025,
+            "ref": "C"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.12492_12493inv\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2899333-da12248e62",
       "input": "NM_001277115:c.12492_12493inv",
       "observed": {
-        "error": "unsupported cDNA change \"c.12492_12493inv\"",
-        "input": "NM_001277115:c.12492_12493inv"
+        "ambiguous": false,
+        "gene": "DNAH11",
+        "input": "NM_001277115:c.12492_12493inv",
+        "transcript": "NM_001277115.2",
+        "vcf": [
+          {
+            "alt": "TG",
+            "chrom": "NC_000007.14",
+            "pos": 21884395,
+            "ref": "CA"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1257055-72029e5c09",
       "input": "TMEM237:c.554-56del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "TMEM237:c.554-56del"
+        "ambiguous": false,
+        "gene": "TMEM237",
+        "input": "TMEM237:c.554-56del",
+        "transcript": "ENST00000409883.7",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000002.12",
+            "pos": 201629907,
+            "ref": "AT"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -314,115 +496,184 @@
     },
     {
       "category": "intronic_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-922365-50497defa5",
       "input": "CDH1:c.48+6_48+7delinsTG",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "CDH1:c.48+6_48+7delinsTG"
+        "ambiguous": false,
+        "gene": "CDH1",
+        "input": "CDH1:c.48+6_48+7delinsTG",
+        "transcript": "ENST00000261769.10",
+        "vcf": [
+          {
+            "alt": "TG",
+            "chrom": "NC_000016.10",
+            "pos": 68737469,
+            "ref": "CC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Asn1366del\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1016454-d6a46d6dc5",
       "input": "GRIN2B:p.Asn1366del",
       "observed": {
-        "error": "unsupported protein change \"p.Asn1366del\" (only substitutions here)",
-        "input": "GRIN2B:p.Asn1366del"
+        "ambiguous": false,
+        "gene": "GRIN2B",
+        "input": "GRIN2B:p.Asn1366del",
+        "transcript": "ENST00000609686.4",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000012.12",
+            "pos": 13563139,
+            "ref": "GGTT"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3632272-a87d83b6a0",
       "input": "NM_033115:c.267-10220_267-10219del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "NM_033115:c.267-10220_267-10219del"
+        "ambiguous": false,
+        "gene": "TBCK",
+        "input": "NM_033115:c.267-10220_267-10219del",
+        "transcript": "NM_033115.5",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000004.12",
+            "pos": 106262225,
+            "ref": "CAA"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000008.11",
+              117822463,
+              "A",
+              "AA"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000008.11",
+              117822462,
+              "T",
+              "TA"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-2735202-d2887fda93",
       "input": "EXT1:c.1417+2dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "EXT1:c.1417+2dup"
+        "ambiguous": false,
+        "gene": "EXT1",
+        "input": "EXT1:c.1417+2dup",
+        "transcript": "ENST00000378204.7",
+        "vcf": [
+          {
+            "alt": "TA",
+            "chrom": "NC_000008.11",
+            "pos": 117822462,
+            "ref": "T"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Arg404=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-736032-8af170755f",
       "input": "CSF1:p.Arg404=",
       "observed": {
-        "error": "unsupported protein change \"p.Arg404=\" (only substitutions here)",
-        "input": "CSF1:p.Arg404="
+        "ambiguous": true,
+        "gene": "CSF1",
+        "input": "CSF1:p.Arg404=",
+        "transcript": "ENST00000329608.11",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000001.11",
+            "pos": 109923831,
+            "ref": "A"
+          },
+          {
+            "alt": "A",
+            "chrom": "NC_000001.11",
+            "pos": 109923833,
+            "ref": "G"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (2 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1553574-2a9907c3fa",
       "input": "NM_000154:c.166-5_166-4delinsAT",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_000154:c.166-5_166-4delinsAT"
+        "ambiguous": false,
+        "gene": "GALK1",
+        "input": "NM_000154:c.166-5_166-4delinsAT",
+        "transcript": "NM_000154.2",
+        "vcf": [
+          {
+            "alt": "AT",
+            "chrom": "NC_000017.11",
+            "pos": 75764090,
+            "ref": "GC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type ins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1956828-0b607e5589",
       "input": "SCN8A:c.2545-19_2545-18insC",
       "observed": {
-        "error": "edit type ins not yet implemented in this prototype",
-        "input": "SCN8A:c.2545-19_2545-18insC"
+        "ambiguous": false,
+        "gene": "SCN8A",
+        "input": "SCN8A:c.2545-19_2545-18insC",
+        "transcript": "ENST00000627620.5",
+        "vcf": [
+          {
+            "alt": "GC",
+            "chrom": "NC_000012.12",
+            "pos": 51765652,
+            "ref": "G"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -448,19 +699,25 @@
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-420779-5067969c06",
       "input": "NM_032446:c.2362+2dupT",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NM_032446:c.2362+2dupT"
+        "ambiguous": false,
+        "gene": "MEGF10",
+        "input": "NM_032446:c.2362+2dupT",
+        "transcript": "NM_032446.3",
+        "vcf": [
+          {
+            "alt": "GT",
+            "chrom": "NC_000005.10",
+            "pos": 127440868,
+            "ref": "G"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_substitution",
@@ -486,67 +743,124 @@
     },
     {
       "category": "protein_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Gln2748del\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3056531-76baec7765",
       "input": "EP400:p.Gln2748del",
       "observed": {
-        "error": "unsupported protein change \"p.Gln2748del\" (only substitutions here)",
-        "input": "EP400:p.Gln2748del"
+        "ambiguous": false,
+        "gene": "EP400",
+        "input": "EP400:p.Gln2748del",
+        "transcript": "ENST00000389561.7",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000012.12",
+            "pos": 132062608,
+            "ref": "ACAG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.6617-9_6617-8inv\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-42404-d0b1ab0802",
       "input": "NM_000138:c.6617-9_6617-8inv",
       "observed": {
-        "error": "unsupported cDNA change \"c.6617-9_6617-8inv\"",
-        "input": "NM_000138:c.6617-9_6617-8inv"
+        "ambiguous": false,
+        "gene": "FBN1",
+        "input": "NM_000138:c.6617-9_6617-8inv",
+        "transcript": "NM_000138.5",
+        "vcf": [
+          {
+            "alt": "CT",
+            "chrom": "NC_000015.10",
+            "pos": 48432996,
+            "ref": "AG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "utr_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.*1_*4delACAA\""
+        "vcf": {
+          "expected": [
+            [
+              "NC_000003.12",
+              94053263,
+              "AACAA",
+              "A"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000003.12",
+              94053261,
+              "TAAAC",
+              "T"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-1967016-69d2bf5dd1",
       "input": "ARL13B:c.*1_*4delACAA",
       "observed": {
-        "error": "unsupported cDNA change \"c.*1_*4delACAA\"",
-        "input": "ARL13B:c.*1_*4delACAA"
+        "ambiguous": false,
+        "gene": "ARL13B",
+        "input": "ARL13B:c.*1_*4delACAA",
+        "transcript": "ENST00000394222.8",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000003.12",
+            "pos": 94053261,
+            "ref": "TAAAC"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Pro463=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1148607-2a72e80f18",
       "input": "CDH23:p.Pro463=",
       "observed": {
-        "error": "unsupported protein change \"p.Pro463=\" (only substitutions here)",
-        "input": "CDH23:p.Pro463="
+        "ambiguous": true,
+        "gene": "CDH23",
+        "input": "CDH23:p.Pro463=",
+        "transcript": "ENST00000224721.12",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000010.11",
+            "pos": 71646557,
+            "ref": "A"
+          },
+          {
+            "alt": "C",
+            "chrom": "NC_000010.11",
+            "pos": 71646557,
+            "ref": "A"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000010.11",
+            "pos": 71646557,
+            "ref": "A"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_substitution",
@@ -572,19 +886,25 @@
     },
     {
       "category": "utr_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.-5_-4delinsTT\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3362158-ca004a0dc8",
       "input": "GMPPB:c.-5_-4delinsTT",
       "observed": {
-        "error": "unsupported cDNA change \"c.-5_-4delinsTT\"",
-        "input": "GMPPB:c.-5_-4delinsTT"
+        "ambiguous": false,
+        "gene": "GMPPB",
+        "input": "GMPPB:c.-5_-4delinsTT",
+        "transcript": "ENST00000308388.7",
+        "vcf": [
+          {
+            "alt": "AA",
+            "chrom": "NC_000003.12",
+            "pos": 49723730,
+            "ref": "GC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -610,131 +930,255 @@
     },
     {
       "category": "coding_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2118848-9d293332c3",
       "input": "NM_001374828:c.6504del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "NM_001374828:c.6504del"
+        "ambiguous": false,
+        "gene": "ARID1B",
+        "input": "NM_001374828:c.6504del",
+        "transcript": "NM_001374828.1",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000006.12",
+            "pos": 157207275,
+            "ref": "GC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "utr_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.-255-340dup\""
+        "vcf": {
+          "expected": [
+            [
+              "NC_000015.10",
+              55498924,
+              "A",
+              "AA"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000015.10",
+              55498911,
+              "C",
+              "CA"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-1227610-d629ea777e",
       "input": "DNAAF4:c.-255-340dup",
       "observed": {
-        "error": "unsupported cDNA change \"c.-255-340dup\"",
-        "input": "DNAAF4:c.-255-340dup"
+        "ambiguous": false,
+        "gene": "DNAAF4",
+        "input": "DNAAF4:c.-255-340dup",
+        "transcript": "ENST00000321149.7",
+        "vcf": [
+          {
+            "alt": "CA",
+            "chrom": "NC_000015.10",
+            "pos": 55498911,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Ala177_Ala179del\" (only substitutions here)"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000009.12",
+              97854442,
+              "CGCCGCCGCC",
+              "C"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000009.12",
+              97854418,
+              "AGCCGCCGCC",
+              "A"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-2662509-a7c542ea15",
       "input": "FOXE1:p.Ala177_Ala179del",
       "observed": {
-        "error": "unsupported protein change \"p.Ala177_Ala179del\" (only substitutions here)",
-        "input": "FOXE1:p.Ala177_Ala179del"
+        "ambiguous": false,
+        "gene": "FOXE1",
+        "input": "FOXE1:p.Ala177_Ala179del",
+        "transcript": "ENST00000375123.5",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000009.12",
+            "pos": 97854418,
+            "ref": "AGCCGCCGCC"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "coding_delins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000003.12",
+              37025729,
+              "GGTC",
+              "GA"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000003.12",
+              37025730,
+              "GTC",
+              "A"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-89647-adf2bf26d7",
       "input": "NM_001258274:c.409_411delinsA",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_001258274:c.409_411delinsA"
+        "ambiguous": false,
+        "gene": "MLH1",
+        "input": "NM_001258274:c.409_411delinsA",
+        "transcript": "NM_001258274.3",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000003.12",
+            "pos": 37025730,
+            "ref": "GTC"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "utr_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.-84+209_-84+210insGG\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1202138-9fb490c583",
       "input": "ZFYVE26:c.-84+209_-84+210insGG",
       "observed": {
-        "error": "unsupported cDNA change \"c.-84+209_-84+210insGG\"",
-        "input": "ZFYVE26:c.-84+209_-84+210insGG"
+        "ambiguous": false,
+        "gene": "ZFYVE26",
+        "input": "ZFYVE26:c.-84+209_-84+210insGG",
+        "transcript": "ENST00000347230.9",
+        "vcf": [
+          {
+            "alt": "GCC",
+            "chrom": "NC_000014.9",
+            "pos": 67816324,
+            "ref": "G"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.His1300=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3654734-b4427b504b",
       "input": "CELSR2:p.His1300=",
       "observed": {
-        "error": "unsupported protein change \"p.His1300=\" (only substitutions here)",
-        "input": "CELSR2:p.His1300="
+        "ambiguous": false,
+        "gene": "CELSR2",
+        "input": "CELSR2:p.His1300=",
+        "transcript": "ENST00000271332.4",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000001.11",
+            "pos": 109259021,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000022.11",
+              28699913,
+              "G",
+              "GTG"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000022.11",
+              28699911,
+              "T",
+              "TTG"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-3894074-c80a493696",
       "input": "NM_145862:c.933_934dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NM_145862:c.933_934dup"
+        "ambiguous": false,
+        "gene": "CHEK2",
+        "input": "NM_145862:c.933_934dup",
+        "transcript": "NM_145862.3",
+        "vcf": [
+          {
+            "alt": "TTG",
+            "chrom": "NC_000022.11",
+            "pos": 28699911,
+            "ref": "T"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "utr_substitution",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.-59G>T\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-4431596-d47aed5c8b",
       "input": "ATP5F1A:c.-59G>T",
       "observed": {
-        "error": "unsupported cDNA change \"c.-59G>T\"",
-        "input": "ATP5F1A:c.-59G>T"
+        "ambiguous": false,
+        "gene": "ATP5F1A",
+        "input": "ATP5F1A:c.-59G>T",
+        "transcript": "ENST00000398752.11",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000018.10",
+            "pos": 46098290,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -782,115 +1226,209 @@
     },
     {
       "category": "coding_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-4730057-ae7f24e069",
       "input": "SLC5A1:c.1566del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "SLC5A1:c.1566del"
+        "ambiguous": false,
+        "gene": "SLC5A1",
+        "input": "SLC5A1:c.1566del",
+        "transcript": "ENST00000266088.9",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000022.11",
+            "pos": 32102137,
+            "ref": "GT"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Asn1911_Asp1912del\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3371459-07889deadd",
       "input": "HIVEP2:p.Asn1911_Asp1912del",
       "observed": {
-        "error": "unsupported protein change \"p.Asn1911_Asp1912del\" (only substitutions here)",
-        "input": "HIVEP2:p.Asn1911_Asp1912del"
+        "ambiguous": false,
+        "gene": "HIVEP2",
+        "input": "HIVEP2:p.Asn1911_Asp1912del",
+        "transcript": "ENST00000367603.8",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000006.12",
+            "pos": 142760551,
+            "ref": "CATCATT"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-13252-dd21e16b87",
       "input": "NM_001316329:c.2090+1_2091-1del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "NM_001316329:c.2090+1_2091-1del"
+        "ambiguous": false,
+        "gene": "PRKCG",
+        "input": "NM_001316329:c.2090+1_2091-1del",
+        "transcript": "NM_001316329.2",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000019.10",
+            "pos": 53906891,
+            "ref": "TGTAATCTCACCCGCCGCCACTAGGTGTCCCCAACGTCCCCTCCGCCGTGCCGGCGGCAGCCCCACTTCACCCCCAACTTCACCACCCCCTGTCCCATTCTAG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000001.11",
+              55058521,
+              "TGTA",
+              "TTG"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000001.11",
+              55058522,
+              "GTA",
+              "TG"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-926999-d682ad08dc",
       "input": "PCSK9:c.1378_1380delinsTG",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "PCSK9:c.1378_1380delinsTG"
+        "ambiguous": false,
+        "gene": "PCSK9",
+        "input": "PCSK9:c.1378_1380delinsTG",
+        "transcript": "ENST00000302118.5",
+        "vcf": [
+          {
+            "alt": "TG",
+            "chrom": "NC_000001.11",
+            "pos": 55058522,
+            "ref": "GTA"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Pro631=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-4688651-2ec37b5576",
       "input": "GLI1:p.Pro631=",
       "observed": {
-        "error": "unsupported protein change \"p.Pro631=\" (only substitutions here)",
-        "input": "GLI1:p.Pro631="
+        "ambiguous": true,
+        "gene": "GLI1",
+        "input": "GLI1:p.Pro631=",
+        "transcript": "ENST00000228682.7",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000012.12",
+            "pos": 57470633,
+            "ref": "C"
+          },
+          {
+            "alt": "A",
+            "chrom": "NC_000012.12",
+            "pos": 57470633,
+            "ref": "C"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000012.12",
+            "pos": 57470633,
+            "ref": "C"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_delins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000011.10",
+              108365428,
+              "CAAGTGAA",
+              "CT"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000011.10",
+              108365429,
+              "AAGTGAA",
+              "T"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-524279-f83a2c1042",
       "input": "NM_001330368:c.640+20485_640+20491delinsA",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_001330368:c.640+20485_640+20491delinsA"
+        "ambiguous": false,
+        "gene": "C11orf65",
+        "input": "NM_001330368:c.640+20485_640+20491delinsA",
+        "transcript": "NM_001330368.2",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000011.10",
+            "pos": 108365429,
+            "ref": "AAGTGAA"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2627387-3b5e35981e",
       "input": "GAN:c.1690dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "GAN:c.1690dup"
+        "ambiguous": false,
+        "gene": "GAN",
+        "input": "GAN:c.1690dup",
+        "transcript": "ENST00000648994.2",
+        "vcf": [
+          {
+            "alt": "CG",
+            "chrom": "NC_000016.10",
+            "pos": 81377491,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -917,50 +1455,87 @@
     {
       "category": "intronic_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000015.10",
+              51455143,
+              "A",
+              "AAGTGA"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000015.10",
+              51455138,
+              "T",
+              "TAGTGA"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-3611873-70b08e2947",
       "input": "NM_001378457:c.8604+8_8604+12dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NM_001378457:c.8604+8_8604+12dup"
+        "ambiguous": false,
+        "gene": "DMXL2",
+        "input": "NM_001378457:c.8604+8_8604+12dup",
+        "transcript": "NM_001378457.1",
+        "vcf": [
+          {
+            "alt": "TAGTGA",
+            "chrom": "NC_000015.10",
+            "pos": 51455138,
+            "ref": "T"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "coding_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type ins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1724733-103bf4c14f",
       "input": "NPHS1:c.2354_2355insTCGTCGTGCTGCT",
       "observed": {
-        "error": "edit type ins not yet implemented in this prototype",
-        "input": "NPHS1:c.2354_2355insTCGTCGTGCTGCT"
+        "ambiguous": false,
+        "gene": "NPHS1",
+        "input": "NPHS1:c.2354_2355insTCGTCGTGCTGCT",
+        "transcript": "ENST00000378910.10",
+        "vcf": [
+          {
+            "alt": "CAGCAGCACGACGA",
+            "chrom": "NC_000019.10",
+            "pos": 35842530,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Leu821_Glu822del\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-432200-0b40bf3aa7",
       "input": "ATRX:p.Leu821_Glu822del",
       "observed": {
-        "error": "unsupported protein change \"p.Leu821_Glu822del\" (only substitutions here)",
-        "input": "ATRX:p.Leu821_Glu822del"
+        "ambiguous": false,
+        "gene": "ATRX",
+        "input": "ATRX:p.Leu821_Glu822del",
+        "transcript": "ENST00000373344.11",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000023.11",
+            "pos": 77682789,
+            "ref": "TTTCTAA"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_substitution",
@@ -1008,51 +1583,102 @@
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Gly373=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1097847-14653afc0e",
       "input": "COL4A4:p.Gly373=",
       "observed": {
-        "error": "unsupported protein change \"p.Gly373=\" (only substitutions here)",
-        "input": "COL4A4:p.Gly373="
+        "ambiguous": true,
+        "gene": "COL4A4",
+        "input": "COL4A4:p.Gly373=",
+        "transcript": "ENST00000396625.5",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000002.12",
+            "pos": 227098779,
+            "ref": "C"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000002.12",
+            "pos": 227098779,
+            "ref": "C"
+          },
+          {
+            "alt": "T",
+            "chrom": "NC_000002.12",
+            "pos": 227098779,
+            "ref": "C"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000016.10",
+              2088054,
+              "AGGGCCTTGTGGACACCAGCGTGGCCAAGA",
+              "A"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000016.10",
+              2088052,
+              "GGAGGGCCTTGTGGACACCAGCGTGGCCAA",
+              "G"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-1074348-a4e07499dd",
       "input": "NM_001370404:c.4944_4972del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "NM_001370404:c.4944_4972del"
+        "ambiguous": false,
+        "gene": "TSC2",
+        "input": "NM_001370404:c.4944_4972del",
+        "transcript": "NM_001370404.1",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000016.10",
+            "pos": 2088052,
+            "ref": "GGAGGGCCTTGTGGACACCAGCGTGGCCAA"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2751182-f68f706ea2",
       "input": "SLC39A4:c.805-3del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "SLC39A4:c.805-3del"
+        "ambiguous": false,
+        "gene": "SLC39A4",
+        "input": "SLC39A4:c.805-3del",
+        "transcript": "ENST00000301305.8",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000008.11",
+            "pos": 144414898,
+            "ref": "TG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -1079,98 +1705,205 @@
     {
       "category": "coding_delins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000023.11",
+              31774031,
+              "GA",
+              "GTT"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000023.11",
+              31774032,
+              "A",
+              "TT"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-4728867-6689079816",
       "input": "NM_004020:c.90delinsAA",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_004020:c.90delinsAA"
+        "ambiguous": false,
+        "gene": "DMD",
+        "input": "NM_004020:c.90delinsAA",
+        "transcript": "NM_004020.4",
+        "vcf": [
+          {
+            "alt": "TT",
+            "chrom": "NC_000023.11",
+            "pos": 31774032,
+            "ref": "A"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "intronic_delins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000014.9",
+              39314809,
+              "TA",
+              "TGTGTG"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000014.9",
+              39314810,
+              "A",
+              "GTGTG"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-2798133-7db8ee6c76",
       "input": "MIA2:c.3180+11delinsGTGTG",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "MIA2:c.3180+11delinsGTGTG"
+        "ambiguous": false,
+        "gene": "MIA2",
+        "input": "MIA2:c.3180+11delinsGTGTG",
+        "transcript": "ENST00000640607.2",
+        "vcf": [
+          {
+            "alt": "GTGTG",
+            "chrom": "NC_000014.9",
+            "pos": 39314810,
+            "ref": "A"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Phe646_Thr677del\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1484475-18f49cf720",
       "input": "SLC25A12:p.Phe646_Thr677del",
       "observed": {
-        "error": "unsupported protein change \"p.Phe646_Thr677del\" (only substitutions here)",
-        "input": "SLC25A12:p.Phe646_Thr677del"
+        "ambiguous": false,
+        "gene": "SLC25A12",
+        "input": "SLC25A12:p.Phe646_Thr677del",
+        "transcript": "ENST00000422440.7",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000002.12",
+            "pos": 171785279,
+            "ref": "GAGTGGCTGCCACTGCTGCCTTTGGCTGAACCACAGCAACACTAGGAGACTTAAATTTCGGGAGATAAAGGCCAAATTTGTTTTCGATGCCTGCAAA"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000010.11",
+              18539650,
+              "A",
+              "AA"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000010.11",
+              18539647,
+              "G",
+              "GA"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-519502-eadd7f7e5b",
       "input": "NM_201572:c.1754dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NM_201572:c.1754dup"
+        "ambiguous": false,
+        "gene": "CACNB2",
+        "input": "NM_201572:c.1754dup",
+        "transcript": "NM_201572.4",
+        "vcf": [
+          {
+            "alt": "GA",
+            "chrom": "NC_000010.11",
+            "pos": 18539647,
+            "ref": "G"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2933376-d68ccda412",
       "input": "GYG1:c.609-15dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "GYG1:c.609-15dup"
+        "ambiguous": false,
+        "gene": "GYG1",
+        "input": "GYG1:c.609-15dup",
+        "transcript": "ENST00000345003.9",
+        "vcf": [
+          {
+            "alt": "TG",
+            "chrom": "NC_000003.12",
+            "pos": 149024037,
+            "ref": "T"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Gly495=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-4389065-50acc2d71d",
       "input": "TBC1D15:p.Gly495=",
       "observed": {
-        "error": "unsupported protein change \"p.Gly495=\" (only substitutions here)",
-        "input": "TBC1D15:p.Gly495="
+        "ambiguous": true,
+        "gene": "TBC1D15",
+        "input": "TBC1D15:p.Gly495=",
+        "transcript": "ENST00000485960.7",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000012.12",
+            "pos": 71917781,
+            "ref": "A"
+          },
+          {
+            "alt": "C",
+            "chrom": "NC_000012.12",
+            "pos": 71917781,
+            "ref": "A"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000012.12",
+            "pos": 71917781,
+            "ref": "A"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_substitution",
@@ -1197,16 +1930,41 @@
     {
       "category": "intronic_ins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type ins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000019.10",
+              13959928,
+              "C",
+              "CGGGCAGGGTGGGCCCAGGGCGGGCAGGGTGGGCCCAGGGC"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000019.10",
+              13959894,
+              "A",
+              "AGGTGGGCCCAGGGCGGGCAGGGTGGGCCCAGGGCGGGCAG"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-3911373-014b0c0c29",
       "input": "DCAF15:c.1440+33_1440+34insGGGCAGGGTGGGCCCAGGGCGGGCAGGGTGGGCCCAGGGC",
       "observed": {
-        "error": "edit type ins not yet implemented in this prototype",
-        "input": "DCAF15:c.1440+33_1440+34insGGGCAGGGTGGGCCCAGGGCGGGCAGGGTGGGCCCAGGGC"
+        "ambiguous": false,
+        "gene": "DCAF15",
+        "input": "DCAF15:c.1440+33_1440+34insGGGCAGGGTGGGCCCAGGGCGGGCAGGGTGGGCCCAGGGC",
+        "transcript": "ENST00000254337.11",
+        "vcf": [
+          {
+            "alt": "AGGTGGGCCCAGGGCGGGCAGGGTGGGCCCAGGGCGGGCAG",
+            "chrom": "NC_000019.10",
+            "pos": 13959894,
+            "ref": "A"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
@@ -1235,16 +1993,41 @@
     {
       "category": "intronic_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000003.12",
+              134558300,
+              "TAAACCAACACACAGCAGAACAACTGAGTTCAAGAATACAGAGTTCAAGTAAAATTTTTTAAAAGTTTATTTAAAATGT",
+              "T"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000003.12",
+              134558299,
+              "TTAAACCAACACACAGCAGAACAACTGAGTTCAAGAATACAGAGTTCAAGTAAAATTTTTTAAAAGTTTATTTAAAATG",
+              "T"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-2799703-11359f8ed0",
       "input": "NM_001353119:c.1330-3076_1330-2999del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "NM_001353119:c.1330-3076_1330-2999del"
+        "ambiguous": false,
+        "gene": "CEP63",
+        "input": "NM_001353119:c.1330-3076_1330-2999del",
+        "transcript": "NM_001353119.2",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000003.12",
+            "pos": 134558299,
+            "ref": "TTAAACCAACACACAGCAGAACAACTGAGTTCAAGAATACAGAGTTCAAGTAAAATTTTTTAAAAGTTTATTTAAAATG"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
@@ -1272,67 +2055,124 @@
     },
     {
       "category": "protein_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.His144_Gln145del\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2582057-b938057d2a",
       "input": "CITED2:p.His144_Gln145del",
       "observed": {
-        "error": "unsupported protein change \"p.His144_Gln145del\" (only substitutions here)",
-        "input": "CITED2:p.His144_Gln145del"
+        "ambiguous": false,
+        "gene": "CITED2",
+        "input": "CITED2:p.His144_Gln145del",
+        "transcript": "ENST00000367651.4",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000006.12",
+            "pos": 139373509,
+            "ref": "TCTGGTG"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000006.12",
+              38734333,
+              "C",
+              "CCC"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000006.12",
+              38734326,
+              "A",
+              "ACC"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-1181977-00e812bfbb",
       "input": "NM_001206927:c.611-140_611-139dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NM_001206927:c.611-140_611-139dup"
+        "ambiguous": false,
+        "gene": "DNAH8",
+        "input": "NM_001206927:c.611-140_611-139dup",
+        "transcript": "NM_001206927.2",
+        "vcf": [
+          {
+            "alt": "ACC",
+            "chrom": "NC_000006.12",
+            "pos": 38734326,
+            "ref": "A"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "utr_del",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.*1789del\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-341887-f1cf5360cb",
       "input": "NAGA:c.*1789del",
       "observed": {
-        "error": "unsupported cDNA change \"c.*1789del\"",
-        "input": "NAGA:c.*1789del"
+        "ambiguous": false,
+        "gene": "NAGA",
+        "input": "NAGA:c.*1789del",
+        "transcript": "ENST00000396398.8",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000022.11",
+            "pos": 42058489,
+            "ref": "GA"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Thr1053=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2094804-2617eaa2a2",
       "input": "LRRK1:p.Thr1053=",
       "observed": {
-        "error": "unsupported protein change \"p.Thr1053=\" (only substitutions here)",
-        "input": "LRRK1:p.Thr1053="
+        "ambiguous": true,
+        "gene": "LRRK1",
+        "input": "LRRK1:p.Thr1053=",
+        "transcript": "ENST00000388948.8",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000015.10",
+            "pos": 101048517,
+            "ref": "T"
+          },
+          {
+            "alt": "A",
+            "chrom": "NC_000015.10",
+            "pos": 101048517,
+            "ref": "T"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000015.10",
+            "pos": 101048517,
+            "ref": "T"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_substitution",
@@ -1358,19 +2198,25 @@
     },
     {
       "category": "utr_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.-84_-83delinsAA\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-3291349-360529595a",
       "input": "ALPK3:c.-84_-83delinsAA",
       "observed": {
-        "error": "unsupported cDNA change \"c.-84_-83delinsAA\"",
-        "input": "ALPK3:c.-84_-83delinsAA"
+        "ambiguous": false,
+        "gene": "ALPK3",
+        "input": "ALPK3:c.-84_-83delinsAA",
+        "transcript": "ENST00000258888.6",
+        "vcf": [
+          {
+            "alt": "AA",
+            "chrom": "NC_000015.10",
+            "pos": 84817369,
+            "ref": "GC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -1397,48 +2243,123 @@
     {
       "category": "coding_delins",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000004.12",
+              102600932,
+              "CTTGT",
+              "CCTTAC"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000004.12",
+              102600933,
+              "TTGT",
+              "CTTAC"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-3377098-adc8aac388",
       "input": "NM_001165412:c.1673_1676delinsCTTAC",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_001165412:c.1673_1676delinsCTTAC"
+        "ambiguous": false,
+        "gene": "NFKB1",
+        "input": "NM_001165412:c.1673_1676delinsCTTAC",
+        "transcript": "NM_001165412.2",
+        "vcf": [
+          {
+            "alt": "CTTAC",
+            "chrom": "NC_000004.12",
+            "pos": 102600933,
+            "ref": "TTGT"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "utr_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.-121dup\""
+        "vcf": {
+          "expected": [
+            [
+              "NC_000001.11",
+              158686638,
+              "G",
+              "GG"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000001.11",
+              158686637,
+              "T",
+              "TG"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-293065-decfaefeef",
       "input": "SPTA1:c.-121dup",
       "observed": {
-        "error": "unsupported cDNA change \"c.-121dup\"",
-        "input": "SPTA1:c.-121dup"
+        "ambiguous": false,
+        "gene": "SPTA1",
+        "input": "SPTA1:c.-121dup",
+        "transcript": "ENST00000643759.2",
+        "vcf": [
+          {
+            "alt": "TG",
+            "chrom": "NC_000001.11",
+            "pos": 158686637,
+            "ref": "T"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Gly405del\" (only substitutions here)"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000017.11",
+              80290669,
+              "AGGA",
+              "A"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000017.11",
+              80290664,
+              "AGAG",
+              "A"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-717067-9f3d8e36f2",
       "input": "RNF213:p.Gly405del",
       "observed": {
-        "error": "unsupported protein change \"p.Gly405del\" (only substitutions here)",
-        "input": "RNF213:p.Gly405del"
+        "ambiguous": false,
+        "gene": "RNF213",
+        "input": "RNF213:p.Gly405del",
+        "transcript": "ENST00000582970.6",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000017.11",
+            "pos": 80290664,
+            "ref": "AGAG"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
@@ -1466,35 +2387,47 @@
     },
     {
       "category": "utr_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.*25_*26insG\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1183521-418e5e6455",
       "input": "ADRB2:c.*25_*26insG",
       "observed": {
-        "error": "unsupported cDNA change \"c.*25_*26insG\"",
-        "input": "ADRB2:c.*25_*26insG"
+        "ambiguous": false,
+        "gene": "ADRB2",
+        "input": "ADRB2:c.*25_*26insG",
+        "transcript": "ENST00000305988.6",
+        "vcf": [
+          {
+            "alt": "CG",
+            "chrom": "NC_000005.10",
+            "pos": 148828098,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Glu1208=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1674305-eb175ebccf",
       "input": "ZFYVE26:p.Glu1208=",
       "observed": {
-        "error": "unsupported protein change \"p.Glu1208=\" (only substitutions here)",
-        "input": "ZFYVE26:p.Glu1208="
+        "ambiguous": false,
+        "gene": "ZFYVE26",
+        "input": "ZFYVE26:p.Glu1208=",
+        "transcript": "ENST00000347230.9",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000014.9",
+            "pos": 67784336,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_substitution",
@@ -1520,19 +2453,25 @@
     },
     {
       "category": "utr_substitution",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported cDNA change \"c.*5092C>G\""
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-888423-94266f4cae",
       "input": "IGF1R:c.*5092C>G",
       "observed": {
-        "error": "unsupported cDNA change \"c.*5092C>G\"",
-        "input": "IGF1R:c.*5092C>G"
+        "ambiguous": false,
+        "gene": "IGF1R",
+        "input": "IGF1R:c.*5092C>G",
+        "transcript": "ENST00000650285.1",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000015.10",
+            "pos": 98962534,
+            "ref": "C"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_substitution",
@@ -1558,65 +2497,122 @@
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1328974-127b3b1a7f",
       "input": "NM_133437:c.73258_73259delinsGT",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "NM_133437:c.73258_73259delinsGT"
+        "ambiguous": false,
+        "gene": "TTN",
+        "input": "NM_133437:c.73258_73259delinsGT",
+        "transcript": "NM_133437.4",
+        "vcf": [
+          {
+            "alt": "AC",
+            "chrom": "NC_000002.12",
+            "pos": 178537231,
+            "ref": "TT"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type delins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2850248-0d42282f8f",
       "input": "ALPL:c.608_609delinsTT",
       "observed": {
-        "error": "edit type delins not yet implemented in this prototype",
-        "input": "ALPL:c.608_609delinsTT"
+        "ambiguous": false,
+        "gene": "ALPL",
+        "input": "ALPL:c.608_609delinsTT",
+        "transcript": "ENST00000374840.8",
+        "vcf": [
+          {
+            "alt": "TT",
+            "chrom": "NC_000001.11",
+            "pos": 21564176,
+            "ref": "AC"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Pro427=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2901624-8d209a9fe2",
       "input": "PCK2:p.Pro427=",
       "observed": {
-        "error": "unsupported protein change \"p.Pro427=\" (only substitutions here)",
-        "input": "PCK2:p.Pro427="
+        "ambiguous": true,
+        "gene": "PCK2",
+        "input": "PCK2:p.Pro427=",
+        "transcript": "ENST00000216780.9",
+        "vcf": [
+          {
+            "alt": "T",
+            "chrom": "NC_000014.9",
+            "pos": 24102799,
+            "ref": "G"
+          },
+          {
+            "alt": "C",
+            "chrom": "NC_000014.9",
+            "pos": 24102799,
+            "ref": "G"
+          },
+          {
+            "alt": "A",
+            "chrom": "NC_000014.9",
+            "pos": 24102799,
+            "ref": "G"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (3 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type dup not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000005.10",
+              143314105,
+              "T",
+              "TT"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000005.10",
+              143314104,
+              "G",
+              "GT"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-3773895-8bf63d3d19",
       "input": "NR3C1:c.1248dup",
       "observed": {
-        "error": "edit type dup not yet implemented in this prototype",
-        "input": "NR3C1:c.1248dup"
+        "ambiguous": false,
+        "gene": "NR3C1",
+        "input": "NR3C1:c.1248dup",
+        "transcript": "ENST00000394464.7",
+        "vcf": [
+          {
+            "alt": "GT",
+            "chrom": "NC_000005.10",
+            "pos": 143314104,
+            "ref": "G"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
@@ -1644,35 +2640,67 @@
     },
     {
       "category": "coding_ins",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type ins not yet implemented in this prototype"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-1076934-e723bda705",
       "input": "HGSNAT:c.1054_1055insATCAATTTCTAATGGGATTTCCAGAGTTGAAAAAGACAAATATTCAGCTTTAGGAAGCACAGTTGAGTCCTGAGCAGTACAAATAAAAATATAGGCTGGGCACAGTGGCTCACATGTGTAATCCCAGCACTTTCGGAGGCTGAGGTGGGTGGATTGCTGGAGTCCAGCAGTTTGAAAACAGCCTGAGCAACATGGCAAGACCCCATCTCTACAAAAAATACAACAATTATCCGGGCATGGTGGCACAAGCCCGTAGTCCCAGCTACTCAGGAAGCTGAGGTGGATCGCTTGAGCCCGGGAGGTGGAGGTTGCAGTGAGCCAAGATCACACCATTGCACTCCACACTGAATGACAGAGTGAGACTGTCTTAATAAAAAATATGAGTCAGCGTATAAGTTAAAAGGAGTTTTAAAAGATACTAATCCAAAAGAAGGCAGAAAAGGAGAAACATAATAGACTTACCAGCCCAATTTAAAAGTCAGGGATTATAAACATGAATTGAAGAAGTGAGACCCAGTTA",
       "observed": {
-        "error": "edit type ins not yet implemented in this prototype",
-        "input": "HGSNAT:c.1054_1055insATCAATTTCTAATGGGATTTCCAGAGTTGAAAAAGACAAATATTCAGCTTTAGGAAGCACAGTTGAGTCCTGAGCAGTACAAATAAAAATATAGGCTGGGCACAGTGGCTCACATGTGTAATCCCAGCACTTTCGGAGGCTGAGGTGGGTGGATTGCTGGAGTCCAGCAGTTTGAAAACAGCCTGAGCAACATGGCAAGACCCCATCTCTACAAAAAATACAACAATTATCCGGGCATGGTGGCACAAGCCCGTAGTCCCAGCTACTCAGGAAGCTGAGGTGGATCGCTTGAGCCCGGGAGGTGGAGGTTGCAGTGAGCCAAGATCACACCATTGCACTCCACACTGAATGACAGAGTGAGACTGTCTTAATAAAAAATATGAGTCAGCGTATAAGTTAAAAGGAGTTTTAAAAGATACTAATCCAAAAGAAGGCAGAAAAGGAGAAACATAATAGACTTACCAGCCCAATTTAAAAGTCAGGGATTATAAACATGAATTGAAGAAGTGAGACCCAGTTA"
+        "ambiguous": false,
+        "gene": "HGSNAT",
+        "input": "HGSNAT:c.1054_1055insATCAATTTCTAATGGGATTTCCAGAGTTGAAAAAGACAAATATTCAGCTTTAGGAAGCACAGTTGAGTCCTGAGCAGTACAAATAAAAATATAGGCTGGGCACAGTGGCTCACATGTGTAATCCCAGCACTTTCGGAGGCTGAGGTGGGTGGATTGCTGGAGTCCAGCAGTTTGAAAACAGCCTGAGCAACATGGCAAGACCCCATCTCTACAAAAAATACAACAATTATCCGGGCATGGTGGCACAAGCCCGTAGTCCCAGCTACTCAGGAAGCTGAGGTGGATCGCTTGAGCCCGGGAGGTGGAGGTTGCAGTGAGCCAAGATCACACCATTGCACTCCACACTGAATGACAGAGTGAGACTGTCTTAATAAAAAATATGAGTCAGCGTATAAGTTAAAAGGAGTTTTAAAAGATACTAATCCAAAAGAAGGCAGAAAAGGAGAAACATAATAGACTTACCAGCCCAATTTAAAAGTCAGGGATTATAAACATGAATTGAAGAAGTGAGACCCAGTTA",
+        "transcript": "ENST00000379644.9",
+        "vcf": [
+          {
+            "alt": "TATCAATTTCTAATGGGATTTCCAGAGTTGAAAAAGACAAATATTCAGCTTTAGGAAGCACAGTTGAGTCCTGAGCAGTACAAATAAAAATATAGGCTGGGCACAGTGGCTCACATGTGTAATCCCAGCACTTTCGGAGGCTGAGGTGGGTGGATTGCTGGAGTCCAGCAGTTTGAAAACAGCCTGAGCAACATGGCAAGACCCCATCTCTACAAAAAATACAACAATTATCCGGGCATGGTGGCACAAGCCCGTAGTCCCAGCTACTCAGGAAGCTGAGGTGGATCGCTTGAGCCCGGGAGGTGGAGGTTGCAGTGAGCCAAGATCACACCATTGCACTCCACACTGAATGACAGAGTGAGACTGTCTTAATAAAAAATATGAGTCAGCGTATAAGTTAAAAGGAGTTTTAAAAGATACTAATCCAAAAGAAGGCAGAAAAGGAGAAACATAATAGACTTACCAGCCCAATTTAAAAGTCAGGGATTATAAACATGAATTGAAGAAGTGAGACCCAGTTA",
+            "chrom": "NC_000008.11",
+            "pos": 43182186,
+            "ref": "T"
+          }
+        ],
+        "warnings": []
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Arg381=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-4368255-ed81d4ab9a",
       "input": "DDX6:p.Arg381=",
       "observed": {
-        "error": "unsupported protein change \"p.Arg381=\" (only substitutions here)",
-        "input": "DDX6:p.Arg381="
+        "ambiguous": true,
+        "gene": "DDX6",
+        "input": "DDX6:p.Arg381=",
+        "transcript": "ENST00000534980.7",
+        "vcf": [
+          {
+            "alt": "A",
+            "chrom": "NC_000011.10",
+            "pos": 118756291,
+            "ref": "T"
+          },
+          {
+            "alt": "G",
+            "chrom": "NC_000011.10",
+            "pos": 118756291,
+            "ref": "T"
+          },
+          {
+            "alt": "C",
+            "chrom": "NC_000011.10",
+            "pos": 118756291,
+            "ref": "T"
+          },
+          {
+            "alt": "T",
+            "chrom": "NC_000011.10",
+            "pos": 118756293,
+            "ref": "G"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (4 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_substitution",
@@ -1721,123 +2749,162 @@
     {
       "category": "intronic_del",
       "differences": {
-        "error": {
-          "expected": null,
-          "observed": "edit type del not yet implemented in this prototype"
+        "vcf": {
+          "expected": [
+            [
+              "NC_000014.9",
+              96478455,
+              "TTCT",
+              "T"
+            ]
+          ],
+          "observed": [
+            [
+              "NC_000014.9",
+              96478453,
+              "CCTT",
+              "C"
+            ]
+          ]
         }
       },
       "id": "ensembl-vr-2068832-7efc9f07ea",
       "input": "AK7:c.1556-9_1556-7del",
       "observed": {
-        "error": "edit type del not yet implemented in this prototype",
-        "input": "AK7:c.1556-9_1556-7del"
+        "ambiguous": false,
+        "gene": "AK7",
+        "input": "AK7:c.1556-9_1556-7del",
+        "transcript": "ENST00000267584.9",
+        "vcf": [
+          {
+            "alt": "C",
+            "chrom": "NC_000014.9",
+            "pos": 96478453,
+            "ref": "CCTT"
+          }
+        ],
+        "warnings": []
       },
       "passed": false
     },
     {
       "category": "protein_other",
-      "differences": {
-        "error": {
-          "expected": null,
-          "observed": "unsupported protein change \"p.Ile462=\" (only substitutions here)"
-        }
-      },
+      "differences": {},
       "id": "ensembl-vr-2006717-34d1718025",
       "input": "ASNS:p.Ile462=",
       "observed": {
-        "error": "unsupported protein change \"p.Ile462=\" (only substitutions here)",
-        "input": "ASNS:p.Ile462="
+        "ambiguous": true,
+        "gene": "ASNS",
+        "input": "ASNS:p.Ile462=",
+        "transcript": "ENST00000394308.8",
+        "vcf": [
+          {
+            "alt": "G",
+            "chrom": "NC_000007.14",
+            "pos": 97853150,
+            "ref": "A"
+          },
+          {
+            "alt": "T",
+            "chrom": "NC_000007.14",
+            "pos": 97853150,
+            "ref": "A"
+          }
+        ],
+        "warnings": [
+          "amino-acid change is ambiguous at the nucleotide level (2 candidates)"
+        ]
       },
-      "passed": false
+      "passed": true
     }
   ],
   "summary": {
     "by_category": {
       "coding_del": {
-        "failed": 5,
-        "passed": 0
+        "failed": 2,
+        "passed": 3
       },
       "coding_delins": {
-        "failed": 8,
-        "passed": 0
+        "failed": 4,
+        "passed": 4
       },
       "coding_dup": {
-        "failed": 6,
-        "passed": 0
+        "failed": 4,
+        "passed": 2
       },
       "coding_ins": {
-        "failed": 4,
-        "passed": 0
+        "failed": 0,
+        "passed": 4
       },
       "coding_other": {
-        "failed": 1,
-        "passed": 0
+        "failed": 0,
+        "passed": 1
       },
       "coding_substitution": {
         "failed": 0,
         "passed": 7
       },
       "intronic_del": {
-        "failed": 6,
-        "passed": 0
+        "failed": 2,
+        "passed": 4
       },
       "intronic_delins": {
-        "failed": 4,
-        "passed": 0
+        "failed": 2,
+        "passed": 2
       },
       "intronic_dup": {
-        "failed": 5,
-        "passed": 0
+        "failed": 3,
+        "passed": 2
       },
       "intronic_ins": {
-        "failed": 2,
-        "passed": 0
+        "failed": 1,
+        "passed": 1
       },
       "intronic_other": {
-        "failed": 1,
-        "passed": 0
+        "failed": 0,
+        "passed": 1
       },
       "intronic_substitution": {
         "failed": 0,
         "passed": 6
       },
       "protein_del": {
-        "failed": 10,
-        "passed": 0
+        "failed": 4,
+        "passed": 6
       },
       "protein_other": {
-        "failed": 13,
-        "passed": 0
+        "failed": 0,
+        "passed": 13
       },
       "protein_substitution": {
         "failed": 0,
         "passed": 12
       },
       "utr_del": {
-        "failed": 2,
-        "passed": 0
+        "failed": 1,
+        "passed": 1
       },
       "utr_delins": {
-        "failed": 2,
-        "passed": 0
+        "failed": 0,
+        "passed": 2
       },
       "utr_dup": {
         "failed": 2,
         "passed": 0
       },
       "utr_ins": {
-        "failed": 2,
-        "passed": 0
+        "failed": 0,
+        "passed": 2
       },
       "utr_substitution": {
-        "failed": 2,
-        "passed": 0
+        "failed": 0,
+        "passed": 2
       }
     },
-    "elapsed_seconds": 2.2959242910146713,
-    "failed": 75,
-    "pass_rate": 0.25,
-    "passed": 25,
+    "elapsed_seconds": 0.4482716249767691,
+    "failed": 25,
+    "pass_rate": 0.75,
+    "passed": 75,
     "total": 100
   }
 }

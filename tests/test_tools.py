@@ -3,6 +3,8 @@
 import importlib.util
 import io
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -464,6 +466,62 @@ class EvaluateTests(unittest.TestCase):
             )
             self.assertEqual(1, len(response))
             self.assertEqual("NM_000603.4:c.894T>G", response[0]["input"])
+
+    def test_evaluate_script_passes_configuration_and_extra_arguments(self):
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            temporary = Path(temporary_dir)
+            truth_set = temporary / "gold.jsonl"
+            truth_set.write_text("{}\n", encoding="utf-8")
+            arguments_file = temporary / "arguments.txt"
+            fake_python = temporary / "python"
+            fake_python.write_text(
+                "#!/usr/bin/env bash\n"
+                "printf '%s\\n' \"$@\" > \"${ARGUMENTS_FILE:?}\"\n",
+                encoding="utf-8",
+            )
+            fake_python.chmod(0o755)
+            json_report = temporary / "result.json"
+            markdown_report = temporary / "result.md"
+            environment = {
+                **os.environ,
+                "PYTHON_BIN": str(fake_python),
+                "ARGUMENTS_FILE": str(arguments_file),
+                "TRUTH_SET": str(truth_set),
+                "BASE_URL": "https://example.test/hgvs2vcf",
+                "JSON_REPORT": str(json_report),
+                "MARKDOWN_REPORT": str(markdown_report),
+                "EVALUATION_BATCH_SIZE": "17",
+                "EVALUATION_TIMEOUT": "2.5",
+            }
+            completed = subprocess.run(
+                [ROOT / "scripts/evaluate.sh", "--allow-non-gold"],
+                cwd=temporary,
+                env=environment,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            self.assertEqual(
+                [
+                    str(ROOT / "tools/evaluate_hgvs2vcf.py"),
+                    "--truth-set",
+                    str(truth_set),
+                    "--base-url",
+                    "https://example.test/hgvs2vcf",
+                    "--json-report",
+                    str(json_report),
+                    "--markdown-report",
+                    str(markdown_report),
+                    "--batch-size",
+                    "17",
+                    "--timeout",
+                    "2.5",
+                    "--allow-non-gold",
+                ],
+                arguments_file.read_text(encoding="utf-8").splitlines(),
+            )
 
 if __name__ == "__main__":
     unittest.main()

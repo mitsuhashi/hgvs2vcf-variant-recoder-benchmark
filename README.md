@@ -182,15 +182,38 @@ scripts/build_truth_set.sh --mode cache
 `http://localhost:4567` でローカル起動している場合の例です。
 
 ```bash
-python3 tools/evaluate_hgvs2vcf.py \
-  --truth-set truth/gold.jsonl \
-  --base-url http://localhost:4567 \
-  --json-report evaluation/result.json \
-  --markdown-report evaluation/result.md
+scripts/evaluate.sh
 ```
 
-`--base-url` には評価対象サーバーのURLを指定します。これはVariant RecoderのURL
-ではありません。
+デフォルトでは `truth/gold.jsonl` を使い、JSONとMarkdownのレポートをそれぞれ
+`evaluation/variant-recoder-result.json`、`evaluation/variant-recoder-result.md` へ
+出力します。
+
+公開または別環境のAPIを評価する場合は `BASE_URL` を指定します。これはVariant
+RecoderのURLではありません。
+
+```bash
+BASE_URL=https://hgvs2vcf.example.org scripts/evaluate.sh
+```
+
+主な環境変数:
+
+| 変数 | デフォルト |
+|---|---|
+| `BASE_URL` | `http://localhost:4567` |
+| `TRUTH_SET` | `truth/gold.jsonl` |
+| `EVALUATION_DIR` | `evaluation` |
+| `JSON_REPORT` | `evaluation/variant-recoder-result.json` |
+| `MARKDOWN_REPORT` | `evaluation/variant-recoder-result.md` |
+| `EVALUATION_BATCH_SIZE` | `100` |
+| `EVALUATION_TIMEOUT` | `60`秒 |
+| `PYTHON_BIN` | `python3` |
+
+追加引数は評価プログラムへそのまま渡せます。
+
+```bash
+EVALUATION_BATCH_SIZE=20 EVALUATION_TIMEOUT=120 scripts/evaluate.sh
+```
 
 `POST /decode` の結果について、次を比較します。
 
@@ -228,6 +251,6 @@ python3 -m unittest discover -s tests -v
 
 実装は `tools/`、ユニットテストとfixtureは `tests/` にあります。
 入力取得は `scripts/download_sources.sh`、正解セット生成は
-`scripts/build_truth_set.sh` から実行します。
+`scripts/build_truth_set.sh`、評価は `scripts/evaluate.sh` から実行します。
 
 この正解セットは回帰試験用です。臨床判断には使用しないでください。

@@ -4,7 +4,7 @@
 python3 -m unittest discover -s tests -v
 ```
 
-現在は、正解セット生成側16件、評価側5件の合計21件である。外部HTTP通信は
+現在は、正解セット生成側16件、評価側6件の合計22件である。外部HTTP通信は
 モックし、ネットワークなしで実行する。
 
 ## 正解セット生成
@@ -121,6 +121,12 @@ Markdownレポートの成功・失敗それぞれの表にcategory、HGVS、期
 
 評価対象の `POST /decode` へ `{"hgvs": [...]}` を送り、JSON配列の応答を読み取る
 ことを確認する。
+
+### 22. `test_evaluate_script_passes_configuration_and_extra_arguments`
+
+`scripts/evaluate.sh` がリポジトリ外の作業ディレクトリからも評価プログラムを呼び出し、
+truth set、評価対象URL、出力先、バッチサイズ、タイムアウトの環境変数を引数へ正しく
+渡すことを確認する。
 
 ## 実APIで確認した範囲
 
