@@ -18,7 +18,7 @@ MANE Select（代表transcript）─┘
 正解セット（JSONL）
   │ ゲノムVCF集合を比較
   ▼
-評価対象の POST /decode
+評価対象のAPI（cdotまたはmarshal）
   ▼
 評価レポート（JSON / Markdown）
 ```
@@ -40,19 +40,21 @@ Variant Recoderが解釈できないHGVSや、GRCh38主染色体のVCFを返さ�
 
 ## 利用するAPI
 
-正解セットの生成と評価では、目的の異なる2つのAPIを使います。
+正解セットの生成にはEnsembl Variant Recoderを使い、評価対象にはcdotまたはmarshal
+のいずれかを選択します。
 
 | API | URL | 用途 |
 |---|---|---|
 | Ensembl Variant Recoder | `https://rest.ensembl.org/variant_recoder/homo_sapiens` | 正解VCFの生成 |
-| 評価対象のHGVS→VCF API | `--base-url` で指定したURLの `/decode` | 正解セットとの比較 |
+| hgvs2vcf-cdot | `--base-url` で指定したURLの `/decode` | 正解セットとの比較 |
+| hgvs2vcf-marshal | `--base-url` で指定したURLの `/v1/convert-batch` | 正解セットとの比較 |
 
 Variant Recoderのデフォルトサーバーは `https://rest.ensembl.org` です。別のEnsembl
 RESTサーバーを使う場合は、正解セット生成時に `--server` で指定します。
 
-`http://localhost:4567` は、評価対象の `hgvs2vcf-cdot-lmdb` をローカルで起動した
-場合の例です。このレポジトリ自身はHGVS→VCF APIサーバーを起動しません。公開または
-別環境のサーバーを評価する場合は、`--base-url` を実際のURLへ変更してください。
+評価対象は `--api-type` で選択します。このレポジトリ自身はHGVS→VCF APIサーバーを
+起動しません。公開または別環境のサーバーを評価する場合は、`--base-url` を実際の
+URLへ変更してください。
 
 ## 必要なもの
 
@@ -178,33 +180,39 @@ scripts/build_truth_set.sh --mode cache
 
 ## 3. HGVS→VCF APIを評価
 
-評価対象の `hgvs2vcf-cdot-lmdb` サーバーを起動してから実行します。次は
-`http://localhost:4567` でローカル起動している場合の例です。
+デフォルトでは公開 `hgvs2vcf-marshal` APIを評価します。
 
 ```bash
 scripts/evaluate.sh
 ```
 
-デフォルトでは `truth/gold.jsonl` を使い、JSONとMarkdownのレポートをそれぞれ
-`evaluation/variant-recoder-result.json`、`evaluation/variant-recoder-result.md` へ
-出力します。
+デフォルトでは `truth/gold500.jsonl` を使い、JSONとMarkdownのレポートをそれぞれ
+`evaluation/marshal-result.json`、`evaluation/marshal-result.md` へ出力します。
+
+`hgvs2vcf-cdot` を評価する場合は、API種別を切り替えます。cdotとmarshalは同じ
+FQDNを使い、それぞれ `/decode` と `/v1/convert-batch` へリクエストします。
+
+```bash
+API_TYPE=cdot scripts/evaluate.sh
+```
 
 公開または別環境のAPIを評価する場合は `BASE_URL` を指定します。これはVariant
 RecoderのURLではありません。
 
 ```bash
-BASE_URL=https://hgvs2vcf.example.org scripts/evaluate.sh
+API_TYPE=marshal BASE_URL=https://hgvs2vcf.example.org scripts/evaluate.sh
 ```
 
 主な環境変数:
 
 | 変数 | デフォルト |
 |---|---|
-| `BASE_URL` | `http://localhost:4567` |
-| `TRUTH_SET` | `truth/gold.jsonl` |
+| `API_TYPE` | `marshal` |
+| `BASE_URL` | `https://hgvs2vcf.togovar.org` |
+| `TRUTH_SET` | `truth/gold500.jsonl` |
 | `EVALUATION_DIR` | `evaluation` |
-| `JSON_REPORT` | `evaluation/variant-recoder-result.json` |
-| `MARKDOWN_REPORT` | `evaluation/variant-recoder-result.md` |
+| `JSON_REPORT` | `evaluation/<API_TYPE>-result.json` |
+| `MARKDOWN_REPORT` | `evaluation/<API_TYPE>-result.md` |
 | `EVALUATION_BATCH_SIZE` | `100` |
 | `EVALUATION_TIMEOUT` | `60`秒 |
 | `PYTHON_BIN` | `python3` |
@@ -215,7 +223,8 @@ BASE_URL=https://hgvs2vcf.example.org scripts/evaluate.sh
 EVALUATION_BATCH_SIZE=20 EVALUATION_TIMEOUT=120 scripts/evaluate.sh
 ```
 
-`POST /decode` の結果について、次を比較します。
+cdotの `POST /decode` またはmarshalの `POST /v1/convert-batch` の結果について、
+次を比較します。
 
 - VCF集合の `chrom`、`pos`、`ref`、`alt`（順序は無視）
 

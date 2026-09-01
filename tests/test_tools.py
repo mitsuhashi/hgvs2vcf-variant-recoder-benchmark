@@ -445,31 +445,112 @@ class EvaluateTests(unittest.TestCase):
 
         def fake_urlopen(request, timeout):
             self.assertEqual("POST", request.method)
+            self.assertEqual("http://localhost:4567/v1/convert-batch", request.full_url)
             self.assertEqual(2, timeout)
             self.assertEqual(evaluator.USER_AGENT, request.get_header("User-agent"))
             payload = json.loads(request.data)
             body = json.dumps(
-                [
-                    {
-                        "input": value,
-                        "transcript": "NM_000603.4",
-                        "vcf": [{"chrom": "NC_000007.14", "pos": 150999023, "ref": "T", "alt": "G"}],
-                        "ambiguous": False,
-                        "warnings": [],
-                    }
-                    for value in payload["hgvs"]
-                ]
+                {
+                    "results": [
+                        {
+                            "input_hgvs": value,
+                            "genomic_accession": "NC_000007.14",
+                            "vcf": {
+                                "chromosome": "7",
+                                "position": 150999023,
+                                "reference": "T",
+                                "alternate": "G",
+                            },
+                        }
+                        for value in payload["hgvs"]
+                    ]
+                }
             ).encode()
+            self.assertEqual("GRCh38", payload["assembly"])
             return FakeResponse(body)
 
         with mock.patch.object(evaluator.urllib.request, "urlopen", side_effect=fake_urlopen):
             response = evaluator.post_batch(
+                "marshal",
                 "http://localhost:4567",
                 ["NM_000603.4:c.894T>G"],
                 2,
             )
             self.assertEqual(1, len(response))
-            self.assertEqual("NM_000603.4:c.894T>G", response[0]["input"])
+            self.assertEqual(
+                [{"chrom": "NC_000007.14", "pos": 150999023, "ref": "T", "alt": "G"}],
+                response[0]["vcf"],
+            )
+
+    def test_normalize_response_collects_protein_candidates(self):
+        response = evaluator.normalize_response(
+            {
+                "input_hgvs": "GENE:p.Ala1Val",
+                "candidates": [
+                    {
+                        "genomic_accession": "NC_000001.11",
+                        "vcf": {
+                            "chromosome": "1",
+                            "position": 10,
+                            "reference": "C",
+                            "alternate": "T",
+                        },
+                    },
+                    {
+                        "genomic_accession": "NC_000001.11",
+                        "vcf": {
+                            "chromosome": "1",
+                            "position": 10,
+                            "reference": "C",
+                            "alternate": "A",
+                        },
+                    },
+                ],
+            }
+        )
+        self.assertEqual(2, len(response["vcf"]))
+        self.assertEqual("NC_000001.11", response["vcf"][0]["chrom"])
+
+    def test_post_cdot_batch_contract(self):
+        class FakeResponse(io.BytesIO):
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                self.close()
+
+        def fake_urlopen(request, timeout):
+            self.assertEqual("POST", request.method)
+            self.assertEqual("http://localhost:4567/decode", request.full_url)
+            self.assertEqual(2, timeout)
+            payload = json.loads(request.data)
+            self.assertEqual(["NM_000603.4:c.894T>G"], payload["hgvs"])
+            return FakeResponse(
+                json.dumps(
+                    [
+                        {
+                            "input": payload["hgvs"][0],
+                            "vcf": [
+                                {
+                                    "chrom": "NC_000007.14",
+                                    "pos": 150999023,
+                                    "ref": "T",
+                                    "alt": "G",
+                                }
+                            ],
+                        }
+                    ]
+                ).encode()
+            )
+
+        with mock.patch.object(evaluator.urllib.request, "urlopen", side_effect=fake_urlopen):
+            response = evaluator.post_batch(
+                "cdot",
+                "http://localhost:4567",
+                ["NM_000603.4:c.894T>G"],
+                2,
+            )
+        self.assertEqual("NC_000007.14", response[0]["vcf"][0]["chrom"])
 
     def test_evaluate_script_passes_configuration_and_extra_arguments(self):
         with tempfile.TemporaryDirectory() as temporary_dir:
@@ -512,6 +593,8 @@ class EvaluateTests(unittest.TestCase):
                     str(ROOT / "tools/evaluate_hgvs2vcf.py"),
                     "--truth-set",
                     str(truth_set),
+                    "--api-type",
+                    "marshal",
                     "--base-url",
                     "https://example.test/hgvs2vcf",
                     "--json-report",

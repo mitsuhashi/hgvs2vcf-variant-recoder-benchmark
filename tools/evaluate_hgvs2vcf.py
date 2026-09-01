@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate hgvs2vcf-cdot-lmdb HTTP responses against a JSONL truth set."""
+"""Evaluate HGVS-to-VCF HTTP responses against a JSONL truth set."""
 
 from __future__ import annotations
 
@@ -34,7 +34,36 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return records
 
 
-def post_batch(base_url: str, inputs: list[str], timeout: float) -> list[dict[str, Any]]:
+def response_vcf(result: dict[str, Any]) -> list[dict[str, Any]]:
+    """Convert hgvs2vcf-marshal output to the evaluator's VCF row format."""
+    if "error" in result:
+        return []
+    candidates = result.get("candidates")
+    results = candidates if isinstance(candidates, list) else [result]
+    rows = []
+    for item in results:
+        vcf = item.get("vcf")
+        if not isinstance(vcf, dict):
+            raise ValueError("conversion result does not contain a VCF object")
+        rows.append(
+            {
+                # The truth set uses RefSeq genomic accessions, not chromosome labels.
+                "chrom": item.get("genomic_accession", vcf.get("chromosome")),
+                "pos": vcf["position"],
+                "ref": vcf["reference"],
+                "alt": vcf["alternate"],
+            }
+        )
+    return rows
+
+
+def normalize_response(result: dict[str, Any]) -> dict[str, Any]:
+    if "error" in result:
+        return {"error": result["error"]}
+    return {"vcf": response_vcf(result)}
+
+
+def post_cdot_batch(base_url: str, inputs: list[str], timeout: float) -> list[dict[str, Any]]:
     request = urllib.request.Request(
         base_url.rstrip("/") + "/decode",
         data=json.dumps({"hgvs": inputs}, ensure_ascii=False).encode(),
@@ -48,8 +77,45 @@ def post_batch(base_url: str, inputs: list[str], timeout: float) -> list[dict[st
     with urllib.request.urlopen(request, timeout=timeout) as response:
         payload = json.load(response)
     if not isinstance(payload, list):
-        raise ValueError(f"POST /decode returned {type(payload).__name__}, expected a JSON array")
+        raise ValueError("POST /decode did not return a JSON array")
     return payload
+
+
+def post_marshal_batch(
+    base_url: str,
+    inputs: list[str],
+    timeout: float,
+    assembly: str = "GRCh38",
+) -> list[dict[str, Any]]:
+    request = urllib.request.Request(
+        base_url.rstrip("/") + "/v1/convert-batch",
+        data=json.dumps({"assembly": assembly, "hgvs": inputs}, ensure_ascii=False).encode(),
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        payload = json.load(response)
+    if not isinstance(payload, dict) or not isinstance(payload.get("results"), list):
+        raise ValueError("POST /v1/convert-batch did not return a JSON results array")
+    return [normalize_response(result) for result in payload["results"]]
+
+
+def post_batch(
+    api_type: str,
+    base_url: str,
+    inputs: list[str],
+    timeout: float,
+    assembly: str = "GRCh38",
+) -> list[dict[str, Any]]:
+    if api_type == "cdot":
+        return post_cdot_batch(base_url, inputs, timeout)
+    if api_type == "marshal":
+        return post_marshal_batch(base_url, inputs, timeout, assembly)
+    raise ValueError(f"unsupported API type: {api_type}")
 
 
 def normalized_vcf(rows: Iterable[dict[str, Any]]) -> list[tuple[str, int, str, str]]:
@@ -248,7 +314,8 @@ def markdown_report(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--truth-set", type=Path, required=True)
-    parser.add_argument("--base-url", default="http://localhost:4567")
+    parser.add_argument("--api-type", choices=("cdot", "marshal"), default="marshal")
+    parser.add_argument("--base-url")
     parser.add_argument("--json-report", type=Path, required=True)
     parser.add_argument("--markdown-report", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=100)
@@ -259,6 +326,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    base_url = args.base_url or "https://hgvs2vcf.togovar.org"
     cases = load_jsonl(args.truth_set)
     if not args.allow_non_gold:
         non_gold = [x["id"] for x in cases if x.get("confidence") not in GOLD_CONFIDENCES]
@@ -270,7 +338,13 @@ def main() -> int:
     try:
         for offset in range(0, len(cases), args.batch_size):
             batch = cases[offset : offset + args.batch_size]
-            responses = post_batch(args.base_url, [x["input"] for x in batch], args.timeout)
+            responses = post_batch(
+                args.api_type,
+                base_url,
+                [x["input"] for x in batch],
+                args.timeout,
+                batch[0].get("assembly", "GRCh38"),
+            )
             if len(responses) != len(batch):
                 raise ValueError(f"batch at offset {offset}: got {len(responses)} responses for {len(batch)} inputs")
             results.extend(compare_case(case, observed) for case, observed in zip(batch, responses))
@@ -279,6 +353,8 @@ def main() -> int:
         return 2
     elapsed = time.monotonic() - started
     summary = summarize_results(results, elapsed)
+    summary["api_type"] = args.api_type
+    summary["base_url"] = base_url
     output = {"summary": summary, "results": results}
     args.json_report.parent.mkdir(parents=True, exist_ok=True)
     args.markdown_report.parent.mkdir(parents=True, exist_ok=True)
