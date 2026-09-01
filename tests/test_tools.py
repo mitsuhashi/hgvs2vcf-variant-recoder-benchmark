@@ -424,12 +424,16 @@ class EvaluateTests(unittest.TestCase):
         report = evaluator.markdown_report(summary, [self.case, self.case], results)
         self.assertIn("## Successful results", report)
         self.assertIn("## Failed results", report)
-        self.assertIn("| Category | HGVS | VCF comparison |", report)
-        self.assertIn("| Category | HGVS | VCF comparison | Difference |", report)
-        self.assertIn("<code>coding_substitution</code>", report)
+        self.assertNotIn("| Category | HGVS | VCF comparison |", report)
+        self.assertNotIn("| Category | HGVS | VCF comparison | Difference |", report)
+        self.assertEqual(2, report.count("### coding_substitution"))
+        self.assertIn("- **HGVS:** <code>NM_000603.4:c.894T&gt;G</code>", report)
+        self.assertNotIn("  - **Category:**", report)
+        self.assertIn("  - **Variant Recoder:**", report)
+        self.assertIn("  - **hgvs2vcf:**", report)
         self.assertIn("<code>NC_000007.14:150999023<br>REF: T<br>ALT: G</code>", report)
         self.assertIn("<code>NC_000007.14:150999024<br>REF: T<br>ALT: G</code>", report)
-        self.assertIn("VCF mismatch", report)
+        self.assertIn("  - **Difference:** VCF mismatch", report)
 
     def test_post_batch_contract(self):
         class FakeResponse(io.BytesIO):

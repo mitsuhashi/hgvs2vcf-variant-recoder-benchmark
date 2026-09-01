@@ -136,16 +136,13 @@ def markdown_vcf(rows: Iterable[dict[str, Any]]) -> str:
     return "<br><br>".join(values)
 
 
-def markdown_vcf_comparison(expected: dict[str, Any], observed: dict[str, Any]) -> str:
+def markdown_vcf_results(expected: dict[str, Any], observed: dict[str, Any]) -> tuple[str, str]:
     expected_vcf = markdown_vcf(expected.get("vcf", []))
     if "error" in observed:
         observed_vcf = f"Error:<br>{html_code(observed['error'])}"
     else:
         observed_vcf = markdown_vcf(observed.get("vcf", []))
-    return (
-        f"<strong>Variant Recoder</strong><br>{expected_vcf}<br><br>"
-        f"<strong>hgvs2vcf</strong><br>{observed_vcf}"
-    )
+    return expected_vcf, observed_vcf
 
 
 def markdown_differences(differences: dict[str, Any]) -> str:
@@ -170,7 +167,7 @@ def markdown_report(
     results: list[dict[str, Any]],
 ) -> str:
     lines = [
-        "# hgvs2vcf-cdot-lmdb evaluation",
+        "# HGVS to VCF evaluation",
         "",
         f"- Total: {summary['total']}",
         f"- Passed: {summary['passed']}",
@@ -193,38 +190,58 @@ def markdown_report(
             "",
             "## Successful results",
             "",
-            "| Category | HGVS | VCF comparison |",
-            "|---|---|---|",
         ]
     )
     successful = [(case, result) for case, result in case_results if result["passed"]]
     if not successful:
-        lines.append("| — | None. | — |")
-    for case, result in successful:
-        comparison = markdown_vcf_comparison(case["expected"], result["observed"])
-        lines.append(
-            f"| {html_code(result['category'])} | {html_code(case['input'])} | {comparison} |"
-        )
+        lines.append("- None.")
+    successful_categories = sorted({result["category"] for _, result in successful})
+    for category_index, category in enumerate(successful_categories):
+        if category_index:
+            lines.append("")
+        lines.extend([f"### {html.escape(category)}", ""])
+        category_results = [item for item in successful if item[1]["category"] == category]
+        for result_index, (case, result) in enumerate(category_results):
+            if result_index:
+                lines.append("")
+            expected_vcf, observed_vcf = markdown_vcf_results(case["expected"], result["observed"])
+            lines.extend(
+                [
+                    f"- **HGVS:** {html_code(case['input'])}",
+                    f"  - **Variant Recoder:**<br>{expected_vcf}",
+                    f"  - **hgvs2vcf:**<br>{observed_vcf}",
+                ]
+            )
 
     lines.extend(
         [
             "",
             "## Failed results",
             "",
-            "| Category | HGVS | VCF comparison | Difference |",
-            "|---|---|---|---|",
         ]
     )
     failed = [(case, result) for case, result in case_results if not result["passed"]]
     if not failed:
-        lines.append("| — | None. | — | — |")
-    for case, result in failed:
-        comparison = markdown_vcf_comparison(case["expected"], result["observed"])
-        differences = markdown_differences(result["differences"])
-        lines.append(
-            f"| {html_code(result['category'])} | {html_code(case['input'])} | "
-            f"{comparison} | {differences} |"
-        )
+        lines.append("- None.")
+    failed_categories = sorted({result["category"] for _, result in failed})
+    for category_index, category in enumerate(failed_categories):
+        if category_index:
+            lines.append("")
+        lines.extend([f"### {html.escape(category)}", ""])
+        category_results = [item for item in failed if item[1]["category"] == category]
+        for result_index, (case, result) in enumerate(category_results):
+            if result_index:
+                lines.append("")
+            expected_vcf, observed_vcf = markdown_vcf_results(case["expected"], result["observed"])
+            differences = markdown_differences(result["differences"])
+            lines.extend(
+                [
+                    f"- **HGVS:** {html_code(case['input'])}",
+                    f"  - **Variant Recoder:**<br>{expected_vcf}",
+                    f"  - **hgvs2vcf:**<br>{observed_vcf}",
+                    f"  - **Difference:** {differences}",
+                ]
+            )
     return "\n".join(lines) + "\n"
 
 
