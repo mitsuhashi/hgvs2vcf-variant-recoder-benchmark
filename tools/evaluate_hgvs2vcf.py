@@ -118,6 +118,35 @@ def post_batch(
     raise ValueError(f"unsupported API type: {api_type}")
 
 
+def post_batch_resilient(
+    api_type: str,
+    base_url: str,
+    inputs: list[str],
+    timeout: float,
+    assembly: str = "GRCh38",
+) -> list[dict[str, Any]]:
+    """Split a failed batch until an HTTP 5xx can be assigned to one input."""
+    try:
+        return post_batch(api_type, base_url, inputs, timeout, assembly)
+    except urllib.error.HTTPError as exc:
+        if not 500 <= exc.code < 600:
+            raise
+        detail = exc.read(4096).decode("utf-8", errors="replace").strip()
+        detail = detail.splitlines()[0][:500] if detail else ""
+        exc.close()
+        if len(inputs) == 1:
+            message = f"HTTP {exc.code}"
+            if detail:
+                message += f": {detail}"
+            return [{"error": {"code": f"HTTP_{exc.code}", "message": message}}]
+        midpoint = len(inputs) // 2
+        return post_batch_resilient(
+            api_type, base_url, inputs[:midpoint], timeout, assembly
+        ) + post_batch_resilient(
+            api_type, base_url, inputs[midpoint:], timeout, assembly
+        )
+
+
 def normalized_vcf(rows: Iterable[dict[str, Any]]) -> list[tuple[str, int, str, str]]:
     values = []
     for row in rows:
@@ -338,7 +367,7 @@ def main() -> int:
     try:
         for offset in range(0, len(cases), args.batch_size):
             batch = cases[offset : offset + args.batch_size]
-            responses = post_batch(
+            responses = post_batch_resilient(
                 args.api_type,
                 base_url,
                 [x["input"] for x in batch],

@@ -552,6 +552,32 @@ class EvaluateTests(unittest.TestCase):
             )
         self.assertEqual("NC_000007.14", response[0]["vcf"][0]["chrom"])
 
+    def test_server_error_isolated_to_single_input(self):
+        def fake_post_batch(api_type, base_url, inputs, timeout, assembly):
+            if "bad" in inputs:
+                raise evaluator.urllib.error.HTTPError(
+                    base_url,
+                    500,
+                    "Internal Server Error",
+                    {},
+                    io.BytesIO(b"conversion crashed"),
+                )
+            return [{"vcf": []} for _input in inputs]
+
+        with mock.patch.object(evaluator, "post_batch", side_effect=fake_post_batch):
+            responses = evaluator.post_batch_resilient(
+                "marshal",
+                "https://example.test",
+                ["good-1", "bad", "good-2"],
+                2,
+            )
+
+        self.assertEqual(3, len(responses))
+        self.assertEqual({"vcf": []}, responses[0])
+        self.assertEqual("HTTP_500", responses[1]["error"]["code"])
+        self.assertIn("conversion crashed", responses[1]["error"]["message"])
+        self.assertEqual({"vcf": []}, responses[2])
+
     def test_evaluate_script_passes_configuration_and_extra_arguments(self):
         with tempfile.TemporaryDirectory() as temporary_dir:
             temporary = Path(temporary_dir)
