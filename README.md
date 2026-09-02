@@ -188,6 +188,8 @@ scripts/evaluate.sh
 
 デフォルトでは `truth/gold500.jsonl` を使い、JSONとMarkdownのレポートをそれぞれ
 `evaluation/marshal-result.json`、`evaluation/marshal-result.md` へ出力します。
+現在のmarshal評価については、`evaluation/marshal-analysis.md` に原因分析をまとめて
+います。
 
 `hgvs2vcf-cdot` を評価する場合は、API種別を切り替えます。cdotとmarshalは同じ
 FQDNを使い、それぞれ `/decode` と `/v1/convert-batch` へリクエストします。
