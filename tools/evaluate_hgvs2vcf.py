@@ -161,24 +161,92 @@ def normalized_vcf(rows: Iterable[dict[str, Any]]) -> list[tuple[str, int, str, 
     return sorted(values)
 
 
+def equivalent_allele(
+    expected: tuple[str, int, str, str],
+    observed: tuple[str, int, str, str],
+) -> bool:
+    """Prove two VCF alleles equivalent from their overlapping REF sequences."""
+    if expected == observed:
+        return True
+    expected_chrom, expected_pos, expected_ref, expected_alt = expected
+    observed_chrom, observed_pos, observed_ref, observed_alt = observed
+    if expected_chrom != observed_chrom:
+        return False
+
+    first = min(expected_pos, observed_pos)
+    last = max(
+        expected_pos + len(expected_ref) - 1,
+        observed_pos + len(observed_ref) - 1,
+    )
+    reference: dict[int, str] = {}
+    for pos, ref in ((expected_pos, expected_ref), (observed_pos, observed_ref)):
+        for offset, base in enumerate(ref):
+            coordinate = pos + offset
+            if coordinate in reference and reference[coordinate] != base:
+                return False
+            reference[coordinate] = base
+    if any(coordinate not in reference for coordinate in range(first, last + 1)):
+        return False
+
+    sequence = "".join(reference[coordinate] for coordinate in range(first, last + 1))
+
+    def apply(pos: int, ref: str, alt: str) -> str:
+        offset = pos - first
+        return sequence[:offset] + alt + sequence[offset + len(ref) :]
+
+    return apply(expected_pos, expected_ref, expected_alt) == apply(
+        observed_pos, observed_ref, observed_alt
+    )
+
+
+def equivalent_vcf(
+    expected_rows: Iterable[dict[str, Any]],
+    observed_rows: Iterable[dict[str, Any]],
+) -> bool:
+    expected = normalized_vcf(expected_rows)
+    observed = normalized_vcf(observed_rows)
+    if len(expected) != len(observed):
+        return False
+
+    def match(index: int, remaining: tuple[tuple[str, int, str, str], ...]) -> bool:
+        if index == len(expected):
+            return True
+        for candidate_index, candidate in enumerate(remaining):
+            if equivalent_allele(expected[index], candidate) and match(
+                index + 1, remaining[:candidate_index] + remaining[candidate_index + 1 :]
+            ):
+                return True
+        return False
+
+    return match(0, tuple(observed))
+
+
 def compare_case(case: dict[str, Any], observed: dict[str, Any]) -> dict[str, Any]:
     expected = case["expected"]
     differences: dict[str, Any] = {}
+    match_type = "failed"
     if "error" in expected:
         if "error" not in observed:
             differences["error"] = {"expected": expected["error"], "observed": None}
+        else:
+            match_type = "exact"
     elif "error" in observed:
         differences["error"] = {"expected": None, "observed": observed["error"]}
     else:
         expected_vcf = normalized_vcf(expected.get("vcf", []))
         observed_vcf = normalized_vcf(observed.get("vcf", []))
-        if expected_vcf != observed_vcf:
+        if expected_vcf == observed_vcf:
+            match_type = "exact"
+        elif equivalent_vcf(expected.get("vcf", []), observed.get("vcf", [])):
+            match_type = "equivalent"
+        else:
             differences["vcf"] = {"expected": expected_vcf, "observed": observed_vcf}
     return {
         "id": case["id"],
         "input": case["input"],
         "category": case.get("category", "uncategorized"),
         "passed": not differences,
+        "match_type": match_type,
         "differences": differences,
         "observed": observed,
     }
@@ -186,6 +254,8 @@ def compare_case(case: dict[str, Any], observed: dict[str, Any]) -> dict[str, An
 
 def summarize_results(results: list[dict[str, Any]], elapsed_seconds: float) -> dict[str, Any]:
     passed = sum(result["passed"] for result in results)
+    exact = sum(result.get("match_type") == "exact" for result in results)
+    equivalent = sum(result.get("match_type") == "equivalent" for result in results)
     category_counts: dict[str, Counter] = {}
     for result in results:
         counts = category_counts.setdefault(result["category"], Counter())
@@ -193,6 +263,8 @@ def summarize_results(results: list[dict[str, Any]], elapsed_seconds: float) -> 
     return {
         "total": len(results),
         "passed": passed,
+        "exact": exact,
+        "equivalent": equivalent,
         "failed": len(results) - passed,
         "pass_rate": passed / len(results) if results else 0.0,
         "elapsed_seconds": elapsed_seconds,
@@ -266,6 +338,8 @@ def markdown_report(
         "",
         f"- Total: {summary['total']}",
         f"- Passed: {summary['passed']}",
+        f"- Exact matches: {summary.get('exact', summary['passed'])}",
+        f"- Equivalent normalized matches: {summary.get('equivalent', 0)}",
         f"- Failed: {summary['failed']}",
         f"- Pass rate: {summary['pass_rate']:.2%}",
         f"- Elapsed: {summary['elapsed_seconds']:.3f} s",
@@ -300,9 +374,15 @@ def markdown_report(
             if result_index:
                 lines.append("")
             expected_vcf, observed_vcf = markdown_vcf_results(case["expected"], result["observed"])
+            match_label = (
+                "Equivalent normalized allele"
+                if result.get("match_type") == "equivalent"
+                else "Exact"
+            )
             lines.extend(
                 [
                     f"- **HGVS:** {html_code(case['input'])}",
+                    f"  - **Match:** {match_label}",
                     f"  - **Variant Recoder:**<br>{expected_vcf}",
                     f"  - **hgvs2vcf:**<br>{observed_vcf}",
                 ]

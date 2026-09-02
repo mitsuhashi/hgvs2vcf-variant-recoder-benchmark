@@ -399,6 +399,62 @@ class EvaluateTests(unittest.TestCase):
         self.assertFalse(result["passed"])
         self.assertIn("vcf", result["differences"])
 
+    def test_equivalent_left_aligned_indel_passes(self):
+        case = {
+            **self.case,
+            "expected": {
+                "vcf": [
+                    {
+                        "chrom": "NC_000013.11",
+                        "pos": 32336546,
+                        "ref": "GAAGAG",
+                        "alt": "G",
+                    }
+                ]
+            },
+        }
+        observed = {
+            "vcf": [
+                {
+                    "chrom": "NC_000013.11",
+                    "pos": 32336544,
+                    "ref": "AAGAAG",
+                    "alt": "A",
+                }
+            ]
+        }
+        result = evaluator.compare_case(case, observed)
+        self.assertTrue(result["passed"])
+        self.assertEqual("equivalent", result["match_type"])
+
+    def test_same_length_distant_dup_is_not_assumed_equivalent(self):
+        case = {
+            **self.case,
+            "expected": {
+                "vcf": [
+                    {
+                        "chrom": "NC_000022.11",
+                        "pos": 50720715,
+                        "ref": "A",
+                        "alt": "AGGACGCGC",
+                    }
+                ]
+            },
+        }
+        observed = {
+            "vcf": [
+                {
+                    "chrom": "NC_000022.11",
+                    "pos": 50720670,
+                    "ref": "A",
+                    "alt": "AGCCGCAGC",
+                }
+            ]
+        }
+        result = evaluator.compare_case(case, observed)
+        self.assertFalse(result["passed"])
+        self.assertEqual("failed", result["match_type"])
+
     def test_markdown_report_lists_passed_and_failed_vcfs(self):
         passed_observed = {
             "transcript": "NM_000603.4",
@@ -431,6 +487,7 @@ class EvaluateTests(unittest.TestCase):
         self.assertNotIn("  - **Category:**", report)
         self.assertIn("  - **Variant Recoder:**", report)
         self.assertIn("  - **hgvs2vcf:**", report)
+        self.assertIn("  - **Match:** Exact", report)
         self.assertIn("<code>NC_000007.14:150999023<br>REF: T<br>ALT: G</code>", report)
         self.assertIn("<code>NC_000007.14:150999024<br>REF: T<br>ALT: G</code>", report)
         self.assertIn("  - **Difference:** VCF mismatch", report)

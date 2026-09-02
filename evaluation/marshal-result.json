@@ -2,28 +2,10 @@
   "results": [
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000013.11",
-              32336546,
-              "GAAGAG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000013.11",
-              32336544,
-              "AAGAAG",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-092efc2043d2",
       "input": "BRCA2:c.2192_2196del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -34,32 +16,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              119422292,
-              "ATGATA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              119422290,
-              "CTATGA",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-dba1c7ce2d5a",
       "input": "HSD3B2:c.792_796del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -70,32 +34,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              47302773,
-              "TGT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              47302770,
-              "CTG",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-b146d847e3ab",
       "input": "ITGB3:c.2068_2069del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -106,32 +52,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              25553944,
-              "CAC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              25553942,
-              "GAC",
-              "G"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-ad5b1b25d425",
       "input": "LDLRAP1:c.112_113del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -142,32 +70,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              156135954,
-              "GCG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              156135953,
-              "AGC",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-a08a4bfa77ee",
       "input": "LMNA:c.991_992del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -178,32 +88,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              31227249,
-              "ACTGCTGAGGCGCA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              31227246,
-              "GGCACTGCTGAGGC",
-              "G"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-f009d5aa3132",
       "input": "NF1:c.2284_2296del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -214,32 +106,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              31349248,
-              "GCAG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              31349246,
-              "TAGC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-ca5ecc8eed8e",
       "input": "NF1:c.7319_7321delCAG",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -250,32 +124,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000002.12",
-              47445639,
-              "AA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000002.12",
-              47445638,
-              "CA",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-bd6d6cbd1888",
       "input": "NM_000251:c.1369del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -286,32 +142,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000023.11",
-              150657854,
-              "AAA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000023.11",
-              150657853,
-              "CAA",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-205dcdf28f62",
       "input": "NM_000252:c.1088_1089del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -322,32 +160,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000016.10",
-              2079413,
-              "CC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000016.10",
-              2079412,
-              "TC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-fddbdad74a88",
       "input": "NM_000548:c.3270del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -358,32 +178,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000003.12",
-              10074607,
-              "GG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000003.12",
-              10074606,
-              "AG",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-ec1a7d3fd38a",
       "input": "NM_001018115:c.2794del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -394,7 +196,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
@@ -420,6 +222,7 @@
       },
       "id": "gold500-report-cfb7582dc3ca",
       "input": "NM_001130438:c.4458del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -434,28 +237,10 @@
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000003.12",
-              128896485,
-              "AA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000003.12",
-              128896483,
-              "TA",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-ce75aef829d9",
       "input": "NM_014049:c.504del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -466,32 +251,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000018.10",
-              33738594,
-              "AGA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000018.10",
-              33738593,
-              "CAG",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-e4d92f166190",
       "input": "NM_030632:c.1191_1192del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -502,32 +269,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              49832370,
-              "CC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              49832369,
-              "AC",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-a0232c13ab17",
       "input": "NM_030973:c.1438del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -538,7 +287,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
@@ -564,6 +313,7 @@
       },
       "id": "gold500-report-5714c3b198d1",
       "input": "NM_198576:c.1668del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -578,28 +328,10 @@
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000018.10",
-              63987099,
-              "AA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000018.10",
-              63987098,
-              "CA",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-8d2e0e3bfd62",
       "input": "SERPINB8:c.947del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -610,32 +342,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              43416602,
-              "CC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              43416601,
-              "AC",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-00f3013b873c",
       "input": "SZT2:c.841del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -646,7 +360,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
@@ -672,6 +386,7 @@
       },
       "id": "gold500-report-7f740337999d",
       "input": "TSC2:c.3294del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -686,28 +401,10 @@
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000010.11",
-              74043089,
-              "AAA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000010.11",
-              74043087,
-              "GAA",
-              "G"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-1213e7f7b720",
       "input": "VCL:c.176_177del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -718,32 +415,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000012.12",
-              48981586,
-              "CC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000012.12",
-              48981585,
-              "GC",
-              "G"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-3244b4e3b8ba",
       "input": "WNT1:c.1060del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -754,32 +433,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              236742954,
-              "TGCT",
-              "TA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              236742955,
-              "GCT",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-fdaa3da0abe4",
       "input": "ACTN2:c.1167_1169delinsA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -790,32 +451,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000021.9",
-              45982741,
-              "TTCATCGACA",
-              "TCCT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000021.9",
-              45982742,
-              "TCATCGACA",
-              "CCT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-78be4a861ab4",
       "input": "COL6A1:c.206_214delinsCCT",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -826,32 +469,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000011.10",
-              640058,
-              "CCCGGGGTCCCTGCGG",
-              "CA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000011.10",
-              640059,
-              "CCGGGGTCCCTGCGG",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-d00f5f25603d",
       "input": "DRD4:c.810_824delinsA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -862,32 +487,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000012.12",
-              120994313,
-              "GG",
-              "GCC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000012.12",
-              120994314,
-              "G",
-              "CC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-6d502861365e",
       "input": "HNF1A:c.864delinsCC",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -898,32 +505,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000012.12",
-              52675517,
-              "ACC",
-              "AT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000012.12",
-              52675518,
-              "CC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-11309eefb5b2",
       "input": "KRT1:c.1609_1610delinsA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -934,32 +523,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000004.12",
-              99619054,
-              "GTT",
-              "GA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000004.12",
-              99619055,
-              "TT",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-4d6bb60eca74",
       "input": "MTTP:c.2299_2300delinsA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -970,32 +541,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              3481606,
-              "AAA",
-              "AT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              3481607,
-              "AA",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-42d4396e5f5c",
       "input": "NM_000049:c.241_242delinsT",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1006,32 +559,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              15174316,
-              "ATCCCAGCCGCAC",
-              "AGCCCA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              15174317,
-              "TCCCAGCCGCAC",
-              "GCCCA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-195e1fdc4542",
       "input": "NM_000435:c.4476_4487delinsTGGGC",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1042,32 +577,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000007.14",
-              107675078,
-              "AAAACT",
-              "ATGTTTCA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000007.14",
-              107675079,
-              "AAACT",
-              "TGTTTCA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-3a254f4a0659",
       "input": "NM_000441:c.735_739delinsTGTTTCA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1078,32 +595,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              43045730,
-              "CACTGGT",
-              "CCAGTGCCAGGACAGCAGGAC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              43045731,
-              "ACTGGT",
-              "CAGTGCCAGGACAGCAGGAC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-7c0bdef29154",
       "input": "NM_007294:c.5534_5539delinsGTCCTGCTGTCCTGGCACTG",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1114,32 +613,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000002.12",
-              208128310,
-              "GGTAGTTG",
-              "GTCTACGAGGGTATTGCCCCGTCTACGAGGTATTGCCCGTCTACGAGGGTATTGCCCCGTCTACGA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000002.12",
-              208128311,
-              "GTAGTTG",
-              "TCTACGAGGGTATTGCCCCGTCTACGAGGTATTGCCCGTCTACGAGGGTATTGCCCCGTCTACGA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-4b1daa2b07b2",
       "input": "NM_020989:c.411_417delinsTCGTAGACGGGGCAATACCCTCGTAGACGGGCAATACCTCGTAGACGGGGCAATACCCTCGTAGA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1150,32 +631,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000007.14",
-              100633086,
-              "TCTTCGGGCCG",
-              "TGTACGC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000007.14",
-              100633087,
-              "CTTCGGGCCG",
-              "GTACGC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-e985612beb00",
       "input": "TFR2:c.754_763delinsGCGTAC",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1186,32 +649,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000005.10",
-              112775723,
-              "C",
-              "CC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000005.10",
-              112775722,
-              "T",
-              "TC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-83f3dc684fd8",
       "input": "APC:c.518dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1222,32 +667,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000003.12",
-              52403637,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000003.12",
-              52403636,
-              "G",
-              "GA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-78386c9fe22c",
       "input": "BAP1:c.1508dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1258,32 +685,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              43071160,
-              "G",
-              "GG"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              43071159,
-              "T",
-              "TG"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-a249069a5fa3",
       "input": "BRCA1:c.4754dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1294,7 +703,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -1309,6 +718,7 @@
       },
       "id": "gold500-report-05bdebf1c669",
       "input": "CDSN:c.164_167dup",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -1341,6 +751,7 @@
       },
       "id": "gold500-report-f3a6ae8d76af",
       "input": "CFAP410:c.689_722dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1355,28 +766,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000005.10",
-              13901316,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000005.10",
-              13901315,
-              "G",
-              "GT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-5ed5542258c0",
       "input": "DNAH5:c.1988dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1387,32 +780,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              11235632,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              11235631,
-              "G",
-              "GA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-f01f4130a42f",
       "input": "DOCK6:c.2520dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1423,7 +798,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -1449,6 +824,7 @@
       },
       "id": "gold500-report-742b9edf6679",
       "input": "EYA1:c.1381_1387dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1485,6 +861,7 @@
       },
       "id": "gold500-report-ae07617b24ed",
       "input": "IRF7:c.1024_1028dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1521,6 +898,7 @@
       },
       "id": "gold500-report-b6208479be3d",
       "input": "KAT6A:c.4968_4982dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1535,28 +913,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              235734593,
-              "C",
-              "CC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              235734592,
-              "T",
-              "TC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-72d7df59a135",
       "input": "LYST:c.8425dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1567,7 +927,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -1593,6 +953,7 @@
       },
       "id": "gold500-report-d845dbf0c9c5",
       "input": "MYO5B:c.3163_3165dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1629,6 +990,7 @@
       },
       "id": "gold500-report-52c46d8e0c47",
       "input": "MYORG:c.337_348dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1643,28 +1005,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000010.11",
-              20812790,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000010.11",
-              20812789,
-              "C",
-              "CT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-0c0e6ec39ce8",
       "input": "NEBL:c.2497dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1675,32 +1019,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000005.10",
-              143314105,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000005.10",
-              143314104,
-              "G",
-              "GT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-3f10a1e6acb1",
       "input": "NM_000176:c.1248dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1711,7 +1037,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -1737,6 +1063,7 @@
       },
       "id": "gold500-report-93721a7af6d1",
       "input": "NM_000321:c.19dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -1751,28 +1078,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000009.12",
-              132902757,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000009.12",
-              132902756,
-              "A",
-              "AT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-b832fb0ee95b",
       "input": "NM_000368:c.2239dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1783,32 +1092,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000010.11",
-              104040389,
-              "G",
-              "GG"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000010.11",
-              104040388,
-              "T",
-              "TG"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-34ebe3bf9729",
       "input": "NM_000494:c.2723dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1819,32 +1110,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000011.10",
-              5226605,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000011.10",
-              5226604,
-              "C",
-              "CT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-1165eb0dffa3",
       "input": "NM_000518:c.287dupA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1855,32 +1128,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              12666613,
-              "G",
-              "GG"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              12666612,
-              "T",
-              "TG"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-a03a024ff508",
       "input": "NM_000528:c.89dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1891,32 +1146,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000007.14",
-              100894222,
-              "G",
-              "GG"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000007.14",
-              100894221,
-              "C",
-              "CG"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-855d416511a7",
       "input": "NM_000665:c.11dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1927,32 +1164,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              13275914,
-              "G",
-              "GG"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              13275913,
-              "C",
-              "CG"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-c302468cc4e1",
       "input": "NM_001127222:c.3925dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -1963,7 +1182,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -1989,6 +1208,7 @@
       },
       "id": "gold500-report-3362d653ae91",
       "input": "NM_001135998:c.196_197dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2025,6 +1245,7 @@
       },
       "id": "gold500-report-05b455fff125",
       "input": "NM_001200:c.231dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2061,6 +1282,7 @@
       },
       "id": "gold500-report-14c0e713feb7",
       "input": "NM_001291415:c.1552_1555dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2097,6 +1319,7 @@
       },
       "id": "gold500-report-782179f0ebe6",
       "input": "NM_001367624:c.10332dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2133,6 +1356,7 @@
       },
       "id": "gold500-report-dc3e48e9cca2",
       "input": "NM_001372044:c.3069_3076dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2147,28 +1371,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              42295072,
-              "C",
-              "CAGGCTGCCCCGCCAC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              42295071,
-              "C",
-              "CCAGGCTGCCCCGCCA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-d891ce733178",
       "input": "NM_001386298:c.7436_7450dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2179,7 +1385,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -2205,6 +1411,7 @@
       },
       "id": "gold500-report-22a5f5bc69ee",
       "input": "NM_003924:c.735_767dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2241,6 +1448,7 @@
       },
       "id": "gold500-report-01586e43ece5",
       "input": "NM_013275:c.6552_6558dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2255,28 +1463,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000016.10",
-              53664955,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000016.10",
-              53664954,
-              "C",
-              "CT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-cba0b62cbfc5",
       "input": "NM_015272:c.1158dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2287,32 +1477,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000002.12",
-              15415666,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000002.12",
-              15415665,
-              "G",
-              "GA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-119343d694cf",
       "input": "NM_015909:c.2817dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2323,7 +1495,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -2349,6 +1521,7 @@
       },
       "id": "gold500-report-9f8cf3d48e22",
       "input": "NM_182931:c.4829dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2385,6 +1558,7 @@
       },
       "id": "gold500-report-12cd7bc4ae3f",
       "input": "NOTCH3:c.1561_1569dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2421,6 +1595,7 @@
       },
       "id": "gold500-report-af298f006875",
       "input": "PADI6:c.441dupA",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2435,28 +1610,10 @@
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000012.12",
-              32878276,
-              "C",
-              "CC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000012.12",
-              32878275,
-              "A",
-              "AC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-44e3d4b217a7",
       "input": "PKP2:c.604dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2467,32 +1624,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000007.14",
-              124871005,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000007.14",
-              124871004,
-              "A",
-              "AT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-6a38e897b173",
       "input": "POT1:c.161dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2503,32 +1642,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000019.10",
-              3770839,
-              "C",
-              "CC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000019.10",
-              3770838,
-              "G",
-              "GC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-5c69a1e228c2",
       "input": "RAX2:c.337dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2539,7 +1660,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "coding_dup",
@@ -2565,6 +1686,7 @@
       },
       "id": "gold500-report-e900744f7392",
       "input": "RPGR:c.2819_2838dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2601,6 +1723,7 @@
       },
       "id": "gold500-report-f4fde05cfdb3",
       "input": "SPTAN1:c.6923_6928dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2637,6 +1760,7 @@
       },
       "id": "gold500-report-c5c24ae902b2",
       "input": "WNT10A:c.495_502dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2673,6 +1797,7 @@
       },
       "id": "gold500-report-e599eb2ab80a",
       "input": "ALG13:c.2797_2798insGAC",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2709,6 +1834,7 @@
       },
       "id": "gold500-report-4dd7b51b67c5",
       "input": "NM_002458:c.14609_14610insCCCAGGGACCACCTGGATCCTCACAGAGTCGAGCACTACAGCCACCGTGACGGTGCCCACCAGCTCCACGGCCACCGCCTCCTCCAC",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2723,28 +1849,10 @@
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              150266657,
-              "CTAGGAAGGAGGGTAAGAGTAGGAAAGAGATTAGATTCTCCCTCGACCTAATCCCCATATTCTCTCTGTACCTTTCTGACTCCCAGATATCTCTCTCAAATTCTCCAGTCTTTCCCTTCAGAGCACCAACATCTTGTGGTTAAGGGGACTTTTGATTTTCAGCTCCTCAGAAACTCAAAGGTTTCTGCCGCTCCTGCTCACCTCAGGCCCTCTGCATTACAGTTTGACTAATCCTTTCAACCTCCTCCCCAGAGCAGGTGATAGAAATGATGCTGAGGTGAGAGACCTTGAAAGACTCACCTTTCCTCCTCCTCCCAGGTAAGTTAAAAATGTTAAGAAGTGAGGATACCCTTTCCCCCACATCCCACTCACCATTAAATGCTTTTCTCCCTAACTCAGGCCCCTGTCTCCAACTCACC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              150266656,
-              "TCTAGGAAGGAGGGTAAGAGTAGGAAAGAGATTAGATTCTCCCTCGACCTAATCCCCATATTCTCTCTGTACCTTTCTGACTCCCAGATATCTCTCTCAAATTCTCCAGTCTTTCCCTTCAGAGCACCAACATCTTGTGGTTAAGGGGACTTTTGATTTTCAGCTCCTCAGAAACTCAAAGGTTTCTGCCGCTCCTGCTCACCTCAGGCCCTCTGCATTACAGTTTGACTAATCCTTTCAACCTCCTCCCCAGAGCAGGTGATAGAAATGATGCTGAGGTGAGAGACCTTGAAAGACTCACCTTTCCTCCTCCTCCCAGGTAAGTTAAAAATGTTAAGAAGTGAGGATACCCTTTCCCCCACATCCCACTCACCATTAAATGCTTTTCTCCCTAACTCAGGCCCCTGTCTCCAACTCAC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-14ed4f996fad",
       "input": "APH1A:c.609_610-2del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2755,32 +1863,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000003.12",
-              52402591,
-              "CATCCCCTCACCTTC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000003.12",
-              52402590,
-              "GCATCCCCTCACCTT",
-              "G"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-1f06d306e39a",
       "input": "BAP1:c.2053_2056+10del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2791,32 +1881,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000009.12",
-              135757246,
-              "CTGCCAGGAGTGCGGGCCCTGGAGCCCCAGC",
-              "C"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000009.12",
-              135757236,
-              "TGAGCCCCAGCTGCCAGGAGTGCGGGCCCTG",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-6c03caebaceb",
       "input": "KCNT1:c.675+17_676-22del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2827,32 +1899,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000017.11",
-              31229813,
-              "AATGTA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000017.11",
-              31229811,
-              "TTAATG",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-697f7598dafc",
       "input": "NF1:c.2851-21_2851-17del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2863,32 +1917,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000015.10",
-              48274667,
-              "TT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000015.10",
-              48274665,
-              "CT",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-3376572316fa",
       "input": "NM_000338:c.2485+15del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2899,32 +1935,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000007.14",
-              74045184,
-              "GCCTGCCTTCCTACACTCACTGCTTTGTCCCCCGGCAGG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000007.14",
-              74045181,
-              "AAGGCCTGCCTTCCTACACTCACTGCTTTGTCCCCCGGC",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-3d7685f25607",
       "input": "NM_000501:c.470-37_470del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -2935,7 +1953,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
@@ -2961,6 +1979,7 @@
       },
       "id": "gold500-report-d27dfb810e8b",
       "input": "NM_001023570:c.1279-15del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -2975,28 +1994,10 @@
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000015.10",
-              92901316,
-              "TTCTT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000015.10",
-              92901313,
-              "ACTTT",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-64ce2de6a24d",
       "input": "NM_001271:c.62+18_62+21del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3007,32 +2008,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000011.10",
-              20628019,
-              "TCTGCTGCATGGGGAGGCCTGATCACTCTCTCTTCTTACAACAAATTCCACAACAACTGCTACAGGTATGTAGAGGTACTACAAGATCTGGGCATAGCTGGTGAGTGGGACAGAAGAATGGACTGAGTTATCAGACACCTGAGGCCACATCCTCACATTTCATCTTAGGGAGAGCTAAAGATTTGCCTCTGGCCTAGGAGAAACCACCTGCTAAGGCCTAGGCACTATCTTCTGAAGGCCTGGACCCTCACTTACACACCTGGCTCTGACACATGGGGGAGGCTCAGTGGCTATTTACAGGATGGAAGCAAGTTTGTCTGCAGGTCACTGTGCAGTTGGCTGTGTTCTGTGACAGTCATTTGTGAGCTACCTAGTCTGTGGATACAATGGACTGTGCCTTCAGATGGTCTTCCCTCTGTGTGGGGCTGTGACCTAATCTCCTCTTCTTATAAAGACCCCAGTCATATCAGTCACATTGGATCAGGGACCACTCTAATGACTTCATTTAACTTAATTACCTCTTTAAAGGCCCTATCTCCAAATACAGTCACGTTATGAGATGCTAGTGATTAGGATGACAAAATATGAATTTGGTAGTGATAGGGGAGTGGTAGGAAGACACAATTCAGTTCAAAATGACCTTGAGTAACAGACTATGGTATTTAAACTTCATTAGTCACAACTGCTCATTAACCATTGACCCAAATCAGTCTGAACACCATTAAAGGGTGAAGCATTGCTATCTTCTTTATTAGAAATGAGGCTGTGGTGTGGCAGAAATAACCCAGGCTGAGAGCTTGAAAATCTAGATTCATATCCTGGCCCACACTATTAATTAGTCCATTACCTTTCCCTGGGCCTCAGTTTCCTCTTCAGTAAACTAAGGGGTCAGACAAGGTGGATCATTTGCTGCACACTTGCTCTGTGCTAGGCGGTGCATAGTACAGGTATCATCTCATTCTCTCCTGGCAACAGCCTATGACAGATAGACTCATTGCTGCCATTTCAAATCAGAGTGGAAAGGAAGTGGATTGCTCAAGGTCATGCCACTAAAAGGCAGGAGAACCAGGATTTCAGTGTAGCCCTGGGTTACAGTGTAGCCCGTCTAGCTGTGACCTCACATTTGAATCTAGGATGACTGAAGGTAGACTGGGAAACCCTGGCTATCTTACCAGCAGCAGGCTCTGCGATGAAGGTAGAGACACTGGGCTCTCTTCCCTCCCCTGCCCCTTTGTCCTTCTCAACCCTGTGTGTCCCAACTCCAGGCTACCCTCACATTTTAGGGTCATTTGACTTTCCCACTGCCTTCTCTTCCCTCACACATAGTTCCTGTCCTGGAGCCGACCAAGGCCCCATCTCCTCAATTTCTGTTCTGATGAACAGATTTACCTCTGCCCCTGGAATAATGTCTTAGTTTGTTCAGATTGTCTAACAAAATGCCATAGACTGAGTAATATTTTTTCTTTATACGTTTTTTGCTTTTATTATTTTTAAATGACACATAGTAATTATGCATATTTATGGAGTACAGTATGATATTTCGGTACATGTATACAATGTGTAATGATCAAATCAGGGTAATTAGCATATCTACTACCTCAAACATTTATCATTTCTTTGTGTTGAAAACACTGACAGTTCATTCTTCTAGCTGTTTGAAAACATAAAATAAATTGTTGTTAATATAGTCATCTCATAGTGCTGTAGGATGATTTTTTTTTTTTTTTTTGAGATGGAGTTTCGCTCTTGTTGCCCAGGCTGGAGTGCAATGGCCAATCTCAGCTCACTGCAACCTCCACCTCCCAGGTTCAAGCAATTCAAGTAGCTGGGATTGCGGGCATGTGCCACCATGCCCCGCTAATTTTTTTTTTTGTGTGTGTATTGGGTAGACACGGGGTTTCACCATGTTGGTGAGGCTGGTCTCGAACTCCTGACCTCAGGTGATCCACCTGCCTTGGCCTCCCAAAGTGCCGGGATTACAGGTATGAGCCACCGTGCCCGGCTGGGATGGTTGTTAATATAGTCATCCTATAGTGCTATAGAATACTAGAGTTTATTTCTCCTACCTAGCTATATTTTTGTATCTTTAACTGACTTTTGGCTATAAACAACAGAAATTTATTGCTCACTGCTCTAGGGGCTGGGAAGTCCAAGTTCAAGGTGCCAGAATATTCAGTGTCTGGAGGGCTGCTCTCTGTTTCAAAGATGGCACCTTGTTGCTGTGTCTTCATATGGTGGAAGAGGCAGACACATTCCCTTCAGCCTATTTTATAAGGGCACTAATCCCATGAGTTGGCTCTGTCTTCATGACTTAATCACTTTTCTAAAGCCTCCACCTCTTAATACTATCAAATTGTGGATTAAGTTTCAGCCAATGAATTTGAGATGGGGGGATTCAGACCACAGCAGATGAGTTGAGACCCATTTATATAGATCGTGGAGTCAGAGCTTTGGCCCACAGGCCCTGAATCAGGGCTATTAGGGGATATCGTCTGAGCCTTTTGGTGCTTTTTAAGTGAGCCCAAGGGAGCCTGTGGTTAGGACATGAACGTACACGTATATGCCTACACATGTGCAGACAAACATGTGGGCACACATTTGTGTGTCCTTCCCCTTGTCCCTTTCCACTCACCAAGCACACCTAATGGAAAACTCTGGTCTCTTCCTTCCAGGGACACTCTAATTGTCACCTGCACCAACAGTGCCACAAGCATCTTTGCCGGCTTCGTCATCTTCTCCGTTATCGGCTTCATGGCCAATGAACGCAAAGTCAACATTGAGAATGTGGCAGACCAAGGTACAGGACAGTTGTTACCCTGCTGTTGCAGGGCAGGTCCCAGGCTCATGTCACAAGCTCCTAATTTAGACTATGCTGGGAAGCTGGCCTTCTGGAACAGGATAGAGGGTGGAGGAGCCCAGGTCCTTCTTTACAGAGGGACCAAGGCAGGCTCAAGTAGGAAGCTCACTGCAGAGTCAGAACTGGCTGGTCTCTAACTGGAGGGATTGCTTTAAAAGCCCTCTTTCCTTCTCCTTGCCTCTCCTTCCTCTTACCTTGCCCCTCTTAATTTAGCTCCAGTCTATAGAAATAAGGGTTATACCTGTTAGGTATGAGTAGAGAATTTATTAGGCAAACCATTGCCTCAGGAGCTGATGTGGGCACAGGCTGCTGTAGGATGACATTCATTGCAGAAGGCCCTGTCGAAACCAAGGCTTAGTGAGAGAACTGACTTCAGAGGAGCATTTTCCTTACAAAGCACTTTTCTGATTGTTAGGTCAAATGTGCTTTCAGGGCCTTCTGCTTAGTTAGCAATGCAGACCTGCAGTTTTTTTCCCCAGTGGGTAGAAATGTTGGATCGTGCTGGGTGGGTGGAGAGGCATGTGGAATAAATGTTTACTCTCTACCCAAATGATCTTTTTATTAATGGCTAACATTTGTATGGTGCTTTCAAGTTGACAAAGAGCTTTCATTTTTATTTCACTTAATCCATATTACTAGGACAGCATTTTGCAGAGAAAGCATTCAAGATTTTAGTTTAACTCTTCATTTTCACCCAGCCTGGTTCCACAAAGGATTTGTATATTTAGTAGGTTTCAGTGATCAAGGGATTTCATTGTGTCTGTTGTTTACCATTATGATCTCATTCTCAATTCAGACATTTATGGGATGCGTAGTGTGTTGGTCATGTGCCTCATGCTGTGGGGCATGACTGTGGCCCTGGACAACCAAGGGGCGTACCTGTGAGAGGCTTGTCTGGGCAGTTATCTTCCTTCAAGGAGCTGACTGCAATTCTCAGATAATGGCTCAGATGTGGTGAGAGAACTAAGCCCTGGAAATGTCACCTTCTTGGATACTAAGATTTCTTCTGGCTCCCCAAGGATAATTCATTACTGCGCCAATTCATGCTGATGGTGCACCAGGGGCCTCAAAGAGTTAAAGAGCCAGCACTTTCCAGGGGTGCAATTATCTCTCCCTGGAGAGAGTGTAAAACCCTGAGGGGTGTTTGGTTCCGCAGCAATGCACTAAATTAGAGGGGCCCCAGGAGATAAGCAATGGCTCTCCCTGGTTGAGAATTCTCAGATACCCTGGGAGGCAGGGAGGGAAAGTGAGAGGGTAAACGGGTTTTGTCCTTAGAGGTACTGGAGTCACTTCCAGCTGTCCTGTAACCTCATTTCCTCCTAGCAGAGTGGTTGGAGCAGATAGGTTCTGTCCCATTTTCTAGAAGATCTTAGGCATTTTGCTTTTTGTGACATTACTGAGTTCTTTTGGAACCAGTGGCCAACCTGCTAGAGACTGTGAATCCTGAGATGTGGGCCAGGTTAGTAAATGATTCTGAACTCTTTTCTGCTCCAGGAAACGGATTTCTGGGGAGATATTGCAAAAACTCAAACAGAATGTTGTTTATCTGGTGTGTAAAATTGCCAACAAATTGCCCATGTTTTCCTCTGAAATTTCTCCTTTCCAATGTTTTTTCACTTCCTTTGATTTGAACAAGGGTAGGGGCACTTCTAACAGGTTCTAACCTGTTGTGTTAATTCTTGTCTCTGGCACAGGGACGGGTGGGCCTCATCTCTCACAGGAGAAGGCCCATGAGATCTTCTCCCAGACCCACTGGGGAAGCTTTCCTGCTCATCTGAACCTGGATGTATTTTTATATGTGCTTTACAGGCTTGTCTTACTTGCCTTGATATAATGGAGGCTCTGCAGAATACAGGACAGAGATTTGGGGTCAGGCCTGCATTCAACCTGAGCCCCACTTCCTCCTTGCTGGGCAACACTGGCATATAGACATTCAGGACATTTTTGCTGACCCAACTTTGGTAACTAAGTTTTGATCTTTAGTCAAATAGAGGTTCTCTTTAATGACCTAACACTATGCGATTTAGTTTACCACTCCCTTCTAAAAGAGGCATTTCTACCAAAATGATCATCTTAAATCTTGGTCTTATCAAAATTTTGAGGGGCTGAGGATGGGATTGGTGAAGAGACCAAGCTGTGTTTTGCTTTTATGATAGGCATAGGGAAGGGGGCATGTTCTCGGGGAACTACTCTAGAAAAGCAGCTTCCAGGAAAGTTAGCCCTTCAGAGCCATCTCGCCACCATATGCATTACCACCTATGGAGCGGTGACTCATGTTCAGAATCTATCCTGAAGCCAAACAAAGATGCTTATCCAATAGCAGAAACACTGAGTTATACCAGAGTAGATAAGCAGAAATTTGCATATTTATTTAGCATTCCCAGGTGTAGGTAACTCTCAGCTAACCGGAGCACTAGAAATACTACTTTGGTTCCCTTGCCCCTTAATAGTTCAGATACCTTACTAATCAAAATAAGCATTCTCAAACAGCACTGATGTCCCACTTCCATGCAGCCATCTGTCTGTCACCTGTATCCCAATCCTTCTGCCCAAAGGCACAGAGGTCCAGGTGGCATATCCTCAGAGAGCTCATTCAATTTGTAATAGTTATCACAGCAGAGTGGCTACCCAAGCTGTGCCATGGGCCTTGATGCATTGCACTGACCAGAGCCCCTTGCTGTGTCTTTAGTGGCACTCTAGGATAAAGGAGGCTCTCATGGTAGGATCTCTGGGGACTCTGCTCAAGTTACTGAAATGAAGAGCCCCTTTGATCCCTTCTCATAAGAAGACTAATAATGGTCTATGTTTTCTGAGTTCATAGTATGTCCAGGCATTGTTCTAAGCCTTTTACTTGTGTTGATGCATTTAATTCTCACGGAAGCTCTATAAAGGTAGGTACTATTACTATTTCCATTGTGTGGATAAAGAAACTAAAGTTTGTCTAGAGAGAACAAGTGACCCCCTAAGTCCTCGGCTAGCAAGAGGTACAGCCAGTTTGTTTTTTGTTTCTTTTTGAGATGGAGTCTTGCTCTGTCACCCAGGCTGGAGTGCAGTGGTGCCATCTTGGCTCACTGCAACTTCTGCCTCCCGGGTTCACACCATTCTCCTGCCTCAGCCTCCTGAGTAGCTGGGACTACAGGCGCCCCCCACTACGCCCGGCTAATTTTTGTATTTTTAGTAGAGACGGGGTTTCACCATATTGGCCAGGCTGGTCTTGAACTCCTCACCTTGTGATCTGCCCACCTTGGCCTCCCAAAGTGTGGGGATTACAGGCGTGAGCCACCGCACCTGGCTGCCAGTTTTTTAATCCATGAGGAAGAGAGCCTGTACTCCAGCCACTGGGCTCTACTGCCTCCCAGTGGGAGAGGAGAGAGGCAGAACTTGGCCTTCATCAGACTGGCCATATACTCTTTTAAACATCTAACGATGTTATTCTCTAGATGACTCCGCTCCCCATCTGCCTTGGGTAAGTGGAGTCTGCTGTAATTTAGCTTGCAAAGAATGCCTTCACCTGGGTGCTTTAGGGAGGCAGCTGAAATGGAAGCAGACTGAATATTTTGAAATCACTTGTTTCCTCTAAAAAAGCTGTAAAGCCCAAAGGGTAGAATCCTGTTAAAGTGAGCAGCTGAGGACCTCTGGTAGTGGCCATTCAAGATCTTCTTGTCGGCTTTACGGGCCTGACTGTCGCCAGAACATTAAACTGACTTCCTTGTTGTTCTGCATTTGAGACCTATTTTGAACTTTAGTTTAATACAGACTTTTCTTTTACGGTTCACATAGGGAGCCTTCAGAGGCTGGCTCTACAGTCTGTTCAATAAATGCGTAAAGCGGGGGTATTTCTGGCATTTGAGGCTTTATATTTTAAATACACAAAGGCCCTAGGCAACATTAGGAACTAACAACCTGATAAATTCCAGTTTAAAAAAGTGCTGTTATGCTTGAGTTATAAACATTCTAGGTGCTGTGATTGCTGATTGTGGACGTGTGCTGGCTGTGGATTATCCCGGCGCCCACATTCACTTGTCTCTGCCCATTATCATTTAGTTTTCTACTTACAGGAAAATTCACAACTGCTGTGTCTTTAGCTACCTTTGATTACAGTAATCTTCCCAGTGAGACCGTGAGGCAGGGAGAATGGCTGGCAGAGCTTTACGATAGCAGAGAAAACTGCCGCTCAGACTTCCCCACCAAGACCACATGAAGTGTTCTAGAGAAAACCTGAATCAGAACCGCTAACTTCCAAGTTCATAGTCCACTCATAATAGAAGATAATATTCTGTGGGTGTTGATGATGTAGGGGGTACTGGGCTCAGTGTTTTACCTGCGTTTTCTCATTTGTTTATTGTAACCACCTTGTGAGGTCCTATTTTTGTCCCCATTTTACAGATGGACAAAATTGAGGCTTACAGAAATTAAATAACTTGTCTAGGGTTGCACAGATGGTAAGTCACGGAATCTGGATTTGGACCAGATCTAACCCTTAGAGACTGAACCCTCTTAACCCTTACATGATGTTTCATGCGCCGCCCCCCCGCAACCCGACTAACTACTAGGACTGATGTAGCCCCATTTATACCAATAGTGCAAGATCCTGAAAGTGTTAGATTCATATTTTATGTGAATGTTTTCTCCTGGAGGACTAAATAGGAGGAAGGGTAGTTAAAGGAAGAAATACTAATGCATGCCAGACTTAATACTTAGGTGATGGGGTGATCTGTGCAGCAAACCACAATGACACACGTTTACCTATGTAACAAACCTGCACATGCACCCCAGAACTTAATAAAATAAATAAAGGAAGAAATGATGTCATTCTGGTCATGTTCCAACTTTTAGAGCGGGGATTCTCAAACCTCAGCACTATTGACATTTGAGACAGGATAATTCTTTGTTGGCAAGAAGCTCTCTTGTGCATTGTAAGAGGCTTACCAGCATCCCTTGCCTCCACCCCACTAGATGCCAGTAGTTATCCTACCCCTACCCCCAGCTCACCCGTGAGAATAAAAAATGTCTGCAGACATTGCCAAATATCCCAAACATGGCAAAATCACTGCTGGTTGAGTACTACTGCTGTAAAGGCTAATTAATTACATTTTCCTTTAATTCATCCAATACAAAGATCCTATGTACATGGTACACAGCCTAGCCGTGGAGTCCAGTAGAGTTGCCTCTGAGTCTCTGCTTAGACACTATTTTTAGGCCTCTCCTGTGAGTTCTCCTAGCTGTTGACCTAATTCCTTTGGTCTTCCCCTTCAAGGAGCCTAAGGTCTAATTGAGGAAATGGATAGAGATGAGTAAAAAATAACCAACAGTGGAAGCAGCATATAAGAAGTAATAAATGAGGATCTCAGCAGAGAGAAGGCCCTCTGGGCTCTGGGAAGAGCAGCCTTGAGTAGGGCCTGCCTGCAATCATCTGTCTTGTTCCTTCCAGGGCCAGGCATTGCATTTGTGGTTTACCCGGAAGCCTTAACCAGGCTGCCTCTCTCTCCGTTCTGGGCCATCATCTTTTTCCTGATGCTCCTCACTCTTGGACTTGACACTATGGTGAGCCCCTTTTCCATCAGTCTCTATCCCATGCTCCTCTTGAAGACTCCCCCTCTCCTGGGTCCTGGGTTCACCCTTCAGGAGAGGGGTAGGCTTACGGGTGTCTGAATGTTTCTCCCGAGAGATCTAGAGATGCTGAAGTGCCTGTGTAGGGCTCAGGATCACCTTGTATTTTGGGTGCTCATGTAATGGTGCAAGAGAGTCATCCTCTCTCCTTCCTTCTCCCTCTGTTCTATGTGGCAACTTTTAGCCTGTGTATCTCCTGCCTTCGTGTCATTTTGCCAAAGCAAATTCTTTAGGGCTGGATAAAGAAT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000011.10",
-              20628017,
-              "TATCTGCTGCATGGGGAGGCCTGATCACTCTCTCTTCTTACAACAAATTCCACAACAACTGCTACAGGTATGTAGAGGTACTACAAGATCTGGGCATAGCTGGTGAGTGGGACAGAAGAATGGACTGAGTTATCAGACACCTGAGGCCACATCCTCACATTTCATCTTAGGGAGAGCTAAAGATTTGCCTCTGGCCTAGGAGAAACCACCTGCTAAGGCCTAGGCACTATCTTCTGAAGGCCTGGACCCTCACTTACACACCTGGCTCTGACACATGGGGGAGGCTCAGTGGCTATTTACAGGATGGAAGCAAGTTTGTCTGCAGGTCACTGTGCAGTTGGCTGTGTTCTGTGACAGTCATTTGTGAGCTACCTAGTCTGTGGATACAATGGACTGTGCCTTCAGATGGTCTTCCCTCTGTGTGGGGCTGTGACCTAATCTCCTCTTCTTATAAAGACCCCAGTCATATCAGTCACATTGGATCAGGGACCACTCTAATGACTTCATTTAACTTAATTACCTCTTTAAAGGCCCTATCTCCAAATACAGTCACGTTATGAGATGCTAGTGATTAGGATGACAAAATATGAATTTGGTAGTGATAGGGGAGTGGTAGGAAGACACAATTCAGTTCAAAATGACCTTGAGTAACAGACTATGGTATTTAAACTTCATTAGTCACAACTGCTCATTAACCATTGACCCAAATCAGTCTGAACACCATTAAAGGGTGAAGCATTGCTATCTTCTTTATTAGAAATGAGGCTGTGGTGTGGCAGAAATAACCCAGGCTGAGAGCTTGAAAATCTAGATTCATATCCTGGCCCACACTATTAATTAGTCCATTACCTTTCCCTGGGCCTCAGTTTCCTCTTCAGTAAACTAAGGGGTCAGACAAGGTGGATCATTTGCTGCACACTTGCTCTGTGCTAGGCGGTGCATAGTACAGGTATCATCTCATTCTCTCCTGGCAACAGCCTATGACAGATAGACTCATTGCTGCCATTTCAAATCAGAGTGGAAAGGAAGTGGATTGCTCAAGGTCATGCCACTAAAAGGCAGGAGAACCAGGATTTCAGTGTAGCCCTGGGTTACAGTGTAGCCCGTCTAGCTGTGACCTCACATTTGAATCTAGGATGACTGAAGGTAGACTGGGAAACCCTGGCTATCTTACCAGCAGCAGGCTCTGCGATGAAGGTAGAGACACTGGGCTCTCTTCCCTCCCCTGCCCCTTTGTCCTTCTCAACCCTGTGTGTCCCAACTCCAGGCTACCCTCACATTTTAGGGTCATTTGACTTTCCCACTGCCTTCTCTTCCCTCACACATAGTTCCTGTCCTGGAGCCGACCAAGGCCCCATCTCCTCAATTTCTGTTCTGATGAACAGATTTACCTCTGCCCCTGGAATAATGTCTTAGTTTGTTCAGATTGTCTAACAAAATGCCATAGACTGAGTAATATTTTTTCTTTATACGTTTTTTGCTTTTATTATTTTTAAATGACACATAGTAATTATGCATATTTATGGAGTACAGTATGATATTTCGGTACATGTATACAATGTGTAATGATCAAATCAGGGTAATTAGCATATCTACTACCTCAAACATTTATCATTTCTTTGTGTTGAAAACACTGACAGTTCATTCTTCTAGCTGTTTGAAAACATAAAATAAATTGTTGTTAATATAGTCATCTCATAGTGCTGTAGGATGATTTTTTTTTTTTTTTTTGAGATGGAGTTTCGCTCTTGTTGCCCAGGCTGGAGTGCAATGGCCAATCTCAGCTCACTGCAACCTCCACCTCCCAGGTTCAAGCAATTCAAGTAGCTGGGATTGCGGGCATGTGCCACCATGCCCCGCTAATTTTTTTTTTTGTGTGTGTATTGGGTAGACACGGGGTTTCACCATGTTGGTGAGGCTGGTCTCGAACTCCTGACCTCAGGTGATCCACCTGCCTTGGCCTCCCAAAGTGCCGGGATTACAGGTATGAGCCACCGTGCCCGGCTGGGATGGTTGTTAATATAGTCATCCTATAGTGCTATAGAATACTAGAGTTTATTTCTCCTACCTAGCTATATTTTTGTATCTTTAACTGACTTTTGGCTATAAACAACAGAAATTTATTGCTCACTGCTCTAGGGGCTGGGAAGTCCAAGTTCAAGGTGCCAGAATATTCAGTGTCTGGAGGGCTGCTCTCTGTTTCAAAGATGGCACCTTGTTGCTGTGTCTTCATATGGTGGAAGAGGCAGACACATTCCCTTCAGCCTATTTTATAAGGGCACTAATCCCATGAGTTGGCTCTGTCTTCATGACTTAATCACTTTTCTAAAGCCTCCACCTCTTAATACTATCAAATTGTGGATTAAGTTTCAGCCAATGAATTTGAGATGGGGGGATTCAGACCACAGCAGATGAGTTGAGACCCATTTATATAGATCGTGGAGTCAGAGCTTTGGCCCACAGGCCCTGAATCAGGGCTATTAGGGGATATCGTCTGAGCCTTTTGGTGCTTTTTAAGTGAGCCCAAGGGAGCCTGTGGTTAGGACATGAACGTACACGTATATGCCTACACATGTGCAGACAAACATGTGGGCACACATTTGTGTGTCCTTCCCCTTGTCCCTTTCCACTCACCAAGCACACCTAATGGAAAACTCTGGTCTCTTCCTTCCAGGGACACTCTAATTGTCACCTGCACCAACAGTGCCACAAGCATCTTTGCCGGCTTCGTCATCTTCTCCGTTATCGGCTTCATGGCCAATGAACGCAAAGTCAACATTGAGAATGTGGCAGACCAAGGTACAGGACAGTTGTTACCCTGCTGTTGCAGGGCAGGTCCCAGGCTCATGTCACAAGCTCCTAATTTAGACTATGCTGGGAAGCTGGCCTTCTGGAACAGGATAGAGGGTGGAGGAGCCCAGGTCCTTCTTTACAGAGGGACCAAGGCAGGCTCAAGTAGGAAGCTCACTGCAGAGTCAGAACTGGCTGGTCTCTAACTGGAGGGATTGCTTTAAAAGCCCTCTTTCCTTCTCCTTGCCTCTCCTTCCTCTTACCTTGCCCCTCTTAATTTAGCTCCAGTCTATAGAAATAAGGGTTATACCTGTTAGGTATGAGTAGAGAATTTATTAGGCAAACCATTGCCTCAGGAGCTGATGTGGGCACAGGCTGCTGTAGGATGACATTCATTGCAGAAGGCCCTGTCGAAACCAAGGCTTAGTGAGAGAACTGACTTCAGAGGAGCATTTTCCTTACAAAGCACTTTTCTGATTGTTAGGTCAAATGTGCTTTCAGGGCCTTCTGCTTAGTTAGCAATGCAGACCTGCAGTTTTTTTCCCCAGTGGGTAGAAATGTTGGATCGTGCTGGGTGGGTGGAGAGGCATGTGGAATAAATGTTTACTCTCTACCCAAATGATCTTTTTATTAATGGCTAACATTTGTATGGTGCTTTCAAGTTGACAAAGAGCTTTCATTTTTATTTCACTTAATCCATATTACTAGGACAGCATTTTGCAGAGAAAGCATTCAAGATTTTAGTTTAACTCTTCATTTTCACCCAGCCTGGTTCCACAAAGGATTTGTATATTTAGTAGGTTTCAGTGATCAAGGGATTTCATTGTGTCTGTTGTTTACCATTATGATCTCATTCTCAATTCAGACATTTATGGGATGCGTAGTGTGTTGGTCATGTGCCTCATGCTGTGGGGCATGACTGTGGCCCTGGACAACCAAGGGGCGTACCTGTGAGAGGCTTGTCTGGGCAGTTATCTTCCTTCAAGGAGCTGACTGCAATTCTCAGATAATGGCTCAGATGTGGTGAGAGAACTAAGCCCTGGAAATGTCACCTTCTTGGATACTAAGATTTCTTCTGGCTCCCCAAGGATAATTCATTACTGCGCCAATTCATGCTGATGGTGCACCAGGGGCCTCAAAGAGTTAAAGAGCCAGCACTTTCCAGGGGTGCAATTATCTCTCCCTGGAGAGAGTGTAAAACCCTGAGGGGTGTTTGGTTCCGCAGCAATGCACTAAATTAGAGGGGCCCCAGGAGATAAGCAATGGCTCTCCCTGGTTGAGAATTCTCAGATACCCTGGGAGGCAGGGAGGGAAAGTGAGAGGGTAAACGGGTTTTGTCCTTAGAGGTACTGGAGTCACTTCCAGCTGTCCTGTAACCTCATTTCCTCCTAGCAGAGTGGTTGGAGCAGATAGGTTCTGTCCCATTTTCTAGAAGATCTTAGGCATTTTGCTTTTTGTGACATTACTGAGTTCTTTTGGAACCAGTGGCCAACCTGCTAGAGACTGTGAATCCTGAGATGTGGGCCAGGTTAGTAAATGATTCTGAACTCTTTTCTGCTCCAGGAAACGGATTTCTGGGGAGATATTGCAAAAACTCAAACAGAATGTTGTTTATCTGGTGTGTAAAATTGCCAACAAATTGCCCATGTTTTCCTCTGAAATTTCTCCTTTCCAATGTTTTTTCACTTCCTTTGATTTGAACAAGGGTAGGGGCACTTCTAACAGGTTCTAACCTGTTGTGTTAATTCTTGTCTCTGGCACAGGGACGGGTGGGCCTCATCTCTCACAGGAGAAGGCCCATGAGATCTTCTCCCAGACCCACTGGGGAAGCTTTCCTGCTCATCTGAACCTGGATGTATTTTTATATGTGCTTTACAGGCTTGTCTTACTTGCCTTGATATAATGGAGGCTCTGCAGAATACAGGACAGAGATTTGGGGTCAGGCCTGCATTCAACCTGAGCCCCACTTCCTCCTTGCTGGGCAACACTGGCATATAGACATTCAGGACATTTTTGCTGACCCAACTTTGGTAACTAAGTTTTGATCTTTAGTCAAATAGAGGTTCTCTTTAATGACCTAACACTATGCGATTTAGTTTACCACTCCCTTCTAAAAGAGGCATTTCTACCAAAATGATCATCTTAAATCTTGGTCTTATCAAAATTTTGAGGGGCTGAGGATGGGATTGGTGAAGAGACCAAGCTGTGTTTTGCTTTTATGATAGGCATAGGGAAGGGGGCATGTTCTCGGGGAACTACTCTAGAAAAGCAGCTTCCAGGAAAGTTAGCCCTTCAGAGCCATCTCGCCACCATATGCATTACCACCTATGGAGCGGTGACTCATGTTCAGAATCTATCCTGAAGCCAAACAAAGATGCTTATCCAATAGCAGAAACACTGAGTTATACCAGAGTAGATAAGCAGAAATTTGCATATTTATTTAGCATTCCCAGGTGTAGGTAACTCTCAGCTAACCGGAGCACTAGAAATACTACTTTGGTTCCCTTGCCCCTTAATAGTTCAGATACCTTACTAATCAAAATAAGCATTCTCAAACAGCACTGATGTCCCACTTCCATGCAGCCATCTGTCTGTCACCTGTATCCCAATCCTTCTGCCCAAAGGCACAGAGGTCCAGGTGGCATATCCTCAGAGAGCTCATTCAATTTGTAATAGTTATCACAGCAGAGTGGCTACCCAAGCTGTGCCATGGGCCTTGATGCATTGCACTGACCAGAGCCCCTTGCTGTGTCTTTAGTGGCACTCTAGGATAAAGGAGGCTCTCATGGTAGGATCTCTGGGGACTCTGCTCAAGTTACTGAAATGAAGAGCCCCTTTGATCCCTTCTCATAAGAAGACTAATAATGGTCTATGTTTTCTGAGTTCATAGTATGTCCAGGCATTGTTCTAAGCCTTTTACTTGTGTTGATGCATTTAATTCTCACGGAAGCTCTATAAAGGTAGGTACTATTACTATTTCCATTGTGTGGATAAAGAAACTAAAGTTTGTCTAGAGAGAACAAGTGACCCCCTAAGTCCTCGGCTAGCAAGAGGTACAGCCAGTTTGTTTTTTGTTTCTTTTTGAGATGGAGTCTTGCTCTGTCACCCAGGCTGGAGTGCAGTGGTGCCATCTTGGCTCACTGCAACTTCTGCCTCCCGGGTTCACACCATTCTCCTGCCTCAGCCTCCTGAGTAGCTGGGACTACAGGCGCCCCCCACTACGCCCGGCTAATTTTTGTATTTTTAGTAGAGACGGGGTTTCACCATATTGGCCAGGCTGGTCTTGAACTCCTCACCTTGTGATCTGCCCACCTTGGCCTCCCAAAGTGTGGGGATTACAGGCGTGAGCCACCGCACCTGGCTGCCAGTTTTTTAATCCATGAGGAAGAGAGCCTGTACTCCAGCCACTGGGCTCTACTGCCTCCCAGTGGGAGAGGAGAGAGGCAGAACTTGGCCTTCATCAGACTGGCCATATACTCTTTTAAACATCTAACGATGTTATTCTCTAGATGACTCCGCTCCCCATCTGCCTTGGGTAAGTGGAGTCTGCTGTAATTTAGCTTGCAAAGAATGCCTTCACCTGGGTGCTTTAGGGAGGCAGCTGAAATGGAAGCAGACTGAATATTTTGAAATCACTTGTTTCCTCTAAAAAAGCTGTAAAGCCCAAAGGGTAGAATCCTGTTAAAGTGAGCAGCTGAGGACCTCTGGTAGTGGCCATTCAAGATCTTCTTGTCGGCTTTACGGGCCTGACTGTCGCCAGAACATTAAACTGACTTCCTTGTTGTTCTGCATTTGAGACCTATTTTGAACTTTAGTTTAATACAGACTTTTCTTTTACGGTTCACATAGGGAGCCTTCAGAGGCTGGCTCTACAGTCTGTTCAATAAATGCGTAAAGCGGGGGTATTTCTGGCATTTGAGGCTTTATATTTTAAATACACAAAGGCCCTAGGCAACATTAGGAACTAACAACCTGATAAATTCCAGTTTAAAAAAGTGCTGTTATGCTTGAGTTATAAACATTCTAGGTGCTGTGATTGCTGATTGTGGACGTGTGCTGGCTGTGGATTATCCCGGCGCCCACATTCACTTGTCTCTGCCCATTATCATTTAGTTTTCTACTTACAGGAAAATTCACAACTGCTGTGTCTTTAGCTACCTTTGATTACAGTAATCTTCCCAGTGAGACCGTGAGGCAGGGAGAATGGCTGGCAGAGCTTTACGATAGCAGAGAAAACTGCCGCTCAGACTTCCCCACCAAGACCACATGAAGTGTTCTAGAGAAAACCTGAATCAGAACCGCTAACTTCCAAGTTCATAGTCCACTCATAATAGAAGATAATATTCTGTGGGTGTTGATGATGTAGGGGGTACTGGGCTCAGTGTTTTACCTGCGTTTTCTCATTTGTTTATTGTAACCACCTTGTGAGGTCCTATTTTTGTCCCCATTTTACAGATGGACAAAATTGAGGCTTACAGAAATTAAATAACTTGTCTAGGGTTGCACAGATGGTAAGTCACGGAATCTGGATTTGGACCAGATCTAACCCTTAGAGACTGAACCCTCTTAACCCTTACATGATGTTTCATGCGCCGCCCCCCCGCAACCCGACTAACTACTAGGACTGATGTAGCCCCATTTATACCAATAGTGCAAGATCCTGAAAGTGTTAGATTCATATTTTATGTGAATGTTTTCTCCTGGAGGACTAAATAGGAGGAAGGGTAGTTAAAGGAAGAAATACTAATGCATGCCAGACTTAATACTTAGGTGATGGGGTGATCTGTGCAGCAAACCACAATGACACACGTTTACCTATGTAACAAACCTGCACATGCACCCCAGAACTTAATAAAATAAATAAAGGAAGAAATGATGTCATTCTGGTCATGTTCCAACTTTTAGAGCGGGGATTCTCAAACCTCAGCACTATTGACATTTGAGACAGGATAATTCTTTGTTGGCAAGAAGCTCTCTTGTGCATTGTAAGAGGCTTACCAGCATCCCTTGCCTCCACCCCACTAGATGCCAGTAGTTATCCTACCCCTACCCCCAGCTCACCCGTGAGAATAAAAAATGTCTGCAGACATTGCCAAATATCCCAAACATGGCAAAATCACTGCTGGTTGAGTACTACTGCTGTAAAGGCTAATTAATTACATTTTCCTTTAATTCATCCAATACAAAGATCCTATGTACATGGTACACAGCCTAGCCGTGGAGTCCAGTAGAGTTGCCTCTGAGTCTCTGCTTAGACACTATTTTTAGGCCTCTCCTGTGAGTTCTCCTAGCTGTTGACCTAATTCCTTTGGTCTTCCCCTTCAAGGAGCCTAAGGTCTAATTGAGGAAATGGATAGAGATGAGTAAAAAATAACCAACAGTGGAAGCAGCATATAAGAAGTAATAAATGAGGATCTCAGCAGAGAGAAGGCCCTCTGGGCTCTGGGAAGAGCAGCCTTGAGTAGGGCCTGCCTGCAATCATCTGTCTTGTTCCTTCCAGGGCCAGGCATTGCATTTGTGGTTTACCCGGAAGCCTTAACCAGGCTGCCTCTCTCTCCGTTCTGGGCCATCATCTTTTTCCTGATGCTCCTCACTCTTGGACTTGACACTATGGTGAGCCCCTTTTCCATCAGTCTCTATCCCATGCTCCTCTTGAAGACTCCCCCTCTCCTGGGTCCTGGGTTCACCCTTCAGGAGAGGGGTAGGCTTACGGGTGTCTGAATGTTTCTCCCGAGAGATCTAGAGATGCTGAAGTGCCTGTGTAGGGCTCAGGATCACCTTGTATTTTGGGTGCTCATGTAATGGTGCAAGAGAGTCATCCTCTCTCCTTCCTTCTCCCTCTGTTCTATGTGGCAACTTTTAGCCTGTGTATCTCCTGCCTTCGTGTCATTTTGCCAAAGCAAATTCTTTAGGGCTGGATAAAGA",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-efe61541e725",
       "input": "NM_004211:c.1436_1737+314del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3043,7 +2026,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
@@ -3069,6 +2052,7 @@
       },
       "id": "gold500-report-2aa5f701ff48",
       "input": "NM_014425:c.273+13del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3083,28 +2067,10 @@
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000016.10",
-              15721510,
-              "TCCAAGGCCTCT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000016.10",
-              15721509,
-              "TTCCAAGGCCTC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-b1dffa91b3a5",
       "input": "NM_017668:c.948-2680_948-2670del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3115,32 +2081,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              45342833,
-              "GCTG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              45342832,
-              "CGCT",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-876f280ccd7b",
       "input": "NM_025077:c.753-9_753-7del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3151,7 +2099,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
@@ -3177,6 +2125,7 @@
       },
       "id": "gold500-report-3bcf9638a7e7",
       "input": "NM_033034:c.768-26_768-24del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3213,6 +2162,7 @@
       },
       "id": "gold500-report-d303ccc5d19e",
       "input": "NM_170682:c.774+123del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3227,28 +2177,10 @@
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000005.10",
-              68296153,
-              "TCT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000005.10",
-              68296152,
-              "TTC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-eb5d009b5013",
       "input": "NM_181523:c.1815-17_1815-16del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3259,32 +2191,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000009.12",
-              340331,
-              "ACA",
-              "A"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000009.12",
-              340328,
-              "AAC",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-f511809fe0a8",
       "input": "NM_203447:c.1679+11_1679+12del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3295,32 +2209,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              10627368,
-              "GAGG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              10627365,
-              "TAGG",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-0120082dd101",
       "input": "PEX14:c.677+6_677+8del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3331,7 +2227,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
@@ -3357,6 +2253,7 @@
       },
       "id": "gold500-report-fe3a0b459972",
       "input": "SMARCAL1:c.811+38del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3382,6 +2279,7 @@
       },
       "id": "gold500-report-6a36357b063a",
       "input": "SRP54:c.1327+15_1327+32del18",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -3392,28 +2290,10 @@
     },
     {
       "category": "intronic_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000001.11",
-              11020411,
-              "TCCTT",
-              "T"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000001.11",
-              11020408,
-              "TCTTC",
-              "T"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-1b2ad6869491",
       "input": "TARDBP:c.544-17_544-14del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3424,7 +2304,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_del",
@@ -3450,6 +2330,7 @@
       },
       "id": "gold500-report-b808037eff1e",
       "input": "ZFC3H1:c.5730-22_5730-20del",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3464,28 +2345,10 @@
     },
     {
       "category": "intronic_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000011.10",
-              108331556,
-              "ATG",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000011.10",
-              108331557,
-              "TG",
-              "A"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-27236bf4b46a",
       "input": "NM_000051:c.7629_7629+1delinsA",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3496,32 +2359,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000020.11",
-              18530811,
-              "AAACT",
-              "AGAC"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000020.11",
-              18530812,
-              "AACT",
-              "GAC"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-29de0b587df8",
       "input": "NM_006363:c.1233+9_1233+12delinsGAC",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3532,7 +2377,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
@@ -3558,6 +2403,7 @@
       },
       "id": "gold500-report-019f64bc26ea",
       "input": "ADAMTSL4:c.1861+16dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3594,6 +2440,7 @@
       },
       "id": "gold500-report-38e7f3b5c97c",
       "input": "AIP:c.645+23dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3630,6 +2477,7 @@
       },
       "id": "gold500-report-66b0b1e87142",
       "input": "ASPM:c.2936+132dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3666,6 +2514,7 @@
       },
       "id": "gold500-report-49b9748de118",
       "input": "BLNK:c.205-19_205-16dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3702,6 +2551,7 @@
       },
       "id": "gold500-report-ccd2da763f6c",
       "input": "COL4A3:c.144+11dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3716,28 +2566,10 @@
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000014.9",
-              95099772,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000014.9",
-              95099771,
-              "C",
-              "CA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-5f2e630a271d",
       "input": "DICER1:c.4206+8dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -3748,7 +2580,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
@@ -3774,6 +2606,7 @@
       },
       "id": "gold500-report-8ad8ff1d18fd",
       "input": "DIS3L2:c.1659+18dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3799,6 +2632,7 @@
       },
       "id": "gold500-report-c099dc275114",
       "input": "KCNQ2:c.1149-6_1149-5dup",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -3831,6 +2665,7 @@
       },
       "id": "gold500-report-f404a64cc4f6",
       "input": "NM_000481:c.878-228dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3867,6 +2702,7 @@
       },
       "id": "gold500-report-22f4438dde89",
       "input": "NM_000546:c.994-35_994-18dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3903,6 +2739,7 @@
       },
       "id": "gold500-report-c10cb7520170",
       "input": "NM_000551:c.340+172_340+174dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3939,6 +2776,7 @@
       },
       "id": "gold500-report-6024c1d8735c",
       "input": "NM_001015880:c.381+24dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -3975,6 +2813,7 @@
       },
       "id": "gold500-report-a32115826f97",
       "input": "NM_001164508:c.13369-20_13369-12dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4011,6 +2850,7 @@
       },
       "id": "gold500-report-9980e983e9b5",
       "input": "NM_001267550:c.1398+216_1398+237dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4047,6 +2887,7 @@
       },
       "id": "gold500-report-ebabe84b406a",
       "input": "NM_001330700:c.2863-7dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4083,6 +2924,7 @@
       },
       "id": "gold500-report-e6f1a42ab817",
       "input": "NM_006939:c.3490-13dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4119,6 +2961,7 @@
       },
       "id": "gold500-report-b65664abaa4c",
       "input": "NM_007098:c.3601-1dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4133,28 +2976,10 @@
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000016.10",
-              58551275,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000016.10",
-              58551274,
-              "T",
-              "TA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-3d4b4f976073",
       "input": "NM_016284:c.3202-3dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4165,32 +2990,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000011.10",
-              17129478,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000011.10",
-              17129477,
-              "G",
-              "GA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-5c944bf4f697",
       "input": "PIK3C2A:c.2232-11dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4201,7 +3008,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
@@ -4227,6 +3034,7 @@
       },
       "id": "gold500-report-21fb70b1094c",
       "input": "RIPOR2:c.886-163dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4241,28 +3049,10 @@
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000002.12",
-              166054636,
-              "A",
-              "AA"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000002.12",
-              166054635,
-              "T",
-              "TA"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-4d5bad6fbf26",
       "input": "SCN1A:c.602+2dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4273,32 +3063,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000003.12",
-              38613724,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000003.12",
-              38613723,
-              "G",
-              "GT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-1b362340744a",
       "input": "SCN5A:c.703+19dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4309,7 +3081,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
@@ -4335,6 +3107,7 @@
       },
       "id": "gold500-report-5fb424b313de",
       "input": "SFXN4:c.112-87_112-84dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4349,28 +3122,10 @@
     },
     {
       "category": "intronic_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000002.12",
-              171826795,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000002.12",
-              171826794,
-              "A",
-              "AT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-0bcdbf374b3c",
       "input": "SLC25A12:c.930+3dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4381,7 +3136,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "intronic_dup",
@@ -4407,6 +3162,7 @@
       },
       "id": "gold500-report-662f0f6b029f",
       "input": "VIPAS39:c.913-36_913-35dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4443,6 +3199,7 @@
       },
       "id": "gold500-report-56fa7c06f7c9",
       "input": "WDR1:c.229+9_229+10dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4479,6 +3236,7 @@
       },
       "id": "gold500-report-1e9e78fd27df",
       "input": "NM_007078:c.93+272_93+273insGAGG",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4504,6 +3262,7 @@
       },
       "id": "gold500-report-2d0c32be038e",
       "input": "AARS1:p.Leu262_Val264del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4525,6 +3284,7 @@
       },
       "id": "gold500-report-878aae8e45f9",
       "input": "ATM:p.Gly2765del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4546,6 +3306,7 @@
       },
       "id": "gold500-report-bad94a308ef1",
       "input": "CBS:p.Met173del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4567,6 +3328,7 @@
       },
       "id": "gold500-report-a0e846df66e1",
       "input": "CEBPA:p.Pro192_His205del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4588,6 +3350,7 @@
       },
       "id": "gold500-report-78fca3a359ed",
       "input": "CFB:p.Glu243del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4609,6 +3372,7 @@
       },
       "id": "gold500-report-84dc55a858c7",
       "input": "CLCN1:p.Gly482_Gly483del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4630,6 +3394,7 @@
       },
       "id": "gold500-report-0ffeecb40898",
       "input": "HCFC1:p.Thr712del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4651,6 +3416,7 @@
       },
       "id": "gold500-report-833df4b45635",
       "input": "MYT1:p.Glu306del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4672,6 +3438,7 @@
       },
       "id": "gold500-report-fb0877f74b97",
       "input": "NHP2:p.Arg42del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4693,6 +3460,7 @@
       },
       "id": "gold500-report-bf1df3fd9f74",
       "input": "PSEN1:p.Leu174del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4714,6 +3482,7 @@
       },
       "id": "gold500-report-b4063e035006",
       "input": "RAI1:p.Ser1249del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4735,6 +3504,7 @@
       },
       "id": "gold500-report-49ed6bf9fd40",
       "input": "SPI1:p.Gly148del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4756,6 +3526,7 @@
       },
       "id": "gold500-report-903eb5f85996",
       "input": "TGFBR1:p.Ala25_Ala26del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4777,6 +3548,7 @@
       },
       "id": "gold500-report-27875ec06d28",
       "input": "TLR7:p.Thr221del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4798,6 +3570,7 @@
       },
       "id": "gold500-report-6552fac288ce",
       "input": "TTN:p.Asp17396del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4819,6 +3592,7 @@
       },
       "id": "gold500-report-4ef30ffdd1d6",
       "input": "ZC4H2:p.Ile73del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -4829,28 +3603,10 @@
     },
     {
       "category": "utr_del",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000010.11",
-              86763617,
-              "GTACCAAAG",
-              "G"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000010.11",
-              86763614,
-              "CAAGTACCA",
-              "C"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-974c54a1c1e6",
       "input": "NM_004329:c.-268+6699_-268+6706del",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4861,32 +3617,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "utr_delins",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000023.11",
-              22032991,
-              "TCTACGGCCCTTCTGATGGAAGC",
-              "TTGGGAGCAGCGTGG"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000023.11",
-              22032992,
-              "CTACGGCCCTTCTGATGGAAGC",
-              "TGGGAGCAGCGTGG"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-05c0e57e7287",
       "input": "NM_000444:c.-14_8delinsTGGGAGCAGCGTGG",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4897,32 +3635,14 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "utr_dup",
-      "differences": {
-        "vcf": {
-          "expected": [
-            [
-              "NC_000008.11",
-              117799568,
-              "T",
-              "TT"
-            ]
-          ],
-          "observed": [
-            [
-              "NC_000008.11",
-              117799567,
-              "C",
-              "CT"
-            ]
-          ]
-        }
-      },
+      "differences": {},
       "id": "gold500-report-c3c336ecb978",
       "input": "NM_000127:c.*144dup",
+      "match_type": "equivalent",
       "observed": {
         "vcf": [
           {
@@ -4933,7 +3653,7 @@
           }
         ]
       },
-      "passed": false
+      "passed": true
     },
     {
       "category": "utr_dup",
@@ -4959,6 +3679,7 @@
       },
       "id": "gold500-report-c63dce398106",
       "input": "NM_001370348:c.*7810dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -4995,6 +3716,7 @@
       },
       "id": "gold500-report-8cf06798b723",
       "input": "NM_019032:c.-84-299dup",
+      "match_type": "failed",
       "observed": {
         "vcf": [
           {
@@ -5012,6 +3734,7 @@
       "differences": {},
       "id": "gold500-report-df44c723c246",
       "input": "BRCA2:c.7563del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5029,6 +3752,7 @@
       "differences": {},
       "id": "gold500-report-b41093edc437",
       "input": "CACNA1A:c.6657_6659del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5046,6 +3770,7 @@
       "differences": {},
       "id": "gold500-report-4ad39a3e16e6",
       "input": "FGA:c.1113del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5063,6 +3788,7 @@
       "differences": {},
       "id": "gold500-report-dc3ea8a28efb",
       "input": "HLCS:c.2212_2213del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5080,6 +3806,7 @@
       "differences": {},
       "id": "gold500-report-671b1f265a77",
       "input": "NM_000080:c.510_511del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5105,6 +3832,7 @@
       },
       "id": "gold500-report-1575e9c461ff",
       "input": "NM_000314:c.31del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -5118,6 +3846,7 @@
       "differences": {},
       "id": "gold500-report-e7a30b471e59",
       "input": "NM_000517:c.340_351del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5135,6 +3864,7 @@
       "differences": {},
       "id": "gold500-report-090f32ffeef4",
       "input": "NM_000546:c.388delC",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5152,6 +3882,7 @@
       "differences": {},
       "id": "gold500-report-4c92b79afb73",
       "input": "NM_001040616:c.1116del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5169,6 +3900,7 @@
       "differences": {},
       "id": "gold500-report-0f29ed0c3797",
       "input": "NM_001261826:c.2489_2490del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5186,6 +3918,7 @@
       "differences": {},
       "id": "gold500-report-ca6ef8970768",
       "input": "NM_001353214:c.1177_1178del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5203,6 +3936,7 @@
       "differences": {},
       "id": "gold500-report-7fd36fb490be",
       "input": "NM_004713:c.2943_2950del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5220,6 +3954,7 @@
       "differences": {},
       "id": "gold500-report-424778db2df5",
       "input": "NM_004714:c.1058del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5237,6 +3972,7 @@
       "differences": {},
       "id": "gold500-report-7fa44f43093f",
       "input": "NM_005334:c.2135_2137del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5254,6 +3990,7 @@
       "differences": {},
       "id": "gold500-report-df2ed722a00b",
       "input": "NM_006231:c.2756_2759del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5271,6 +4008,7 @@
       "differences": {},
       "id": "gold500-report-22208faa7956",
       "input": "NM_015910:c.512_515del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5288,6 +4026,7 @@
       "differences": {},
       "id": "gold500-report-d263f4122395",
       "input": "NM_018192:c.722del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5305,6 +4044,7 @@
       "differences": {},
       "id": "gold500-report-010c42411a7f",
       "input": "NM_018417:c.4477del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5322,6 +4062,7 @@
       "differences": {},
       "id": "gold500-report-f8e825a35fd3",
       "input": "NM_020779:c.1468del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5347,6 +4088,7 @@
       },
       "id": "gold500-report-fcd6d78d3bea",
       "input": "NM_172107:c.2333del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -5360,6 +4102,7 @@
       "differences": {},
       "id": "gold500-report-3f80de5b3b7b",
       "input": "NM_206933:c.6225_6227del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5377,6 +4120,7 @@
       "differences": {},
       "id": "gold500-report-35ecf827ee93",
       "input": "NOTCH1:c.456_458del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5394,6 +4138,7 @@
       "differences": {},
       "id": "gold500-report-0c995ae75a9f",
       "input": "PALB2:c.2127_2128del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5419,6 +4164,7 @@
       },
       "id": "gold500-report-5b654ff971d3",
       "input": "PKD1:c.5883_5929del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -5440,6 +4186,7 @@
       },
       "id": "gold500-report-270f02fba92c",
       "input": "PKD1:c.99del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -5453,6 +4200,7 @@
       "differences": {},
       "id": "gold500-report-1c52070badf5",
       "input": "SCN1A:c.3305del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5470,6 +4218,7 @@
       "differences": {},
       "id": "gold500-report-a8b5ae9beb6b",
       "input": "SPI1:c.443_445del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5487,6 +4236,7 @@
       "differences": {},
       "id": "gold500-report-4c30c0417fb8",
       "input": "SPTB:c.3332del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5504,6 +4254,7 @@
       "differences": {},
       "id": "gold500-report-dfb9a14e4b9d",
       "input": "ST3GAL5:c.374_381del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5521,6 +4272,7 @@
       "differences": {},
       "id": "gold500-report-88474954ded1",
       "input": "TBL1XR1:c.1189del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5538,6 +4290,7 @@
       "differences": {},
       "id": "gold500-report-2f5539247a20",
       "input": "USH2A:c.10714del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5555,6 +4308,7 @@
       "differences": {},
       "id": "gold500-report-6952287c0f90",
       "input": "ZC4H2:c.218_220del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5572,6 +4326,7 @@
       "differences": {},
       "id": "gold500-report-24deb129d707",
       "input": "APC:c.578_584delinsTAAGGCT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5589,6 +4344,7 @@
       "differences": {},
       "id": "gold500-report-e51789ae7c85",
       "input": "NM_001365999:c.7466_7467delinsTT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5606,6 +4362,7 @@
       "differences": {},
       "id": "gold500-report-fd7930da4ae8",
       "input": "NM_004656:c.2124_2125delinsTA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5623,6 +4380,7 @@
       "differences": {},
       "id": "gold500-report-8097e0716627",
       "input": "NM_005876:c.259_260delinsAA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5640,6 +4398,7 @@
       "differences": {},
       "id": "gold500-report-56e74fb8bf8a",
       "input": "NM_015311:c.2577_2578delinsTT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5657,6 +4416,7 @@
       "differences": {},
       "id": "gold500-report-95b9e8908332",
       "input": "NM_017617:c.5273_5274delinsAA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5674,6 +4434,7 @@
       "differences": {},
       "id": "gold500-report-c33be6ee79de",
       "input": "NM_182961:c.17386_17387delinsAA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5691,6 +4452,7 @@
       "differences": {},
       "id": "gold500-report-df979e3fdccf",
       "input": "NM_198075:c.728_729delinsTA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5708,6 +4470,7 @@
       "differences": {},
       "id": "gold500-report-173ca1138298",
       "input": "TTN:c.63303_63304delinsTT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5733,6 +4496,7 @@
       },
       "id": "gold500-report-c9d6e5a7fdaf",
       "input": "ALMS1:c.790dup",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -5746,6 +4510,7 @@
       "differences": {},
       "id": "gold500-report-f63baadcdf24",
       "input": "ARID1A:c.750_771dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5763,6 +4528,7 @@
       "differences": {},
       "id": "gold500-report-619b420bbe6b",
       "input": "BEST1:c.194dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5780,6 +4546,7 @@
       "differences": {},
       "id": "gold500-report-21ce88fe1a5b",
       "input": "NIPBL:c.3547dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5797,6 +4564,7 @@
       "differences": {},
       "id": "gold500-report-dabf1843c6e7",
       "input": "NM_000051:c.5524dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5814,6 +4582,7 @@
       "differences": {},
       "id": "gold500-report-e9b3bab3be6a",
       "input": "NM_000179:c.692_693dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5831,6 +4600,7 @@
       "differences": {},
       "id": "gold500-report-c80fcca40989",
       "input": "NM_000327:c.180dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5848,6 +4618,7 @@
       "differences": {},
       "id": "gold500-report-dbe9f3bf9b4a",
       "input": "NM_001042492:c.4051dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5865,6 +4636,7 @@
       "differences": {},
       "id": "gold500-report-130ce6549d5b",
       "input": "NM_001177316:c.1467_1477dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5882,6 +4654,7 @@
       "differences": {},
       "id": "gold500-report-fa883544e902",
       "input": "NM_006767:c.112dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5899,6 +4672,7 @@
       "differences": {},
       "id": "gold500-report-67ad8418cc03",
       "input": "NM_014956:c.4255_4262dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5916,6 +4690,7 @@
       "differences": {},
       "id": "gold500-report-bc35a66bfdc3",
       "input": "ATM:c.8059_8060insT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5933,6 +4708,7 @@
       "differences": {},
       "id": "gold500-report-872f75e63f58",
       "input": "BICRA:c.1509_1510insA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5950,6 +4726,7 @@
       "differences": {},
       "id": "gold500-report-51c3c6472e4c",
       "input": "CPT2:c.28_29insAGCAAG",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5967,6 +4744,7 @@
       "differences": {},
       "id": "gold500-report-37f54c8fc880",
       "input": "MYBPC3:c.3228_3229insT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -5984,6 +4762,7 @@
       "differences": {},
       "id": "gold500-report-b4c5773db658",
       "input": "NM_001369369:c.1910_1911insG",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6001,6 +4780,7 @@
       "differences": {},
       "id": "gold500-report-e603577af3fb",
       "input": "NM_007294:c.3814_3815insT",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6018,6 +4798,7 @@
       "differences": {},
       "id": "gold500-report-f81565da2258",
       "input": "NM_007294:c.770_771insGA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6035,6 +4816,7 @@
       "differences": {},
       "id": "gold500-report-3ddcc6ef5906",
       "input": "PALB2:c.521_522insCA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6052,6 +4834,7 @@
       "differences": {},
       "id": "gold500-report-d5a32950b054",
       "input": "PAX3:c.422_423insTCCTTTCTCTGTCTCCACAAGCAGCAGTGCCTGTGTCACCTGTTACATCTTGGGACAGAGACCACAGCAGCGGCAGG",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6069,6 +4852,7 @@
       "differences": {},
       "id": "gold500-report-0f9a55a2a0b5",
       "input": "NM_018389:c.717_718inv",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6086,6 +4870,7 @@
       "differences": {},
       "id": "gold500-report-1944f4c43f82",
       "input": "ADGRV1:c.12008T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6103,6 +4888,7 @@
       "differences": {},
       "id": "gold500-report-af5777d05384",
       "input": "AKAP9:c.7023G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6120,6 +4906,7 @@
       "differences": {},
       "id": "gold500-report-d72beb924140",
       "input": "CFTR:c.4335C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6137,6 +4924,7 @@
       "differences": {},
       "id": "gold500-report-52b7028abea9",
       "input": "DEF6:c.891G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6154,6 +4942,7 @@
       "differences": {},
       "id": "gold500-report-7eaed2a53bf7",
       "input": "DNAH5:c.12210C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6171,6 +4960,7 @@
       "differences": {},
       "id": "gold500-report-498ffdcb4c49",
       "input": "FDX2:c.111G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6188,6 +4978,7 @@
       "differences": {},
       "id": "gold500-report-6f51ca8819e5",
       "input": "GALNT12:c.1386C>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6205,6 +4996,7 @@
       "differences": {},
       "id": "gold500-report-cd061c7f646d",
       "input": "GPI:c.1574T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6222,6 +5014,7 @@
       "differences": {},
       "id": "gold500-report-da5c64636b6f",
       "input": "HPS3:c.2877A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6239,6 +5032,7 @@
       "differences": {},
       "id": "gold500-report-4aaa7e184fbe",
       "input": "ITGB4:c.3463A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6256,6 +5050,7 @@
       "differences": {},
       "id": "gold500-report-9fb3318d02d6",
       "input": "JMJD1C:c.1399C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6273,6 +5068,7 @@
       "differences": {},
       "id": "gold500-report-dfeaebdd94e9",
       "input": "KIF7:c.1485G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6290,6 +5086,7 @@
       "differences": {},
       "id": "gold500-report-d7db69974bc5",
       "input": "KRT5:c.58G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6307,6 +5104,7 @@
       "differences": {},
       "id": "gold500-report-5ffe979f5f2e",
       "input": "LCA5:c.634G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6324,6 +5122,7 @@
       "differences": {},
       "id": "gold500-report-5b621f7c9203",
       "input": "LDB1:c.607C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6341,6 +5140,7 @@
       "differences": {},
       "id": "gold500-report-8f999b4823a5",
       "input": "LITAF:c.429C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6358,6 +5158,7 @@
       "differences": {},
       "id": "gold500-report-8b5a5c200d2f",
       "input": "LONP1:c.1924A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6375,6 +5176,7 @@
       "differences": {},
       "id": "gold500-report-b3c9e7a92e25",
       "input": "MYOM1:c.2125T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6392,6 +5194,7 @@
       "differences": {},
       "id": "gold500-report-62c0526b6dbb",
       "input": "NM_000038:c.6883T>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6409,6 +5212,7 @@
       "differences": {},
       "id": "gold500-report-d06790b63e37",
       "input": "NM_000391:c.840G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6426,6 +5230,7 @@
       "differences": {},
       "id": "gold500-report-06e314060dc8",
       "input": "NM_001004471:c.254T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6443,6 +5248,7 @@
       "differences": {},
       "id": "gold500-report-2792d495e227",
       "input": "NM_001098484:c.2051A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6460,6 +5266,7 @@
       "differences": {},
       "id": "gold500-report-d6ce905dc7d4",
       "input": "NM_001161417:c.787C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6477,6 +5284,7 @@
       "differences": {},
       "id": "gold500-report-1701753f5921",
       "input": "NM_001267550:c.28434C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6494,6 +5302,7 @@
       "differences": {},
       "id": "gold500-report-5b0a25330006",
       "input": "NM_001271696:c.1492G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6511,6 +5320,7 @@
       "differences": {},
       "id": "gold500-report-11dc5f325642",
       "input": "NM_002386:c.96A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6528,6 +5338,7 @@
       "differences": {},
       "id": "gold500-report-269fc52a3d4f",
       "input": "NM_002637:c.2062C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6545,6 +5356,7 @@
       "differences": {},
       "id": "gold500-report-518b338ee802",
       "input": "NM_003014:c.760G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6562,6 +5374,7 @@
       "differences": {},
       "id": "gold500-report-17864bc323aa",
       "input": "NM_004136:c.313G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6579,6 +5392,7 @@
       "differences": {},
       "id": "gold500-report-912b5b483689",
       "input": "NM_004984:c.767A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6596,6 +5410,7 @@
       "differences": {},
       "id": "gold500-report-593818b1e166",
       "input": "NM_006947:c.378T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6613,6 +5428,7 @@
       "differences": {},
       "id": "gold500-report-73adfdb62290",
       "input": "NM_007294:c.2913T>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6630,6 +5446,7 @@
       "differences": {},
       "id": "gold500-report-a6c11b540615",
       "input": "NM_013339:c.665G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6647,6 +5464,7 @@
       "differences": {},
       "id": "gold500-report-4743f47abc06",
       "input": "NM_015450:c.896C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6664,6 +5482,7 @@
       "differences": {},
       "id": "gold500-report-5cb18d3f3ebd",
       "input": "NM_015512:c.12198G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6681,6 +5500,7 @@
       "differences": {},
       "id": "gold500-report-dcc9cbb136f4",
       "input": "NM_018121:c.2650C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6698,6 +5518,7 @@
       "differences": {},
       "id": "gold500-report-6d12c808553c",
       "input": "NM_018946:c.219G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6715,6 +5536,7 @@
       "differences": {},
       "id": "gold500-report-93de382fcb11",
       "input": "NM_020207:c.4061C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6732,6 +5554,7 @@
       "differences": {},
       "id": "gold500-report-074694adb4a6",
       "input": "NM_020759:c.10946G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6749,6 +5572,7 @@
       "differences": {},
       "id": "gold500-report-86d80a2ea6fa",
       "input": "NM_024535:c.578G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6766,6 +5590,7 @@
       "differences": {},
       "id": "gold500-report-13eb17c43b4f",
       "input": "NM_031935:c.9035T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6783,6 +5608,7 @@
       "differences": {},
       "id": "gold500-report-e631a5bd17d0",
       "input": "NM_033109:c.1033A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6800,6 +5626,7 @@
       "differences": {},
       "id": "gold500-report-356227fad5b0",
       "input": "NM_144646:c.58G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6817,6 +5644,7 @@
       "differences": {},
       "id": "gold500-report-94b77b6e13ca",
       "input": "NM_182476:c.24A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6834,6 +5662,7 @@
       "differences": {},
       "id": "gold500-report-0fbebb88ad09",
       "input": "ORC1:c.271C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6851,6 +5680,7 @@
       "differences": {},
       "id": "gold500-report-35fbf565e02e",
       "input": "PLA2R1:c.439A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6868,6 +5698,7 @@
       "differences": {},
       "id": "gold500-report-de016ed1e0c3",
       "input": "PSAT1:c.173A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6885,6 +5716,7 @@
       "differences": {},
       "id": "gold500-report-33f6e3332faf",
       "input": "QDPR:c.48C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6902,6 +5734,7 @@
       "differences": {},
       "id": "gold500-report-06d7d042d1b0",
       "input": "RYR1:c.10207C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6919,6 +5752,7 @@
       "differences": {},
       "id": "gold500-report-949376e78103",
       "input": "SAMHD1:c.78T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6936,6 +5770,7 @@
       "differences": {},
       "id": "gold500-report-b34850eca2af",
       "input": "SLC4A9:c.829C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6953,6 +5788,7 @@
       "differences": {},
       "id": "gold500-report-2f2dbb0b7430",
       "input": "SOAT1:c.550G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6970,6 +5806,7 @@
       "differences": {},
       "id": "gold500-report-8989f7adb3c6",
       "input": "DICER1:c.1752+14_1752+15del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -6987,6 +5824,7 @@
       "differences": {},
       "id": "gold500-report-9206c76b5257",
       "input": "DICER1:c.904-5del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7004,6 +5842,7 @@
       "differences": {},
       "id": "gold500-report-ae488f534ad3",
       "input": "DNAH5:c.3263-3del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7021,6 +5860,7 @@
       "differences": {},
       "id": "gold500-report-a05d4b0a8cd0",
       "input": "HNRNPA2B1:c.658+7_658+8del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7038,6 +5878,7 @@
       "differences": {},
       "id": "gold500-report-00bd127cd0ed",
       "input": "HPS5:c.109-10_109-9del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7055,6 +5896,7 @@
       "differences": {},
       "id": "gold500-report-4a169cce4b32",
       "input": "IQCB1:c.767-228_767-226del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7072,6 +5914,7 @@
       "differences": {},
       "id": "gold500-report-bc40c4bcb730",
       "input": "MECP2:c.413+6_413+9del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7089,6 +5932,7 @@
       "differences": {},
       "id": "gold500-report-65239ed94418",
       "input": "MYLK:c.5369-14_5369-12del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7106,6 +5950,7 @@
       "differences": {},
       "id": "gold500-report-a378e849375c",
       "input": "NM_000187:c.87+8_88-31del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7123,6 +5968,7 @@
       "differences": {},
       "id": "gold500-report-652762d6ab80",
       "input": "NM_000257:c.4953+11del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7140,6 +5986,7 @@
       "differences": {},
       "id": "gold500-report-515dce89265d",
       "input": "NM_001080449:c.442-768_587+648del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7157,6 +6004,7 @@
       "differences": {},
       "id": "gold500-report-9b9db9f91256",
       "input": "NM_001278116:c.2431+300_2431+311del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7174,6 +6022,7 @@
       "differences": {},
       "id": "gold500-report-f081645cb2fc",
       "input": "NM_001660:c.259-7del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7191,6 +6040,7 @@
       "differences": {},
       "id": "gold500-report-e3b18e63aec4",
       "input": "NM_003292:c.790-4del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7208,6 +6058,7 @@
       "differences": {},
       "id": "gold500-report-7f5f5b014db5",
       "input": "NM_004268:c.860-17del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7225,6 +6076,7 @@
       "differences": {},
       "id": "gold500-report-dbd05c71e000",
       "input": "NM_004656:c.438-7del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7242,6 +6094,7 @@
       "differences": {},
       "id": "gold500-report-3a1a263fb114",
       "input": "NM_004963:c.1930+1del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7259,6 +6112,7 @@
       "differences": {},
       "id": "gold500-report-62b709c5b976",
       "input": "NM_006231:c.2026+18_2026+62del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7276,6 +6130,7 @@
       "differences": {},
       "id": "gold500-report-1ee0a4e65307",
       "input": "NM_014291:c.815-2_815-1del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7293,6 +6148,7 @@
       "differences": {},
       "id": "gold500-report-fe0a8ed64b6a",
       "input": "NM_015662:c.4815+10del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7310,6 +6166,7 @@
       "differences": {},
       "id": "gold500-report-f1830668d082",
       "input": "NM_016122:c.1812-9_1812-5del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7327,6 +6184,7 @@
       "differences": {},
       "id": "gold500-report-c1060af36f62",
       "input": "NM_018100:c.1492+175_1492+176del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7344,6 +6202,7 @@
       "differences": {},
       "id": "gold500-report-75e4bfc26409",
       "input": "PCDH15:c.4368-2189_4368-2154del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7361,6 +6220,7 @@
       "differences": {},
       "id": "gold500-report-23b2171c0243",
       "input": "PFKM:c.85+16del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7378,6 +6238,7 @@
       "differences": {},
       "id": "gold500-report-a87f36b63870",
       "input": "PLEC:c.4045-7_4045-5del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7395,6 +6256,7 @@
       "differences": {},
       "id": "gold500-report-f90b7a85c7a9",
       "input": "SCRIB:c.4770+8del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7412,6 +6274,7 @@
       "differences": {},
       "id": "gold500-report-df59ef0c5572",
       "input": "SKA3:c.829+1_830-1del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7429,6 +6292,7 @@
       "differences": {},
       "id": "gold500-report-d0f883aa0265",
       "input": "SUFU:c.318-22_318-19del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7446,6 +6310,7 @@
       "differences": {},
       "id": "gold500-report-71914f69401b",
       "input": "TBCE:c.898+6del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7463,6 +6328,7 @@
       "differences": {},
       "id": "gold500-report-f2b60a54230a",
       "input": "TRERF1:c.2746-6del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7480,6 +6346,7 @@
       "differences": {},
       "id": "gold500-report-a44017da71d2",
       "input": "WDR83OS:c.255-4_260del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7497,6 +6364,7 @@
       "differences": {},
       "id": "gold500-report-b671c31fc562",
       "input": "ALDH7A1:c.193-15_193-9delinsCCCTTTG",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7514,6 +6382,7 @@
       "differences": {},
       "id": "gold500-report-473ff1472764",
       "input": "NM_004984:c.129+6_129+7delinsCC",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7531,6 +6400,7 @@
       "differences": {},
       "id": "gold500-report-f56047b0f626",
       "input": "SATB1:c.1779+680_1779+681delinsAA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7548,6 +6418,7 @@
       "differences": {},
       "id": "gold500-report-aa5b6954c51e",
       "input": "NM_000019:c.580-5dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7565,6 +6436,7 @@
       "differences": {},
       "id": "gold500-report-61b33d737dd3",
       "input": "MAP3K7:c.483-8_483-7insC",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7582,6 +6454,7 @@
       "differences": {},
       "id": "gold500-report-6410e50bc4ec",
       "input": "NM_145207:c.289-8_289-7insAACATTTATTTC",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7599,6 +6472,7 @@
       "differences": {},
       "id": "gold500-report-dd7373f6205e",
       "input": "PNKP:c.1298+13_1298+14insA",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7616,6 +6490,7 @@
       "differences": {},
       "id": "gold500-report-3be3e6085200",
       "input": "ATM:c.7308-15A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7633,6 +6508,7 @@
       "differences": {},
       "id": "gold500-report-f57bee41cd3e",
       "input": "ATP13A3:c.2421+8C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7650,6 +6526,7 @@
       "differences": {},
       "id": "gold500-report-e05f02ef2dcc",
       "input": "ATP1A3:c.6+9T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7667,6 +6544,7 @@
       "differences": {},
       "id": "gold500-report-79d1d57fa583",
       "input": "CCDC39:c.930+12C>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7684,6 +6562,7 @@
       "differences": {},
       "id": "gold500-report-50f18d36e711",
       "input": "CDH23:c.337-16G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7701,6 +6580,7 @@
       "differences": {},
       "id": "gold500-report-865d10a2c880",
       "input": "CEP95:c.367+12A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7718,6 +6598,7 @@
       "differences": {},
       "id": "gold500-report-c9b45939adb8",
       "input": "COL17A1:c.4357+18G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7735,6 +6616,7 @@
       "differences": {},
       "id": "gold500-report-228698cefe96",
       "input": "COL5A2:c.97+10C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7752,6 +6634,7 @@
       "differences": {},
       "id": "gold500-report-aa368c084aa4",
       "input": "COQ7:c.73+36T>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7769,6 +6652,7 @@
       "differences": {},
       "id": "gold500-report-fca7615a48ae",
       "input": "CTNNA1:c.1062+3189T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7786,6 +6670,7 @@
       "differences": {},
       "id": "gold500-report-022d5adc4aa9",
       "input": "CYBC1:c.128-150G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7803,6 +6688,7 @@
       "differences": {},
       "id": "gold500-report-825c1d2757e2",
       "input": "DICER1:c.4051-5T>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7820,6 +6706,7 @@
       "differences": {},
       "id": "gold500-report-4aa20be3d2b2",
       "input": "FASN:c.2100+6C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7837,6 +6724,7 @@
       "differences": {},
       "id": "gold500-report-8209ac6cf932",
       "input": "IARS1:c.1305-5T>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7854,6 +6742,7 @@
       "differences": {},
       "id": "gold500-report-95c717e9fc7c",
       "input": "KCNMA1:c.1334+12C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7871,6 +6760,7 @@
       "differences": {},
       "id": "gold500-report-043683f69ace",
       "input": "KMT2B:c.6960-4C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7888,6 +6778,7 @@
       "differences": {},
       "id": "gold500-report-7581c8a52685",
       "input": "LRP5:c.4001-18C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7905,6 +6796,7 @@
       "differences": {},
       "id": "gold500-report-279ab1f4da19",
       "input": "MLH1:c.1897-3C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7922,6 +6814,7 @@
       "differences": {},
       "id": "gold500-report-6ca6e5acbe59",
       "input": "NM_000260:c.5856+13C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7939,6 +6832,7 @@
       "differences": {},
       "id": "gold500-report-bc448588db65",
       "input": "NM_000310:c.234+7C>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7956,6 +6850,7 @@
       "differences": {},
       "id": "gold500-report-2aae7b45f986",
       "input": "NM_000435:c.5362+20C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7973,6 +6868,7 @@
       "differences": {},
       "id": "gold500-report-ebc23cfd1b86",
       "input": "NM_001037283:c.1290-5C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -7990,6 +6886,7 @@
       "differences": {},
       "id": "gold500-report-2263fb2089f6",
       "input": "NM_001244008:c.1769-11C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8007,6 +6904,7 @@
       "differences": {},
       "id": "gold500-report-261997c22414",
       "input": "NM_001290223:c.2847+47707G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8024,6 +6922,7 @@
       "differences": {},
       "id": "gold500-report-ce4f06333fb0",
       "input": "NM_001363:c.513+20G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8041,6 +6940,7 @@
       "differences": {},
       "id": "gold500-report-f7535bc67929",
       "input": "NM_001384140:c.876+2T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8058,6 +6958,7 @@
       "differences": {},
       "id": "gold500-report-930259355ce9",
       "input": "NM_001384474:c.3619+10C>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8075,6 +6976,7 @@
       "differences": {},
       "id": "gold500-report-7f1796598583",
       "input": "NM_001556:c.1364+5C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8092,6 +6994,7 @@
       "differences": {},
       "id": "gold500-report-6c707465860c",
       "input": "NM_002150:c.324+8A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8109,6 +7012,7 @@
       "differences": {},
       "id": "gold500-report-ac32837ce3ab",
       "input": "NM_002224:c.627+5G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8126,6 +7030,7 @@
       "differences": {},
       "id": "gold500-report-149bda83c5d6",
       "input": "NM_002474:c.1749+17C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8143,6 +7048,7 @@
       "differences": {},
       "id": "gold500-report-3cc67af2a606",
       "input": "NM_003070:c.4461+195T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8160,6 +7066,7 @@
       "differences": {},
       "id": "gold500-report-6d9fa67ea1d7",
       "input": "NM_003072:c.3382+17G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8177,6 +7084,7 @@
       "differences": {},
       "id": "gold500-report-e831ba7ec132",
       "input": "NM_005751:c.11686+4C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8202,6 +7110,7 @@
       },
       "id": "gold500-report-a8032ea61435",
       "input": "NM_005993:c.3480-19G>T",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -8215,6 +7124,7 @@
       "differences": {},
       "id": "gold500-report-8c1592eba121",
       "input": "NM_017617:c.5168-5C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8232,6 +7142,7 @@
       "differences": {},
       "id": "gold500-report-c8d9d28c1d0a",
       "input": "NM_018288:c.195-17T>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8249,6 +7160,7 @@
       "differences": {},
       "id": "gold500-report-592039c2089a",
       "input": "NM_022458:c.424-15649G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8266,6 +7178,7 @@
       "differences": {},
       "id": "gold500-report-05aaf07a7b45",
       "input": "NM_022475:c.630-177G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8283,6 +7196,7 @@
       "differences": {},
       "id": "gold500-report-12fcd7105041",
       "input": "NM_058216:c.572-16T>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8300,6 +7214,7 @@
       "differences": {},
       "id": "gold500-report-d96d5aa96f0e",
       "input": "NM_133459:c.655-155A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8317,6 +7232,7 @@
       "differences": {},
       "id": "gold500-report-bd0d07711606",
       "input": "NM_153704:c.1861-13A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8334,6 +7250,7 @@
       "differences": {},
       "id": "gold500-report-95aa06811b37",
       "input": "NM_206933:c.2809+2T>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8351,6 +7268,7 @@
       "differences": {},
       "id": "gold500-report-ea2b5ad3a69a",
       "input": "NM_206943:c.4985-57G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8368,6 +7286,7 @@
       "differences": {},
       "id": "gold500-report-cc7bf89c009a",
       "input": "OBSCN:c.21533-2384G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8385,6 +7304,7 @@
       "differences": {},
       "id": "gold500-report-2a8a5d197453",
       "input": "PHKB:c.1514+1G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8402,6 +7322,7 @@
       "differences": {},
       "id": "gold500-report-79747011d79f",
       "input": "PLCD1:c.790+92C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8419,6 +7340,7 @@
       "differences": {},
       "id": "gold500-report-8718c506d09f",
       "input": "PLEKHN1:c.1294-11C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8436,6 +7358,7 @@
       "differences": {},
       "id": "gold500-report-aea11799bf9b",
       "input": "PTPRC:c.658+16G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8453,6 +7376,7 @@
       "differences": {},
       "id": "gold500-report-face39183073",
       "input": "SOS2:c.3337+20C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8470,6 +7394,7 @@
       "differences": {},
       "id": "gold500-report-1c2976847d56",
       "input": "TCIRG1:c.504-15C>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8487,6 +7412,7 @@
       "differences": {},
       "id": "gold500-report-d7f0812b2d77",
       "input": "TOP2B:c.640-7T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -8512,6 +7438,7 @@
       },
       "id": "gold500-report-37920f16f9d2",
       "input": "CNOT1:p.Cys2125del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8533,6 +7460,7 @@
       },
       "id": "gold500-report-8e966089922e",
       "input": "COL6A3:p.Val1219_Pro1222del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8554,6 +7482,7 @@
       },
       "id": "gold500-report-3411a4d96282",
       "input": "DYNC1H1:p.Pro2628del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8575,6 +7504,7 @@
       },
       "id": "gold500-report-fb426e769a6c",
       "input": "FOXG1:p.Ala62_Pro69del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8596,6 +7526,7 @@
       },
       "id": "gold500-report-20fbe0fa6c62",
       "input": "NAF1:p.Asp159del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8617,6 +7548,7 @@
       },
       "id": "gold500-report-d9d6356cf646",
       "input": "PKD1:p.Ile1374del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8638,6 +7570,7 @@
       },
       "id": "gold500-report-05f77188d2c5",
       "input": "PKP2:p.Arg534del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8659,6 +7592,7 @@
       },
       "id": "gold500-report-5d499e92031c",
       "input": "SYNGAP1:p.Trp1315_Pro1321del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8680,6 +7614,7 @@
       },
       "id": "gold500-report-ea5df655d471",
       "input": "TBX5:p.His220del",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "INVALID_HGVS",
@@ -8701,6 +7636,7 @@
       },
       "id": "gold500-report-d35911a5bc34",
       "input": "ACTA2:p.Val300=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8722,6 +7658,7 @@
       },
       "id": "gold500-report-210f63e75180",
       "input": "ANLN:p.Thr1018=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8743,6 +7680,7 @@
       },
       "id": "gold500-report-f16b06a4f5b0",
       "input": "ASGR2:p.Gly303=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8764,6 +7702,7 @@
       },
       "id": "gold500-report-3322e696693e",
       "input": "B3GALNT2:p.Pro28=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8785,6 +7724,7 @@
       },
       "id": "gold500-report-ff6c261a0210",
       "input": "BRCA1:p.Glu575=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8806,6 +7746,7 @@
       },
       "id": "gold500-report-760cd6c7e2c9",
       "input": "CLN3:p.Glu257=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8827,6 +7768,7 @@
       },
       "id": "gold500-report-e0059cc0f0eb",
       "input": "DEF6:p.Thr297=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8848,6 +7790,7 @@
       },
       "id": "gold500-report-ee572221e12f",
       "input": "EDC3:p.His470=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8869,6 +7812,7 @@
       },
       "id": "gold500-report-8792e7fddc22",
       "input": "EIF2B2:p.Gly94=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8890,6 +7834,7 @@
       },
       "id": "gold500-report-865df828e583",
       "input": "ERCC2:p.Arg369=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8911,6 +7856,7 @@
       },
       "id": "gold500-report-f2fefdd1bcc3",
       "input": "ERG:p.Asn121=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8932,6 +7878,7 @@
       },
       "id": "gold500-report-9f68e4e35f21",
       "input": "GHR:p.Ser65=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8953,6 +7900,7 @@
       },
       "id": "gold500-report-ac7dcf039747",
       "input": "INPP5E:p.Arg97=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8974,6 +7922,7 @@
       },
       "id": "gold500-report-56da39fad39b",
       "input": "KARS1:p.Phe391=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -8995,6 +7944,7 @@
       },
       "id": "gold500-report-2bdb571e1f6c",
       "input": "LAMP2:p.Glu334=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9016,6 +7966,7 @@
       },
       "id": "gold500-report-fb440633fbb2",
       "input": "MYB:p.Lys109=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9037,6 +7988,7 @@
       },
       "id": "gold500-report-3876e7dc3b98",
       "input": "PALLD:p.Ser426=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9058,6 +8010,7 @@
       },
       "id": "gold500-report-a619b80b877f",
       "input": "PCDH19:p.Pro984=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9079,6 +8032,7 @@
       },
       "id": "gold500-report-d20d1f0d32d8",
       "input": "PDE6C:p.Arg623=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9100,6 +8054,7 @@
       },
       "id": "gold500-report-e6bf6b64197b",
       "input": "PGM3:p.Glu81=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9121,6 +8076,7 @@
       },
       "id": "gold500-report-19bf1b18cf1e",
       "input": "POLE:p.Ile1890=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9142,6 +8098,7 @@
       },
       "id": "gold500-report-5cda98f99b65",
       "input": "POLQ:p.Gly2225=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9163,6 +8120,7 @@
       },
       "id": "gold500-report-27bd841abd70",
       "input": "RTEL1:p.Arg1188=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9184,6 +8142,7 @@
       },
       "id": "gold500-report-5bee36a1559d",
       "input": "SPEN:p.Val2549=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9205,6 +8164,7 @@
       },
       "id": "gold500-report-5c0d565d7262",
       "input": "TTN:p.Ala15599=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9226,6 +8186,7 @@
       },
       "id": "gold500-report-f7747bc5030b",
       "input": "ZFPM2:p.Phe370=",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "UNSUPPORTED_PROTEIN_EDIT",
@@ -9239,6 +8200,7 @@
       "differences": {},
       "id": "gold500-report-c3da1a6b8f3d",
       "input": "ADAM22:p.Ala266Val",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9256,6 +8218,7 @@
       "differences": {},
       "id": "gold500-report-1fc2c31e0f43",
       "input": "ARHGEF4:p.Leu1680Ser",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9273,6 +8236,7 @@
       "differences": {},
       "id": "gold500-report-22425087dc8b",
       "input": "ATF6:p.Lys370Glu",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9290,6 +8254,7 @@
       "differences": {},
       "id": "gold500-report-f7d20aa28240",
       "input": "COX11:p.Pro13Arg",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9307,6 +8272,7 @@
       "differences": {},
       "id": "gold500-report-0acd239f502c",
       "input": "DHDDS:p.Lys147Arg",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9324,6 +8290,7 @@
       "differences": {},
       "id": "gold500-report-846e02609eec",
       "input": "FHDC1:p.Arg580Gln",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9341,6 +8308,7 @@
       "differences": {},
       "id": "gold500-report-b218e16bb44f",
       "input": "GPR149:p.Pro29Leu",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9358,6 +8326,7 @@
       "differences": {},
       "id": "gold500-report-984419467a19",
       "input": "LAMC2:p.Gln992Ter",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9375,6 +8344,7 @@
       "differences": {},
       "id": "gold500-report-fe46f9f6d374",
       "input": "LTN1:p.Tyr830Cys",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9400,6 +8370,7 @@
       },
       "id": "gold500-report-9b1f2216cd4c",
       "input": "MARVELD2:p.Pro97His",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "DATA_NOT_FOUND",
@@ -9413,6 +8384,7 @@
       "differences": {},
       "id": "gold500-report-ccc1939e3004",
       "input": "MATR3:p.Gln34Arg",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9430,6 +8402,7 @@
       "differences": {},
       "id": "gold500-report-992eea100e3e",
       "input": "MEGF6:p.Cys296Ser",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9453,6 +8426,7 @@
       "differences": {},
       "id": "gold500-report-55d449d57d25",
       "input": "NAB1:p.Ala166Thr",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9470,6 +8444,7 @@
       "differences": {},
       "id": "gold500-report-fdd93b588699",
       "input": "NLRP3:p.Arg673Gln",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9487,6 +8462,7 @@
       "differences": {},
       "id": "gold500-report-37b3428c7a56",
       "input": "OTX2:p.Ala234Val",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9504,6 +8480,7 @@
       "differences": {},
       "id": "gold500-report-6353f120aa6a",
       "input": "PCM1:p.Glu136Lys",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9521,6 +8498,7 @@
       "differences": {},
       "id": "gold500-report-8f2773566373",
       "input": "PLXNA3:p.Ile320Val",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9538,6 +8516,7 @@
       "differences": {},
       "id": "gold500-report-1dfceb18ca4c",
       "input": "SBF1:p.Arg1885Trp",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9555,6 +8534,7 @@
       "differences": {},
       "id": "gold500-report-991f37b7416e",
       "input": "SLC15A5:p.Thr281Arg",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9572,6 +8552,7 @@
       "differences": {},
       "id": "gold500-report-0eea649ad3b4",
       "input": "SLC5A4:p.Gly196Ala",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9589,6 +8570,7 @@
       "differences": {},
       "id": "gold500-report-7cfd755177ea",
       "input": "SRPX:p.Val259Phe",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9606,6 +8588,7 @@
       "differences": {},
       "id": "gold500-report-c224d472a425",
       "input": "ST18:p.Gln953Arg",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9623,6 +8606,7 @@
       "differences": {},
       "id": "gold500-report-0d46671ab2c9",
       "input": "SYNE2:p.Leu5486Phe",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9640,6 +8624,7 @@
       "differences": {},
       "id": "gold500-report-70dafe7263bc",
       "input": "TSC2:p.Phe966Val",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9657,6 +8642,7 @@
       "differences": {},
       "id": "gold500-report-0e7ae8fa79b6",
       "input": "WWP2:p.Leu725Pro",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9674,6 +8660,7 @@
       "differences": {},
       "id": "gold500-report-82dcf6044437",
       "input": "ZFHX3:p.His1380Asp",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9691,6 +8678,7 @@
       "differences": {},
       "id": "gold500-report-930c18d9a281",
       "input": "HABP2:c.*599del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9708,6 +8696,7 @@
       "differences": {},
       "id": "gold500-report-54222ebab0c0",
       "input": "NM_000059:c.-39-89del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9725,6 +8714,7 @@
       "differences": {},
       "id": "gold500-report-dc436f262606",
       "input": "NM_015599:c.*2675del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9742,6 +8732,7 @@
       "differences": {},
       "id": "gold500-report-d9a1bc0d32a4",
       "input": "PTCH1:c.-6_-5del",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9759,6 +8750,7 @@
       "differences": {},
       "id": "gold500-report-b42cc089d2d3",
       "input": "ATRIP:c.*2003dup",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9776,6 +8768,7 @@
       "differences": {},
       "id": "gold500-report-381f940bfeee",
       "input": "AGPS:c.*1364A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9793,6 +8786,7 @@
       "differences": {},
       "id": "gold500-report-4cb4301c415e",
       "input": "AZIN2:c.-72-11T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9810,6 +8804,7 @@
       "differences": {},
       "id": "gold500-report-4b20e0c4dc55",
       "input": "BBS7:c.-9G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9827,6 +8822,7 @@
       "differences": {},
       "id": "gold500-report-5e8f03c1fc36",
       "input": "C19orf44:c.*335C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9852,6 +8848,7 @@
       },
       "id": "gold500-report-bcc733a05743",
       "input": "COL18A1:c.*30G>A",
+      "match_type": "failed",
       "observed": {
         "error": {
           "code": "HTTP_500",
@@ -9865,6 +8862,7 @@
       "differences": {},
       "id": "gold500-report-9c15f7ac0e0f",
       "input": "DES:c.*662G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9882,6 +8880,7 @@
       "differences": {},
       "id": "gold500-report-c113ed2c150a",
       "input": "EFCAB10:c.*115C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9899,6 +8898,7 @@
       "differences": {},
       "id": "gold500-report-9ff26de061b9",
       "input": "ERCC4:c.*2710C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9916,6 +8916,7 @@
       "differences": {},
       "id": "gold500-report-abc3522cd6cd",
       "input": "HLCS:c.*1484A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9933,6 +8934,7 @@
       "differences": {},
       "id": "gold500-report-588db69d7c14",
       "input": "IFT80:c.*104G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9950,6 +8952,7 @@
       "differences": {},
       "id": "gold500-report-a745f61ac049",
       "input": "IGF1R:c.*6092G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9967,6 +8970,7 @@
       "differences": {},
       "id": "gold500-report-3c8bc9c0e9c1",
       "input": "IVD:c.*2235G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -9984,6 +8988,7 @@
       "differences": {},
       "id": "gold500-report-e75b480090e9",
       "input": "KIF1A:c.*120C>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10001,6 +9006,7 @@
       "differences": {},
       "id": "gold500-report-2399000c7fa3",
       "input": "LMLN:c.*3256A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10018,6 +9024,7 @@
       "differences": {},
       "id": "gold500-report-bea288306f18",
       "input": "MMP13:c.*13A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10035,6 +9042,7 @@
       "differences": {},
       "id": "gold500-report-6bdc077a4e58",
       "input": "NM_000033:c.*668C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10052,6 +9060,7 @@
       "differences": {},
       "id": "gold500-report-4679a7f4b28c",
       "input": "NM_000129:c.*934G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10069,6 +9078,7 @@
       "differences": {},
       "id": "gold500-report-3741fbcf2ca2",
       "input": "NM_000136:c.*593C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10086,6 +9096,7 @@
       "differences": {},
       "id": "gold500-report-4a794366e702",
       "input": "NM_000294:c.*1744G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10103,6 +9114,7 @@
       "differences": {},
       "id": "gold500-report-f2376cb487a7",
       "input": "NM_001009925:c.-16G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10120,6 +9132,7 @@
       "differences": {},
       "id": "gold500-report-18433766cfbf",
       "input": "NM_001017995:c.*1862G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10137,6 +9150,7 @@
       "differences": {},
       "id": "gold500-report-70c905e41af5",
       "input": "NM_001039844:c.*2308A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10154,6 +9168,7 @@
       "differences": {},
       "id": "gold500-report-0815aade4cf5",
       "input": "NM_001113525:c.*1291C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10171,6 +9186,7 @@
       "differences": {},
       "id": "gold500-report-fbab91a8754d",
       "input": "NM_001135091:c.*1334A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10188,6 +9204,7 @@
       "differences": {},
       "id": "gold500-report-2f39a145629f",
       "input": "NM_001361:c.*144G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10205,6 +9222,7 @@
       "differences": {},
       "id": "gold500-report-cda4abd4d294",
       "input": "NM_001621:c.*2091A>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10222,6 +9240,7 @@
       "differences": {},
       "id": "gold500-report-502a11929cf7",
       "input": "NM_004004:c.*979A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10239,6 +9258,7 @@
       "differences": {},
       "id": "gold500-report-c6ab1b4bfa23",
       "input": "NM_004744:c.*3654T>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10256,6 +9276,7 @@
       "differences": {},
       "id": "gold500-report-ba5a0a5a49c8",
       "input": "NM_005589:c.*309G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10273,6 +9294,7 @@
       "differences": {},
       "id": "gold500-report-c1c698e9d9ba",
       "input": "NM_006580:c.-90C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10290,6 +9312,7 @@
       "differences": {},
       "id": "gold500-report-18b64b4a1db9",
       "input": "NM_006824:c.-14G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10307,6 +9330,7 @@
       "differences": {},
       "id": "gold500-report-f057c2f79aa0",
       "input": "NM_007294:c.-19-6T>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10324,6 +9348,7 @@
       "differences": {},
       "id": "gold500-report-510c07e0cbe4",
       "input": "NM_014431:c.*1422G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10341,6 +9366,7 @@
       "differences": {},
       "id": "gold500-report-ff4377f579f1",
       "input": "NM_014748:c.*766G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10358,6 +9384,7 @@
       "differences": {},
       "id": "gold500-report-7bfe20b5fa5e",
       "input": "NM_016156:c.*1822T>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10375,6 +9402,7 @@
       "differences": {},
       "id": "gold500-report-a86c3d4e3829",
       "input": "NM_024838:c.-215-38A>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10392,6 +9420,7 @@
       "differences": {},
       "id": "gold500-report-4545df1dc165",
       "input": "NM_031433:c.*951C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10409,6 +9438,7 @@
       "differences": {},
       "id": "gold500-report-d201acbc926c",
       "input": "NM_032638:c.-4G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10426,6 +9456,7 @@
       "differences": {},
       "id": "gold500-report-981a8603b9c6",
       "input": "NM_153252:c.*3083G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10443,6 +9474,7 @@
       "differences": {},
       "id": "gold500-report-b6ce43dde86b",
       "input": "NM_194255:c.*2918G>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10460,6 +9492,7 @@
       "differences": {},
       "id": "gold500-report-6a0579a4f174",
       "input": "NM_198252:c.-9-2025G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10477,6 +9510,7 @@
       "differences": {},
       "id": "gold500-report-c657be183c4c",
       "input": "NRXN1:c.-28A>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10494,6 +9528,7 @@
       "differences": {},
       "id": "gold500-report-cc81643ab9ea",
       "input": "PLEKHA6:c.-13-256G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10511,6 +9546,7 @@
       "differences": {},
       "id": "gold500-report-ee879a9529d9",
       "input": "RPE65:c.*630C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10528,6 +9564,7 @@
       "differences": {},
       "id": "gold500-report-61d79a66cf0f",
       "input": "RRM2B:c.*2035A>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10545,6 +9582,7 @@
       "differences": {},
       "id": "gold500-report-460e79948a99",
       "input": "SLC37A4:c.-195-136A>C",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10562,6 +9600,7 @@
       "differences": {},
       "id": "gold500-report-6188712da8aa",
       "input": "SMARCA4:c.*19C>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10579,6 +9618,7 @@
       "differences": {},
       "id": "gold500-report-999b70dfc537",
       "input": "TMEM106B:c.*1276G>T",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10596,6 +9636,7 @@
       "differences": {},
       "id": "gold500-report-8c2191f49a4b",
       "input": "TRIP11:c.-335G>A",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10613,6 +9654,7 @@
       "differences": {},
       "id": "gold500-report-e14f77ca9861",
       "input": "VANGL1:c.*5993C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10630,6 +9672,7 @@
       "differences": {},
       "id": "gold500-report-43f89e94fa48",
       "input": "VLDLR:c.-303C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10647,6 +9690,7 @@
       "differences": {},
       "id": "gold500-report-33694aecebaa",
       "input": "ZNF276:c.*438C>G",
+      "match_type": "exact",
       "observed": {
         "vcf": [
           {
@@ -10665,16 +9709,16 @@
     "base_url": "https://hgvs2vcf.togovar.org",
     "by_category": {
       "coding_del": {
-        "failed": 25,
-        "passed": 28
+        "failed": 7,
+        "passed": 46
       },
       "coding_delins": {
-        "failed": 12,
-        "passed": 9
+        "failed": 0,
+        "passed": 21
       },
       "coding_dup": {
-        "failed": 42,
-        "passed": 10
+        "failed": 22,
+        "passed": 30
       },
       "coding_ins": {
         "failed": 2,
@@ -10689,16 +9733,16 @@
         "passed": 52
       },
       "intronic_del": {
-        "failed": 21,
-        "passed": 31
+        "failed": 7,
+        "passed": 45
       },
       "intronic_delins": {
-        "failed": 2,
-        "passed": 3
+        "failed": 0,
+        "passed": 5
       },
       "intronic_dup": {
-        "failed": 26,
-        "passed": 1
+        "failed": 20,
+        "passed": 7
       },
       "intronic_ins": {
         "failed": 1,
@@ -10721,26 +9765,28 @@
         "passed": 25
       },
       "utr_del": {
-        "failed": 1,
-        "passed": 4
+        "failed": 0,
+        "passed": 5
       },
       "utr_delins": {
-        "failed": 1,
-        "passed": 0
+        "failed": 0,
+        "passed": 1
       },
       "utr_dup": {
-        "failed": 3,
-        "passed": 1
+        "failed": 2,
+        "passed": 2
       },
       "utr_substitution": {
         "failed": 1,
         "passed": 51
       }
     },
-    "elapsed_seconds": 25.180501125,
-    "failed": 190,
-    "pass_rate": 0.5948827292110874,
-    "passed": 279,
+    "elapsed_seconds": 63.002290499999994,
+    "equivalent": 75,
+    "exact": 279,
+    "failed": 115,
+    "pass_rate": 0.7547974413646056,
+    "passed": 354,
     "total": 469
   }
 }
